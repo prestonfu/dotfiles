@@ -1,0 +1,555 @@
+@@ -0,0 +1,554 @@
+% prestonfu.sty - Copyright Preston Fu 2019
+% Credits to Evan Chen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ProvidesPackage{prestonfu}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%  OPTIONS  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newif\ifprestonmdthm\prestonmdthmfalse
+\newif\ifprestonchthm\prestonchthmfalse
+\newif\ifprestonsecthm\prestonsecthmtrue
+\newif\ifprestonfancy\prestonfancytrue
+\newif\ifprestonpazo\prestonpazofalse
+\newif\ifprestonplainhdr\prestonplainhdrfalse
+\newif\ifprestonplainheading\prestonplainheadingfalse
+\newif\ifprestonnoindent\prestonnoindentfalse
+\newif\ifprestonboldenum\prestonboldenumfalse
+\newif\ifprestonindex\prestonindexfalse
+
+\DeclareOption{mdthm}{\prestonmdthmtrue}
+\DeclareOption{nomdthm}{\prestonmdthmfalse}
+
+\DeclareOption{chthm}{\prestonchthmtrue}
+\DeclareOption{secthm}{\prestonsecthmtrue}
+\DeclareOption{nosecthm}{\prestonsecthmfalse}
+
+\DeclareOption{fancy}{\prestonfancytrue}
+\DeclareOption{plainhdr}{\prestonplainhdrtrue}
+\DeclareOption{nofancy}{\prestonfancyfalse}
+\DeclareOption{pazo}{\prestonpazotrue}
+\DeclareOption{plainheading}{\prestonplainheadingtrue}
+\DeclareOption{noindent}{\prestonnoindenttrue}
+\DeclareOption{boldenum}{\prestonboldenumtrue}
+
+\DeclareOption{index}{\prestonindextrue}
+
+\ProcessOptions\relax
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{amsthm}
+\usepackage{thmtools}
+\usepackage[margin=1in]{geometry}
+\PassOptionsToPackage{usenames,svgnames,dvipsnames}{xcolor}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[english]{babel}
+\usepackage{mathdots}
+\usepackage[final]{pdfpages}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{epigraph}
+\usepackage{hyperref}
+\usepackage{mathrsfs}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{appendix}
+\usepackage{imakeidx}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%  USEFUL COMMANDS  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\dotp}{\boldsymbol{\cdot}}
+\newcommand{\x}{\times}
+\newcommand{\cbrt}[1]{\sqrt[3]{#1}}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceiling}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\braces}[1]{\left \{ #1 \right \}}
+\newcommand{\set}[1]{\left \{ #1 \right \}}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\angleb}[1]{\left\langle #1 \right\rangle}
+\newcommand{\pfrac}[2]{\parens{\frac{#1}{#2}}}
+\newcommand{\mailto}[1]{\href{mailto:#1}{\texttt{#1}}}
+\newcommand{\ol}{\overline}
+\newcommand{\ul}{\underline}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\deg}{^\circ}
+\renewcommand{\bold}[1]{{\boldmath\bfseries #1}}
+\newcommand{\vocab}[1]{\bold{\color{MidnightBlue} #1}}
+
+% Topology
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\inv}{^{-1}}
+
+% Functions
+\DeclareMathOperator*{\lcm}{lcm} % least common multiple
+\DeclareMathOperator*{\re}{Re} % real part
+\DeclareMathOperator*{\im}{Im} % imaginary part
+\DeclareMathOperator*{\diam}{diam} % diameter
+\DeclareMathOperator*{\mesh}{mesh} % mesh
+\DeclareMathOperator*{\ord}{ord} % order
+\DeclareMathOperator*{\adj}{adj} % adjugate
+\DeclareMathOperator*{\cur}{curl} % curl
+\DeclareMathOperator*{\die}{div} % divergence
+\DeclareMathOperator*{\cis}{cis} % cis
+\DeclareMathOperator*{\rank}{rank} % rank
+\DeclareMathOperator*{\Spec}{Spec} % spectrum
+\DeclareMathOperator*{\Tr}{Tr} % trace
+\DeclareMathOperator*{\Dom}{Dom} % domain
+\DeclareMathOperator*{\Rng}{Rng} % range
+
+% Sums and Products
+\newcommand{\cycsum}{\sum_{\mathrm{cyc}}}
+\newcommand{\symsum}{\sum_{\mathrm{sym}}}
+\newcommand{\cycprod}{\prod_{\mathrm{cyc}}}
+\newcommand{\symprod}{\prod_{\mathrm{sym}}}
+
+% Letters
+\newcommand{\CC}{\mathbb C}
+\newcommand{\EE}{\mathbb E}
+\newcommand{\FF}{\mathbb F}
+\newcommand{\HH}{\mathbb H}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\TT}{\mathbb T}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\UU}{\mathbb U}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\Qbar}{\overline{\QQ}}
+\newcommand{\Zbar}{\overline{\ZZ}}
+\newcommand{\ii}{\mathbf i}
+\newcommand{\jj}{\mathbf j}
+\newcommand{\kk}{\mathbf k}
+
+\newcommand{\mfb}{\mathfrak b}
+\newcommand{\mfg}{\mathfrak g}
+\newcommand{\mfh}{\mathfrak h}
+\newcommand{\mfm}{\mathfrak m}
+\newcommand{\mfn}{\mathfrak n}
+\newcommand{\mfp}{\mathfrak p}
+\newcommand{\mfq}{\mathfrak q}
+\newcommand{\mfu}{\mathfrak u}
+\newcommand{\mfz}{\mathfrak z}
+
+\newcommand{\mcA}{\mathcal A} 
+\newcommand{\mcB}{\mathcal B} 
+\newcommand{\mcC}{\mathcal C} 
+\newcommand{\mcD}{\mathcal D} 
+\newcommand{\mcE}{\mathcal E} 
+\newcommand{\mcF}{\mathcal F} 
+\newcommand{\mcG}{\mathcal G} 
+\newcommand{\mcH}{\mathcal H} 
+\newcommand{\mcI}{\mathcal I} 
+\newcommand{\mcJ}{\mathcal J} 
+\newcommand{\mcK}{\mathcal K} 
+\newcommand{\mcL}{\mathcal L} 
+\newcommand{\mcM}{\mathcal M} 
+\newcommand{\mcN}{\mathcal N} 
+\newcommand{\mcO}{\mathcal O} 
+\newcommand{\mcP}{\mathcal P} 
+\newcommand{\mcQ}{\mathcal Q} 
+\newcommand{\mcR}{\mathcal R} 
+\newcommand{\mcS}{\mathcal S} 
+\newcommand{\mcT}{\mathcal T} 
+\newcommand{\mcU}{\mathcal U} 
+\newcommand{\mcV}{\mathcal V} 
+\newcommand{\mcW}{\mathcal W} 
+\newcommand{\mcX}{\mathcal X} 
+\newcommand{\mcY}{\mathcal Y} 
+\newcommand{\mcZ}{\mathcal Z}
+
+\newcommand{\msA}{\mathscr A} 
+\newcommand{\msB}{\mathscr B} 
+\newcommand{\msC}{\mathscr C} 
+\newcommand{\msD}{\mathscr D} 
+\newcommand{\msE}{\mathscr E} 
+\newcommand{\msF}{\mathscr F} 
+\newcommand{\msG}{\mathscr G} 
+\newcommand{\msH}{\mathscr H} 
+\newcommand{\msI}{\mathscr I} 
+\newcommand{\msJ}{\mathscr J} 
+\newcommand{\msK}{\mathscr K} 
+\newcommand{\msL}{\mathscr L} 
+\newcommand{\msM}{\mathscr M} 
+\newcommand{\msN}{\mathscr N} 
+\newcommand{\msO}{\mathscr O} 
+\newcommand{\msP}{\mathscr P} 
+\newcommand{\msQ}{\mathscr Q} 
+\newcommand{\msR}{\mathscr R} 
+\newcommand{\msS}{\mathscr S} 
+\newcommand{\msT}{\mathscr T} 
+\newcommand{\msU}{\mathscr U} 
+\newcommand{\msV}{\mathscr V} 
+\newcommand{\msW}{\mathscr W} 
+\newcommand{\msX}{\mathscr X} 
+\newcommand{\msY}{\mathscr Y} 
+\newcommand{\msZ}{\mathscr Z}
+
+% Geometry
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\dang}{\measuredangle}
+\newcommand{\ray}[1]{\overrightarrow{#1}} 
+\newcommand{\seg}[1]{\overline{#1}}
+\DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n}
+\DeclareMathAccent{\wideparen}{\mathord}{yhlargesymbols}{"F3}
+\newcommand{\arc}[1]{\wideparen{#1}}
+
+% Custom enumerates
+\newenvironment{anum}{ % (a), (b), ...
+\begin{enumerate}[label = (\alph*)]}{\end{enumerate}}
+\newenvironment{Rnum}{ % (I), (II), ...
+\begin{enumerate}[label = (\Roman*)]}{\end{enumerate}}
+\newenvironment{rnum}{ % (i), (ii), ...
+\begin{enumerate}[label = (\roman*)]}{\end{enumerate}}
+
+\newenvironment{myenum} % no space
+{ \begin{enumerate}[topsep = 0pt]
+    \setlength{\topsep}{0pt}
+    \setlength{\itemsep}{0pt}
+    \setlength{\parskip}{0pt}
+    \setlength{\parsep}{0pt}     }
+{ \end{enumerate}                  }
+
+\newenvironment{myitem} % no space
+{ \begin{itemize}[topsep = 0pt]
+    \setlength{\itemsep}{0pt}
+    \setlength{\parskip}{0pt}
+    \setlength{\parsep}{0pt}     }
+{ \end{itemize}                  }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%  HYPERREF  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{astral}{RGB}{46,116,181}
+\hypersetup{
+    colorlinks,
+    citecolor=astral,
+    filecolor=astral,
+    linkcolor=astral,
+    urlcolor=astral
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%  FONTS/OTHER STYLISTIC FEATURES  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifprestonnoindent
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+\fi
+\ifprestonpazo \usepackage{mathpazo} \fi
+\@ifundefined{KOMAClassName}
+{
+    \newcommand{\headingfont}{\bfseries}
+    \newcommand{\sansfont}{\normalfont}
+}
+{
+    \usepackage{roboto}
+    \newcommand{\headingfont}{\sffamily\bfseries}
+    \newcommand{\sansfont}{\sffamily}
+}
+\ifprestonindex \makeindex[columns=2,intoc] \fi
+\ifprestonboldenum \setlist[enumerate]{font=\bfseries} \fi
+
+\ifprestonplainheading
+
+\else
+    \usepackage{titlesec}
+    \usepackage{titling}
+    
+    \pretitle{\begin{center}\Huge\headingfont}
+    \posttitle{\end{center}\vskip 0.5em}
+    \preauthor{\begin{center}\large\sansfont\lineskip 0.5em \begin{tabular}[t]{c}}
+    \postauthor{\end{tabular}\par\end{center}}
+    \predate{\begin{center}\large\sansfont}
+    \postdate{\par\end{center}}
+    
+    \titleformat{\part}[display]{\centering\normalfont\LARGE\headingfont }{Part \thepart}{20pt}{\Huge}
+    \titleformat{\chapter}[display]{\normalfont\LARGE\headingfont}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+    \titleformat{\section}{\normalfont\LARGE\headingfont}{\thesection}{1em}{}
+    \titleformat{\subsection}{\normalfont\Large\headingfont}{\thesubsection}{1em}{}
+    \titleformat{\subsubsection}{\normalfont\large\headingfont}{\thesubsubsection}{1em}{}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%  THEOREMS  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifprestonmdthm
+    \mdfdefinestyle{mdbluebox}{%
+		skipabove=8pt,
+		linewidth=3pt,
+		rightline=false,
+		leftline=true,
+		topline=false,
+		bottomline=false,
+		linecolor=MidnightBlue,
+		backgroundcolor=TealBlue!5,
+	}
+
+	\declaretheoremstyle[
+		headfont=\headingfont\color{MidnightBlue},
+		bodyfont=\itshape,
+		mdframed={style=mdbluebox},
+		headpunct={. },
+		postheadspace={0pt}
+	]{thmbluebox}
+	
+	\mdfdefinestyle{mdgreenbox}{%
+		skipabove=8pt,
+		linewidth=3pt,
+		rightline=false,
+		leftline=true,
+		topline=false,
+		bottomline=false,
+		linecolor=ForestGreen,
+		backgroundcolor=ForestGreen!5,
+	}
+
+	\declaretheoremstyle[
+		headfont=\headingfont\color{ForestGreen},
+		mdframed={style=mdgreenbox},
+		headpunct={. },
+		postheadspace={0pt},
+	]{thmgreenbox}
+	
+	\mdfdefinestyle{mdorangebox}{%
+		skipabove=8pt,
+		linewidth=3pt,
+		rightline=false,
+		leftline=true,
+		topline=false,
+		bottomline=false,
+		linecolor=orange,
+		backgroundcolor=Crimson!5,
+	}
+
+	\declaretheoremstyle[
+		headfont=\headingfont\color{orange},
+		mdframed={style=mdorangebox},
+		headpunct={. },
+		postheadspace={0pt},
+	]{thmorangebox}
+	
+	\mdfdefinestyle{mdredbox}{%
+		skipabove=8pt,
+		linewidth=3pt,
+		rightline=false,
+		leftline=true,
+		topline=false,
+		bottomline=false,
+		linecolor=RawSienna,
+		backgroundcolor=Salmon!5,
+	}
+
+	\declaretheoremstyle[
+		headfont=\headingfont\color{RawSienna},
+		mdframed={style=mdredbox},
+		headpunct={. },
+		postheadspace={0pt},
+	]{thmredbox}
+	
+	\mdfdefinestyle{mdblackbox}{%
+		skipabove=8pt,
+		linewidth=3pt,
+		rightline=false,
+		leftline=true,
+		topline=false,
+		bottomline=false,
+		linecolor=black,
+		backgroundcolor=RedViolet!5!gray!5,
+	}
+
+	\declaretheoremstyle[
+		headfont=\itshape,
+		mdframed={style=mdblackbox},
+		headpunct={. },
+		postheadspace={0pt},
+	]{thmblackbox}
+	
+	\mdfdefinestyle{mdpurplebox}{%
+		skipabove=8pt,
+		linewidth=3pt,
+		rightline=false,
+		leftline=true,
+		topline=false,
+		bottomline=false,
+		linecolor=RoyalPurple,
+		backgroundcolor=Orchid!4,
+	}
+
+	\declaretheoremstyle[
+		headfont=\headingfont\color{RoyalPurple},
+		mdframed={style=mdpurplebox},
+		headpunct={. },
+		postheadspace={0pt},
+	]{thmpurplebox}
+
+	\newcommand{\listhack}{$\empty$\vspace{-2em}}
+\fi
+
+\theoremstyle{plain} % Theorem, Lemma, Proposition, Corollary
+
+\ifprestonmdthm
+    \ifprestonchthm
+        \declaretheorem[style=thmbluebox,name=Theorem,numberwithin=chapter]{thm}
+	\else
+    	\ifprestonsecthm
+    		\declaretheorem[style=thmbluebox,name=Theorem,numberwithin=section]{thm}
+    	\else
+    		\declaretheorem[style=thmbluebox,name=Theorem]{thm}
+    	\fi
+	\fi
+	\declaretheorem[style=thmbluebox,name=Lemma,sibling=thm]{lemma}
+	\declaretheorem[style=thmbluebox,name=Proposition,sibling=thm]{prop}
+	\declaretheorem[style=thmbluebox,name=Corollary,sibling=thm]{cor}
+	
+    \declaretheorem[style=thmbluebox,name=Theorem,numbered=no]{thm*}
+	\declaretheorem[style=thmbluebox,name=Lemma,numbered=no]{lemma*}
+	\declaretheorem[style=thmbluebox,name=Proposition,numbered=no]{prop*}
+	\declaretheorem[style=thmbluebox,name=Corollary,numbered=no]{cor*}
+\else
+    \ifprestonchthm
+        \declaretheorem[name=Theorem,numberwithin=chapter]{thm}
+	\else
+    	\ifprestonsecthm
+    		\declaretheorem[name=Theorem,numberwithin=section]{thm}
+    	\else
+    		\declaretheorem[name=Theorem]{thm}
+    	\fi
+	\fi
+	\declaretheorem[name=Lemma,sibling=thm]{lemma}
+	\declaretheorem[name=Proposition,sibling=thm]{prop}
+	\declaretheorem[name=Corollary,sibling=thm]{cor}
+	
+	\declaretheorem[name=Theorem,numbered=no]{thm*}
+	\declaretheorem[name=Lemma,numbered=no]{lemma*}
+	\declaretheorem[name=Proposition,numbered=no]{prop*}
+	\declaretheorem[name=Corollary,numbered=no]{cor*}
+\fi
+	
+\theoremstyle{definition} % Problem, example, definition, claim,
+% definition, conjecture, fact, question, answer, notation,
+% terminology, upshot
+
+\ifprestonchthm
+    \declaretheorem[name=Problem,numberwithin=chapter]{prob}
+\else
+    \ifprestonsecthm
+    	\declaretheorem[name=Problem,numberwithin=section]{prob}
+    \else
+        \declaretheorem[name=Problem]{prob}
+    \fi
+\fi
+\declaretheorem[name=Problem,numbered=no]{prob*}
+
+\ifprestonmdthm
+	\declaretheorem[style=thmgreenbox,name=Problem,sibling=prob]{boxprob}
+	\declaretheorem[style=thmorangebox,name=Claim,sibling=thm]{claim}
+	\declaretheorem[style=thmgreenbox,name=Problem,numbered=no]{boxprob*}
+	\declaretheorem[style=thmorangebox,name=Claim,numbered=no]{claim*}
+\else
+	\declaretheorem[name=Claim,sibling=thm]{claim}
+	\declaretheorem[name=Claim,numbered=no]{claim*}
+\fi
+
+\declaretheorem[name=Definition,sibling=thm]{defn}
+\declaretheorem[name=Conjugate,sibling=thm]{conj}
+\declaretheorem[name=Fact,sibling=thm]{fact}
+\declaretheorem[name=Question,sibling=thm]{question}
+\declaretheorem[name=Answer,sibling=thm]{answer}
+
+\declaretheorem[name=Definition,numbered=no]{defn*}
+\declaretheorem[name=Conjugate,numbered=no]{conj*}
+\declaretheorem[name=Fact,numbered=no]{fact*}
+\declaretheorem[name=Question,numbered=no]{question*}
+\declaretheorem[name=Answer,numbered=no]{answer*}
+\declaretheorem[name=Notation,numbered=no]{notation}
+\declaretheorem[name=Terminology,numbered=no]{term}
+\declaretheorem[name=Upshot,numbered=no]{upshot}
+
+\ifprestonmdthm
+    \ifprestonchthm
+        \declaretheorem[style=thmredbox,name=Example,numberwithin=chapter]{ex}
+    \else
+        \ifprestonsecthm
+            \declaretheorem[style=thmredbox,name=Example,numberwithin=section]{ex}
+        \else
+            \declaretheorem[style=thmredbox,name=Example]{ex}
+        \fi 
+    \fi
+	\declaretheorem[style=thmredbox,name=Example,numbered=no]{ex*}
+\else
+    \ifprestonchthm
+        \declaretheorem[name=Example,numberwithin=chapter]{ex}
+    \else
+        \ifprestonsecthm
+            \declaretheorem[name=Example,numberwithin=section]{ex}
+        \else
+            \declaretheorem[name=Example]{ex}
+        \fi 
+    \fi
+	\declaretheorem[name=Example,numbered=no]{ex*}
+\fi
+
+\theoremstyle{remark} % Remark, note
+
+\ifprestonmdthm
+	\declaretheorem[style=thmblackbox,name=Remark,numbered=no]{remark}
+\else
+	\declaretheorem[name=Remark,numbered=no]{remark}
+\fi
+
+\declaretheorem[name=Note,numbered=no]{note}
+
+% Hint, which doesn't belong anywhere
+\newenvironment{hint}{\scriptsize [Hint:}{\scriptsize\unskip]}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%  PROOFS  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand\qedsymbol{$\blacksquare$}
+\newenvironment{subproof}[1][\proofname]{\renewcommand{\qedsymbol}{$\Box$}\begin{proof}[#1]}{\end{proof}}
+\newenvironment{sol}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\headingfont#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
+\newenvironment{solsketch}[1][Solution Sketch] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\headingfont#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
+\newenvironment{pfsketch}[1][Proof Sketch] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\headingfont#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
+\newenvironment{progress}[1][Progress] {\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\itshape#1\@addpunct{.}]\ignorespaces}{\endtrivlist\@endpefalse}
+
+\ifprestonmdthm
+    \declaretheorem[style=thmpurplebox,name=Bogus Solution,numbered=no]{bogussol}
+    \declaretheorem[style=thmpurplebox,name=Bogus Proof,numbered=no]{boguspf}
+\else
+    \newenvironment{bogussol}[1][Bogus Solution] {\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\endtrivlist\@endpefalse}
+    \newenvironment{boguspf}[1][Bogus Proof] {\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\endtrivlist\@endpefalse}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%  FANCYHDR  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifprestonfancy
+    \usepackage{fancyhdr}
+    
+    \ifprestonplainhdr
+        \pagestyle{fancy}
+        \lhead{{\Author} (\Date)}
+        \rhead{\Title}
+        \setlength{\headheight}{20pt} 
+        \setlength{\headsep}{3mm}
+    \else
+        \pagestyle{fancy}
+        \lhead{\small\textbf{\Author}  (\Date)}
+        \rhead{\small\textbf{\Title}}
+        \setlength{\headheight}{20pt} 
+        \setlength{\headsep}{3mm}
+    \fi
+\fi
