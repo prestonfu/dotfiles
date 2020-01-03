@@ -14,6 +14,7 @@
 \newif\ifprestonpazo\prestonpazofalse
 \newif\ifprestonplainhdr\prestonplainhdrfalse
 \newif\ifprestonnoindent\prestonnoindentfalse
+\newif\ifprestonmarginset\prestonmarginsettrue
 \newif\ifprestonboldenum\prestonboldenumfalse
 \newif\ifprestonindex\prestonindexfalse
 
@@ -29,8 +30,8 @@
 \DeclareOption{nofancy}{\prestonfancyfalse}
 \DeclareOption{pazo}{\prestonpazotrue}
 \DeclareOption{noindent}{\prestonnoindenttrue}
+\DeclareOption{nomarginset}{\prestonmarginsetfalse}
 \DeclareOption{boldenum}{\prestonboldenumtrue}
-
 \DeclareOption{index}{\prestonindextrue}
 
 \ProcessOptions\relax
@@ -39,7 +40,6 @@
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{amsthm}
 \usepackage{thmtools}
-\usepackage[margin=1in]{geometry}
 \PassOptionsToPackage{usenames,svgnames,dvipsnames}{xcolor}
 \usepackage{xcolor}
 \usepackage{graphicx}
@@ -241,6 +241,9 @@
 \ifprestonnoindent
     \setlength{\parindent}{0pt}
     \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+\fi
+\ifprestonmarginset
+    \usepackage[margin=1in]{geometry}
 \fi
 \ifprestonpazo \usepackage{mathpazo} \fi
 \@ifundefined{KOMAClassName}
