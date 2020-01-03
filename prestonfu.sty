@@ -13,7 +13,6 @@
 \newif\ifprestonfancy\prestonfancytrue
 \newif\ifprestonpazo\prestonpazofalse
 \newif\ifprestonplainhdr\prestonplainhdrfalse
-\newif\ifprestonplainheading\prestonplainheadingfalse
 \newif\ifprestonnoindent\prestonnoindentfalse
 \newif\ifprestonboldenum\prestonboldenumfalse
 \newif\ifprestonindex\prestonindexfalse
@@ -29,7 +28,6 @@
 \DeclareOption{plainhdr}{\prestonplainhdrtrue}
 \DeclareOption{nofancy}{\prestonfancyfalse}
 \DeclareOption{pazo}{\prestonpazotrue}
-\DeclareOption{plainheading}{\prestonplainheadingtrue}
 \DeclareOption{noindent}{\prestonnoindenttrue}
 \DeclareOption{boldenum}{\prestonboldenumtrue}
 
@@ -257,26 +255,6 @@
 }
 \ifprestonindex \makeindex[columns=2,intoc] \fi
 \ifprestonboldenum \setlist[enumerate]{font=\bfseries} \fi
-
-\ifprestonplainheading
-
-\else
-    \usepackage{titlesec}
-    \usepackage{titling}
-    
-    \pretitle{\begin{center}\Huge\headingfont}
-    \posttitle{\end{center}\vskip 0.5em}
-    \preauthor{\begin{center}\large\sansfont\lineskip 0.5em \begin{tabular}[t]{c}}
-    \postauthor{\end{tabular}\par\end{center}}
-    \predate{\begin{center}\large\sansfont}
-    \postdate{\par\end{center}}
-    
-    \titleformat{\part}[display]{\centering\normalfont\LARGE\headingfont }{Part \thepart}{20pt}{\Huge}
-    \titleformat{\chapter}[display]{\normalfont\LARGE\headingfont}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
-    \titleformat{\section}{\normalfont\LARGE\headingfont}{\thesection}{1em}{}
-    \titleformat{\subsection}{\normalfont\Large\headingfont}{\thesubsection}{1em}{}
-    \titleformat{\subsubsection}{\normalfont\large\headingfont}{\thesubsubsection}{1em}{}
-\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%  THEOREMS  %%%%
