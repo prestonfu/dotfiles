@@ -12,6 +12,7 @@
 \newif\ifprestonsecthm\prestonsecthmtrue
 \newif\ifprestonfancy\prestonfancytrue
 \newif\ifprestonpazo\prestonpazofalse
+\newif\ifprestonroboto\prestonrobototrue
 \newif\ifprestonplainhdr\prestonplainhdrfalse
 \newif\ifprestonnoindent\prestonnoindentfalse
 \newif\ifprestonmarginset\prestonmarginsettrue
@@ -29,6 +30,7 @@
 \DeclareOption{plainhdr}{\prestonplainhdrtrue}
 \DeclareOption{nofancy}{\prestonfancyfalse}
 \DeclareOption{pazo}{\prestonpazotrue}
+\DeclareOption{noroboto}{\prestonrobotofalse}
 \DeclareOption{noindent}{\prestonnoindenttrue}
 \DeclareOption{nomarginset}{\prestonmarginsetfalse}
 \DeclareOption{boldenum}{\prestonboldenumtrue}
@@ -252,7 +254,9 @@
     \newcommand{\sansfont}{\normalfont}
 }
 {
-    \usepackage{roboto}
+    \ifprestonroboto
+        \usepackage{roboto}
+    \fi
     \newcommand{\headingfont}{\sffamily\bfseries}
     \newcommand{\sansfont}{\sffamily}
 }
