@@ -1,11 +1,12 @@
-% prestonfu.sty - Copyright Preston Fu 2019
-% Credits to Evan Chen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% prestonfu.sty - Copyright Preston Fu 2020       %
+% Credits to Evan Chen                            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ProvidesPackage{prestonfu}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %%%%  OPTIONS  %%%%
+  %%%%          OPTIONS          %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newif\ifprestonmdthm\prestonmdthmfalse
 \newif\ifprestonchthm\prestonchthmfalse
@@ -14,6 +15,7 @@
 \newif\ifprestonpazo\prestonpazofalse
 \newif\ifprestonroboto\prestonrobototrue
 \newif\ifprestonplainhdr\prestonplainhdrfalse
+\newif\ifprestonsetlinespacing\prestonsetlinespacingtrue
 \newif\ifprestonnoindent\prestonnoindentfalse
 \newif\ifprestonmarginset\prestonmarginsettrue
 \newif\ifprestonboldenum\prestonboldenumfalse
@@ -35,6 +37,13 @@
 \DeclareOption{nomarginset}{\prestonmarginsetfalse}
 \DeclareOption{boldenum}{\prestonboldenumtrue}
 \DeclareOption{index}{\prestonindextrue}
+
+\@ifundefined{KOMAClassName}{}{
+    \prestonmdthmtrue
+    \prestonboldenumtrue
+    \prestonpazotrue
+}
+\DeclareOption{plain}{\prestonplainhdrtrue}
 
 \ProcessOptions\relax
 
@@ -60,7 +69,7 @@
 \usepackage{imakeidx}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %%%%  USEFUL COMMANDS  %%%%
+  %%%%      USEFUL COMMANDS      %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\dotp}{\boldsymbol{\cdot}}
@@ -80,7 +89,12 @@
 \newcommand{\eps}{\varepsilon}
 \renewcommand{\deg}{^\circ}
 \renewcommand{\bold}[1]{{\boldmath\bfseries #1}}
-\newcommand{\vocab}[1]{\bold{\color{MidnightBlue} #1}}
+\ifprestonmdthm
+    \newcommand{\vocab}[1]{\bold{\color{MidnightBlue} #1}}
+\else
+    \newcommand{\vocab}[1]{\bold{#1}}
+\fi
+\newcommand{\hrulebar}{\begin{center}\nointerlineskip\vspace{5pt}\rule{\textwidth}{.7pt}\hspace{\fill}\end{center}}
 
 % Topology
 \newcommand{\id}{\mathrm{id}}
@@ -90,6 +104,7 @@
 \DeclareMathOperator*{\lcm}{lcm} % least common multiple
 \DeclareMathOperator*{\re}{Re} % real part
 \DeclareMathOperator*{\im}{Im} % imaginary part
+\DeclareMathOperator*{\pow}{Pow} % power
 \DeclareMathOperator*{\diam}{diam} % diameter
 \DeclareMathOperator*{\mesh}{mesh} % mesh
 \DeclareMathOperator*{\ord}{ord} % order
@@ -225,7 +240,7 @@
 { \end{itemize}                  }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %%%%  HYPERREF  %%%%
+  %%%%         HYPERREF          %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \definecolor{astral}{RGB}{46,116,181}
@@ -238,11 +253,14 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %%%%  FONTS/OTHER STYLISTIC FEATURES  %%%%
+  %%%%            PAGE SETUP            %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ifprestonnoindent
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+\ifprestonsetlinespacing
+    \ifprestonnoindent
+        \setlength{\parindent}{0pt}
+        \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+    \fi
+    \renewcommand{\baselinestretch}{1.05}
 \fi
 \ifprestonmarginset
     \usepackage[margin=1in]{geometry}
@@ -264,7 +282,7 @@
 \ifprestonboldenum \setlist[enumerate]{font=\bfseries} \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %%%%  THEOREMS  %%%%
+  %%%%          THEOREMS         %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ifprestonmdthm
@@ -422,7 +440,7 @@
 	
 \theoremstyle{definition} % Problem, example, definition, claim,
 % definition, conjecture, fact, question, answer, notation,
-% terminology, upshot
+% terminology, upshot, warning
 
 \ifprestonchthm
     \declaretheorem[name=Problem,numberwithin=chapter]{prob}
@@ -440,9 +458,11 @@
 	\declaretheorem[style=thmorangebox,name=Claim,sibling=thm]{claim}
 	\declaretheorem[style=thmgreenbox,name=Problem,numbered=no]{boxprob*}
 	\declaretheorem[style=thmorangebox,name=Claim,numbered=no]{claim*}
+	\declaretheorem[style=thmpurplebox,name=Warning,numbered=no]{warn}
 \else
 	\declaretheorem[name=Claim,sibling=thm]{claim}
 	\declaretheorem[name=Claim,numbered=no]{claim*}
+	\declaretheorem[name=Warning,numbered=no]{warn}
 \fi
 
 \declaretheorem[name=Definition,sibling=thm]{defn}
@@ -499,7 +519,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %%%%  PROOFS  %%%%
+  %%%%           PROOFS          %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \renewcommand\qedsymbol{$\blacksquare$}
@@ -518,7 +538,7 @@
 \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %%%%  FANCYHDR  %%%%
+  %%%%         FANCYHDR          %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ifprestonfancy
     \usepackage{fancyhdr}
