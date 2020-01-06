@@ -504,6 +504,9 @@
 	\declaretheorem[name=Example,numbered=no]{ex*}
 \fi
 
+\declaretheorem[name=Exercise,sibling=ex]{exer}
+\declaretheorem[name=Exercise,numbered=no]{exer*}
+
 \theoremstyle{remark} % Remark, note
 
 \ifprestonmdthm
@@ -514,8 +517,9 @@
 
 \declaretheorem[name=Note,numbered=no]{note}
 
-% Hint, which doesn't belong anywhere
+% Environments that don't belong anywhere
 \newenvironment{hint}{\scriptsize [Hint:}{\scriptsize\unskip]}
+\newcommand{\proofprob}{\begin{note}This is a proof problem. Instead of entering an answer into the boxes below, please attach your proof to this paper.\end{note}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
