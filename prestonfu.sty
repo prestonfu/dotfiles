@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % prestonfu.sty - Copyright Preston Fu 2020       %
-% Credits to Evan Chen                            %
+% Credit to Evan Chen                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ProvidesPackage{prestonfu}
@@ -9,11 +9,13 @@
   %%%%          OPTIONS          %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newif\ifprestonmdthm\prestonmdthmfalse
+\newif\ifprestoncolor\prestoncolortrue
+\newif\ifprestonmonochrome\prestonmonochromefalse
 \newif\ifprestonchthm\prestonchthmfalse
 \newif\ifprestonsecthm\prestonsecthmtrue
 \newif\ifprestonfancy\prestonfancytrue
 \newif\ifprestonpazo\prestonpazofalse
-\newif\ifprestonroboto\prestonrobototrue
+\newif\ifprestonroboto\prestonrobotofalse
 \newif\ifprestonplainhdr\prestonplainhdrfalse
 \newif\ifprestonsetlinespacing\prestonsetlinespacingtrue
 \newif\ifprestonnoindent\prestonnoindentfalse
@@ -23,6 +25,9 @@
 
 \DeclareOption{mdthm}{\prestonmdthmtrue}
 \DeclareOption{nomdthm}{\prestonmdthmfalse}
+\DeclareOption{color}{\prestoncolortrue}
+\DeclareOption{nocolor}{\prestoncolorfalse}
+\DeclareOption{monochrome}{\prestoncolorfalse\prestonmonochrometrue}
 
 \DeclareOption{chthm}{\prestonchthmtrue}
 \DeclareOption{secthm}{\prestonsecthmtrue}
@@ -32,7 +37,7 @@
 \DeclareOption{plainhdr}{\prestonplainhdrtrue}
 \DeclareOption{nofancy}{\prestonfancyfalse}
 \DeclareOption{pazo}{\prestonpazotrue}
-\DeclareOption{noroboto}{\prestonrobotofalse}
+\DeclareOption{roboto}{\prestonrobototrue}
 \DeclareOption{noindent}{\prestonnoindenttrue}
 \DeclareOption{nomarginset}{\prestonmarginsetfalse}
 \DeclareOption{boldenum}{\prestonboldenumtrue}
@@ -42,7 +47,15 @@
     \prestonmdthmtrue
     \prestonboldenumtrue
 }
-\DeclareOption{plain}{\prestonplainhdrtrue}
+
+\DeclareOption{article}{
+    \prestoncolorfalse
+}
+
+\DeclareOption{amsart}{
+    \prestoncolorfalse
+    \prestonfancyfalse
+}
 
 \ProcessOptions\relax
 
@@ -88,7 +101,7 @@
 \newcommand{\eps}{\varepsilon}
 \renewcommand{\deg}{^\circ}
 \renewcommand{\bold}[1]{{\boldmath\bfseries #1}}
-\ifprestonmdthm
+\ifprestoncolor
     \newcommand{\vocab}[1]{\bold{\color{MidnightBlue} #1}}
 \else
     \newcommand{\vocab}[1]{\bold{#1}}
@@ -244,13 +257,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \definecolor{astral}{RGB}{46,116,181}
-\hypersetup{
-    colorlinks,
-    citecolor=astral,
-    filecolor=astral,
-    linkcolor=astral,
-    urlcolor=astral
-}
+\ifprestoncolor
+    \hypersetup{
+        colorlinks,
+        citecolor=astral,
+        filecolor=astral,
+        linkcolor=astral,
+        urlcolor=astral
+    }
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%            PAGE SETUP            %%%%
@@ -274,6 +289,8 @@
 {
     \ifprestonroboto
         \usepackage{roboto}
+    \else
+        \usepackage{lmodern}
     \fi
     \newcommand{\headingfont}{\sffamily\bfseries}
     \newcommand{\sansfont}{\sffamily}
@@ -286,139 +303,335 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ifprestonmdthm
-    \mdfdefinestyle{mdbluebox}{%
+    \ifprestoncolor
+        \mdfdefinestyle{mdbluebox}{%
+    		skipabove=8pt,
+    		linewidth=3pt,
+    		rightline=false,
+    		leftline=true,
+    		topline=false,
+    		bottomline=false,
+    		linecolor=MidnightBlue,
+    		backgroundcolor=TealBlue!5,
+    	}
+    
+    	\declaretheoremstyle[
+    		headfont=\headingfont\color{MidnightBlue},
+    		bodyfont=\itshape,
+    		mdframed={style=mdbluebox},
+    		headpunct={. },
+    		postheadspace={0pt}
+    	]{thmbluebox}
+    	
+    	\mdfdefinestyle{mdgreenbox}{%
+    		skipabove=8pt,
+    		linewidth=3pt,
+    		rightline=false,
+    		leftline=true,
+    		topline=false,
+    		bottomline=false,
+    		linecolor=ForestGreen,
+    		backgroundcolor=ForestGreen!5,
+    	}
+    
+    	\declaretheoremstyle[
+    		headfont=\headingfont\color{ForestGreen},
+    		mdframed={style=mdgreenbox},
+    		headpunct={. },
+    		postheadspace={0pt},
+    	]{thmgreenbox}
+    	
+    	\mdfdefinestyle{mdorangebox}{%
+    		skipabove=8pt,
+    		linewidth=3pt,
+    		rightline=false,
+    		leftline=true,
+    		topline=false,
+    		bottomline=false,
+    		linecolor=orange,
+    		backgroundcolor=Crimson!5,
+    	}
+    
+    	\declaretheoremstyle[
+    		headfont=\headingfont\color{orange},
+    		mdframed={style=mdorangebox},
+    		headpunct={. },
+    		postheadspace={0pt},
+    	]{thmorangebox}
+    	
+    	\mdfdefinestyle{mdredbox}{%
+    		skipabove=8pt,
+    		linewidth=3pt,
+    		rightline=false,
+    		leftline=true,
+    		topline=false,
+    		bottomline=false,
+    		linecolor=RawSienna,
+    		backgroundcolor=Salmon!5,
+    	}
+    
+    	\declaretheoremstyle[
+    		headfont=\headingfont\color{RawSienna},
+    		mdframed={style=mdredbox},
+    		headpunct={. },
+    		postheadspace={0pt},
+    	]{thmredbox}
+    	
+    	\mdfdefinestyle{mdblackbox}{%
+    		skipabove=8pt,
+    		linewidth=3pt,
+    		rightline=false,
+    		leftline=true,
+    		topline=false,
+    		bottomline=false,
+    		linecolor=black,
+    		backgroundcolor=RedViolet!5!gray!5,
+    	}
+    
+    	\declaretheoremstyle[
+    		headfont=\itshape\sansfont,
+    		mdframed={style=mdblackbox},
+    		headpunct={. },
+    		postheadspace={0pt},
+    	]{thmblackbox}
+    	
+    	\mdfdefinestyle{mdpurplebox}{%
+    		skipabove=8pt,
+    		linewidth=3pt,
+    		rightline=false,
+    		leftline=true,
+    		topline=false,
+    		bottomline=false,
+    		linecolor=RoyalPurple,
+    		backgroundcolor=Orchid!4,
+    	}
+    
+    	\declaretheoremstyle[
+    		headfont=\headingfont\color{RoyalPurple},
+    		mdframed={style=mdpurplebox},
+    		headpunct={. },
+    		postheadspace={0pt},
+    	]{thmpurplebox}
+    	
+    \else
+        \ifprestonmonochrome
+            \mdfdefinestyle{mdbluebox}{%
+        		skipabove=8pt,
+        		linewidth=0.5pt,
+        		backgroundcolor=RoyalBlue!30!Gray!40,
+        	}
+        
+        	\declaretheoremstyle[
+        		headfont=\headingfont,
+        		bodyfont=\itshape,
+        		mdframed={style=mdbluebox},
+        		headpunct={. },
+        		postheadspace={0pt}
+        	]{thmbluebox}
+        	
+        	\mdfdefinestyle{mdgreenbox}{%
+        		skipabove=8pt,
+        		linewidth=0.5pt,
+        		backgroundcolor=Cerulean!20!Gray!40,
+        	}
+        
+        	\declaretheoremstyle[
+        		headfont=\headingfont,
+        		mdframed={style=mdgreenbox},
+        		headpunct={. },
+        		postheadspace={0pt},
+        	]{thmgreenbox}
+        	
+        	\mdfdefinestyle{mdorangebox}{%
+        		skipabove=8pt,
+        		linewidth=0.5pt,
+        		backgroundcolor=Cerulean!10!Gray!50,
+        	}
+        
+        	\declaretheoremstyle[
+        		headfont=\headingfont,
+        		mdframed={style=mdorangebox},
+        		headpunct={. },
+        		postheadspace={0pt},
+        	]{thmorangebox}
+        	
+        	\mdfdefinestyle{mdredbox}{%
+        		skipabove=8pt,
+        		linewidth=0.5pt,
+        		backgroundcolor=Cerulean!20!Gray!40,
+        	}
+        
+        	\declaretheoremstyle[
+        		headfont=\headingfont,
+        		mdframed={style=mdredbox},
+        		headpunct={. },
+        		postheadspace={0pt},
+        	]{thmredbox}
+        	
+        	\mdfdefinestyle{mdblackbox}{%
+        		skipabove=8pt,
+        		linewidth=0.5pt,
+        		backgroundcolor=CornflowerBlue!20!Gray!30,
+        	}
+        
+        	\declaretheoremstyle[
+        		headfont=\itshape\sansfont,
+        		mdframed={style=mdblackbox},
+        		headpunct={. },
+        		postheadspace={0pt},
+        	]{thmblackbox}
+        	
+        	\mdfdefinestyle{mdpurplebox}{%
+        		skipabove=8pt,
+        		linewidth=0.5pt,
+        		backgroundcolor=MidnightBlue!10!Gray!40,
+        	}
+        
+        	\declaretheoremstyle[
+        		headfont=\headingfont,
+        		mdframed={style=mdpurplebox},
+        		headpunct={. },
+        		postheadspace={0pt},
+        	]{thmpurplebox}
+        \fi
+    \fi
+    	
+	\mdfdefinestyle{mdgraybox}{%
 		skipabove=8pt,
-		linewidth=3pt,
-		rightline=false,
-		leftline=true,
-		topline=false,
-		bottomline=false,
-		linecolor=MidnightBlue,
-		backgroundcolor=TealBlue!5,
+		linewidth=0.5pt,
+		backgroundcolor=Gray!20,
 	}
 
 	\declaretheoremstyle[
-		headfont=\headingfont\color{MidnightBlue},
-		bodyfont=\itshape,
-		mdframed={style=mdbluebox},
-		headpunct={. },
-		postheadspace={0pt}
-	]{thmbluebox}
-	
-	\mdfdefinestyle{mdgreenbox}{%
-		skipabove=8pt,
-		linewidth=3pt,
-		rightline=false,
-		leftline=true,
-		topline=false,
-		bottomline=false,
-		linecolor=ForestGreen,
-		backgroundcolor=ForestGreen!5,
-	}
-
-	\declaretheoremstyle[
-		headfont=\headingfont\color{ForestGreen},
-		mdframed={style=mdgreenbox},
+		headfont=\headingfont,
+		mdframed={style=mdgraybox},
 		headpunct={. },
 		postheadspace={0pt},
-	]{thmgreenbox}
-	
-	\mdfdefinestyle{mdorangebox}{%
+	]{thmgraybox}
+    
+	\mdfdefinestyle{mdbox}{%
 		skipabove=8pt,
-		linewidth=3pt,
-		rightline=false,
-		leftline=true,
-		topline=false,
-		bottomline=false,
-		linecolor=orange,
-		backgroundcolor=Crimson!5,
+		linewidth=0.5pt
 	}
-
 	\declaretheoremstyle[
-		headfont=\headingfont\color{orange},
-		mdframed={style=mdorangebox},
+		headfont=\headingfont,
+		mdframed={style=mdbox},
 		headpunct={. },
 		postheadspace={0pt},
-	]{thmorangebox}
-	
-	\mdfdefinestyle{mdredbox}{%
-		skipabove=8pt,
-		linewidth=3pt,
-		rightline=false,
-		leftline=true,
-		topline=false,
-		bottomline=false,
-		linecolor=RawSienna,
-		backgroundcolor=Salmon!5,
-	}
-
-	\declaretheoremstyle[
-		headfont=\headingfont\color{RawSienna},
-		mdframed={style=mdredbox},
-		headpunct={. },
-		postheadspace={0pt},
-	]{thmredbox}
-	
-	\mdfdefinestyle{mdblackbox}{%
-		skipabove=8pt,
-		linewidth=3pt,
-		rightline=false,
-		leftline=true,
-		topline=false,
-		bottomline=false,
-		linecolor=black,
-		backgroundcolor=RedViolet!5!gray!5,
-	}
-
-	\declaretheoremstyle[
-		headfont=\itshape,
-		mdframed={style=mdblackbox},
-		headpunct={. },
-		postheadspace={0pt},
-	]{thmblackbox}
-	
-	\mdfdefinestyle{mdpurplebox}{%
-		skipabove=8pt,
-		linewidth=3pt,
-		rightline=false,
-		leftline=true,
-		topline=false,
-		bottomline=false,
-		linecolor=RoyalPurple,
-		backgroundcolor=Orchid!4,
-	}
-
-	\declaretheoremstyle[
-		headfont=\headingfont\color{RoyalPurple},
-		mdframed={style=mdpurplebox},
-		headpunct={. },
-		postheadspace={0pt},
-	]{thmpurplebox}
-
-	\newcommand{\listhack}{$\empty$\vspace{-2em}}
+	]{thmbox}
 \fi
 
-\theoremstyle{plain} % Theorem, Lemma, Proposition, Corollary
+\newcommand{\listhack}{$\empty$\vspace{-2em}}
 
 \ifprestonmdthm
-    \ifprestonchthm
-        \declaretheorem[style=thmbluebox,name=Theorem,numberwithin=chapter]{thm}
-	\else
-    	\ifprestonsecthm
-    		\declaretheorem[style=thmbluebox,name=Theorem,numberwithin=section]{thm}
+    \if\ifprestoncolor T\else\ifprestonmonochrome T\else F\fi\fi T%
+        \theoremstyle{plain} % Theorem, Lemma, Proposition, Corollary
+        
+        \ifprestonchthm
+            \declaretheorem[style=thmbluebox,name=Theorem,numberwithin=chapter]{thm}
     	\else
-    		\declaretheorem[style=thmbluebox,name=Theorem]{thm}
+        	\ifprestonsecthm
+        		\declaretheorem[style=thmbluebox,name=Theorem,numberwithin=section]{thm}
+        	\else
+        		\declaretheorem[style=thmbluebox,name=Theorem]{thm}
+        	\fi
     	\fi
-	\fi
-	\declaretheorem[style=thmbluebox,name=Lemma,sibling=thm]{lemma}
-	\declaretheorem[style=thmbluebox,name=Proposition,sibling=thm]{prop}
-	\declaretheorem[style=thmbluebox,name=Corollary,sibling=thm]{cor}
-	
-    \declaretheorem[style=thmbluebox,name=Theorem,numbered=no]{thm*}
-	\declaretheorem[style=thmbluebox,name=Lemma,numbered=no]{lemma*}
-	\declaretheorem[style=thmbluebox,name=Proposition,numbered=no]{prop*}
-	\declaretheorem[style=thmbluebox,name=Corollary,numbered=no]{cor*}
+    	\declaretheorem[style=thmbluebox,name=Lemma,sibling=thm]{lemma}
+    	\declaretheorem[style=thmbluebox,name=Proposition,sibling=thm]{prop}
+    	\declaretheorem[style=thmbluebox,name=Corollary,sibling=thm]{cor}
+    	
+        \declaretheorem[style=thmbluebox,name=Theorem,numbered=no]{thm*}
+    	\declaretheorem[style=thmbluebox,name=Lemma,numbered=no]{lemma*}
+    	\declaretheorem[style=thmbluebox,name=Proposition,numbered=no]{prop*}
+    	\declaretheorem[style=thmbluebox,name=Corollary,numbered=no]{cor*}
+    	
+        \theoremstyle{definition} % Problem, example, definition, claim,
+        % definition, conjecture, fact, question, answer, notation,
+        % terminology, upshot, warning, bogus, boxed solution
+    
+        \ifprestonchthm
+            \declaretheorem[name=Problem,numberwithin=chapter]{prob}
+            \declaretheorem[style=thmredbox,name=Example,numberwithin=chapter]{ex}
+        \else
+            \ifprestonsecthm
+            	\declaretheorem[name=Problem,numberwithin=section]{prob}
+            	\declaretheorem[style=thmredbox,name=Example,numberwithin=section]{ex}
+            \else
+                \declaretheorem[name=Problem]{prob}
+                \declaretheorem[style=thmredbox,name=Example]{ex}
+            \fi
+        \fi
+        \declaretheorem[name=Problem,numbered=no]{prob*}
+        \declaretheorem[style=thmredbox,name=Example,numbered=no]{ex*}
+        
+    	\declaretheorem[style=thmgreenbox,name=Problem,sibling=prob]{boxprob}
+    	\declaretheorem[style=thmorangebox,name=Claim,sibling=thm]{claim}
+    	\declaretheorem[style=thmgreenbox,name=Problem,numbered=no]{boxprob*}
+    	\declaretheorem[style=thmorangebox,name=Claim,numbered=no]{claim*}
+    	\declaretheorem[style=thmpurplebox,name=Warning,numbered=no]{warn}
+    	
+        \declaretheorem[style=thmpurplebox,name=Bogus Solution,numbered=no]{bogussol}
+        \declaretheorem[style=thmpurplebox,name=Bogus Proof,numbered=no]{boguspf}
+        \declaretheorem[style=thmgraybox,name=Solution,numbered=no]{boxsol}
+    	
+    	\theoremstyle{remark}
+    	\declaretheorem[style=thmblackbox,name=Remark,numbered=no]{remark}
+    \else
+        \theoremstyle{plain} % Theorem, Lemma, Proposition, Corollary
+        
+        \ifprestonchthm
+            \declaretheorem[style=thmbox,name=Theorem,numberwithin=chapter]{thm}
+    	\else
+        	\ifprestonsecthm
+        		\declaretheorem[style=thmbox,name=Theorem,numberwithin=section]{thm}
+        	\else
+        		\declaretheorem[style=thmbox,name=Theorem]{thm}
+        	\fi
+    	\fi
+    	\declaretheorem[style=thmbox,name=Lemma,sibling=thm]{lemma}
+    	\declaretheorem[style=thmbox,name=Proposition,sibling=thm]{prop}
+    	\declaretheorem[style=thmbox,name=Corollary,sibling=thm]{cor}
+    	
+        \declaretheorem[style=thmbox,name=Theorem,numbered=no]{thm*}
+    	\declaretheorem[style=thmbox,name=Lemma,numbered=no]{lemma*}
+    	\declaretheorem[style=thmbox,name=Proposition,numbered=no]{prop*}
+    	\declaretheorem[style=thmbox,name=Corollary,numbered=no]{cor*}
+    	
+        \theoremstyle{definition} % Problem, example, definition, claim,
+        % definition, conjecture, fact, question, answer, notation,
+        % terminology, upshot, warning, bogus, boxed solution
+    
+        \ifprestonchthm
+            \declaretheorem[name=Problem,numberwithin=chapter]{prob}
+            \declaretheorem[style=thmbox,name=Example,numberwithin=chapter]{ex}
+        \else
+            \ifprestonsecthm
+            	\declaretheorem[name=Problem,numberwithin=section]{prob}
+            	\declaretheorem[style=thmbox,name=Example,numberwithin=section]{ex}
+            \else
+                \declaretheorem[name=Problem]{prob}
+                \declaretheorem[style=thmbox,name=Example]{ex}
+            \fi
+        \fi
+        \declaretheorem[name=Problem,numbered=no]{prob*}
+        \declaretheorem[style=thmbox,name=Example,numbered=no]{ex*}
+        
+    	\declaretheorem[style=thmbox,name=Problem,sibling=prob]{boxprob}
+    	\declaretheorem[style=thmbox,name=Claim,sibling=thm]{claim}
+    	\declaretheorem[style=thmbox,name=Problem,numbered=no]{boxprob*}
+    	\declaretheorem[style=thmbox,name=Claim,numbered=no]{claim*}
+    	\declaretheorem[style=thmbox,name=Warning,numbered=no]{warn}
+    	
+        \declaretheorem[style=thmbox,name=Bogus Solution,numbered=no]{bogussol}
+        \declaretheorem[style=thmbox,name=Bogus Proof,numbered=no]{boguspf}
+        \declaretheorem[style=thmbox,name=Solution,numbered=no]{boxsol}
+    	
+    	\theoremstyle{remark}
+    	\declaretheorem[style=thmbox,name=Remark,numbered=no]{remark}
+    \fi
 \else
+    \theoremstyle{plain} % Theorem, Lemma, Proposition, Corollary
+    
     \ifprestonchthm
         \declaretheorem[name=Theorem,numberwithin=chapter]{thm}
 	\else
@@ -436,34 +649,40 @@
 	\declaretheorem[name=Lemma,numbered=no]{lemma*}
 	\declaretheorem[name=Proposition,numbered=no]{prop*}
 	\declaretheorem[name=Corollary,numbered=no]{cor*}
-\fi
 	
-\theoremstyle{definition} % Problem, example, definition, claim,
-% definition, conjecture, fact, question, answer, notation,
-% terminology, upshot, warning
-
-\ifprestonchthm
-    \declaretheorem[name=Problem,numberwithin=chapter]{prob}
-\else
-    \ifprestonsecthm
-    	\declaretheorem[name=Problem,numberwithin=section]{prob}
+	\theoremstyle{definition} % Problem, example, definition, claim,
+    % definition, conjecture, fact, question, answer, notation,
+    % terminology, upshot, warning
+    
+    \ifprestonchthm
+        \declaretheorem[name=Problem,numberwithin=chapter]{prob}
+        \declaretheorem[name=Example,numberwithin=chapter]{ex}
     \else
-        \declaretheorem[name=Problem]{prob}
+        \ifprestonsecthm
+        	\declaretheorem[name=Problem,numberwithin=section]{prob}
+        	\declaretheorem[name=Example,numberwithin=section]{ex}
+        \else
+            \declaretheorem[name=Problem]{prob}
+            \declaretheorem[name=Example]{ex}
+        \fi
     \fi
-\fi
-\declaretheorem[name=Problem,numbered=no]{prob*}
-
-\ifprestonmdthm
-	\declaretheorem[style=thmgreenbox,name=Problem,sibling=prob]{boxprob}
-	\declaretheorem[style=thmorangebox,name=Claim,sibling=thm]{claim}
-	\declaretheorem[style=thmgreenbox,name=Problem,numbered=no]{boxprob*}
-	\declaretheorem[style=thmorangebox,name=Claim,numbered=no]{claim*}
-	\declaretheorem[style=thmpurplebox,name=Warning,numbered=no]{warn}
-\else
+    \declaretheorem[name=Problem,numbered=no]{prob*}
+    \declaretheorem[name=Example,numbered=no]{ex*}
+    
 	\declaretheorem[name=Claim,sibling=thm]{claim}
 	\declaretheorem[name=Claim,numbered=no]{claim*}
 	\declaretheorem[name=Warning,numbered=no]{warn}
+	
+	 \newenvironment{bogussol}[1][Bogus Solution] {\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\endtrivlist\@endpefalse}
+    \newenvironment{boguspf}[1][Bogus Proof] {\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\endtrivlist\@endpefalse}
+	
+	\theoremstyle{remark}
+	\declaretheorem[name=Remark,numbered=no]{remark}
 \fi
+
+%% Non-MD-style
+
+\theoremstyle{definition}
 
 \declaretheorem[name=Definition,sibling=thm]{defn}
 \declaretheorem[name=Conjugate,sibling=thm]{conj}
@@ -479,45 +698,12 @@
 \declaretheorem[name=Notation,numbered=no]{notation}
 \declaretheorem[name=Terminology,numbered=no]{term}
 \declaretheorem[name=Upshot,numbered=no]{upshot}
-
-\ifprestonmdthm
-    \ifprestonchthm
-        \declaretheorem[style=thmredbox,name=Example,numberwithin=chapter]{ex}
-    \else
-        \ifprestonsecthm
-            \declaretheorem[style=thmredbox,name=Example,numberwithin=section]{ex}
-        \else
-            \declaretheorem[style=thmredbox,name=Example]{ex}
-        \fi 
-    \fi
-	\declaretheorem[style=thmredbox,name=Example,numbered=no]{ex*}
-\else
-    \ifprestonchthm
-        \declaretheorem[name=Example,numberwithin=chapter]{ex}
-    \else
-        \ifprestonsecthm
-            \declaretheorem[name=Example,numberwithin=section]{ex}
-        \else
-            \declaretheorem[name=Example]{ex}
-        \fi 
-    \fi
-	\declaretheorem[name=Example,numbered=no]{ex*}
-\fi
-
 \declaretheorem[name=Exercise,sibling=ex]{exer}
 \declaretheorem[name=Exercise,numbered=no]{exer*}
 
 \theoremstyle{remark} % Remark, note
 
-\ifprestonmdthm
-	\declaretheorem[style=thmblackbox,name=Remark,numbered=no]{remark}
-\else
-	\declaretheorem[name=Remark,numbered=no]{remark}
-\fi
-
 \declaretheorem[name=Note,numbered=no]{note}
-
-% Environments that don't belong anywhere
 \newenvironment{hint}{\scriptsize [Hint:}{\scriptsize\unskip]}
 \newcommand{\proofprob}{\begin{note}This is a proof problem. Instead of entering an answer into the boxes below, please attach your proof to this paper.\end{note}}
 
@@ -533,13 +719,7 @@
 \newenvironment{pfsketch}[1][Proof Sketch] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
 \newenvironment{progress}[1][Progress] {\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\itshape#1\@addpunct{.}]\ignorespaces}{\endtrivlist\@endpefalse}
 
-\ifprestonmdthm
-    \declaretheorem[style=thmpurplebox,name=Bogus Solution,numbered=no]{bogussol}
-    \declaretheorem[style=thmpurplebox,name=Bogus Proof,numbered=no]{boguspf}
-\else
-    \newenvironment{bogussol}[1][Bogus Solution] {\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\endtrivlist\@endpefalse}
-    \newenvironment{boguspf}[1][Bogus Proof] {\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\endtrivlist\@endpefalse}
-\fi
+%% See above for bogus and boxed solution.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%         FANCYHDR          %%%%
