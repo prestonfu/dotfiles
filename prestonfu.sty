@@ -14,9 +14,10 @@
 \newif\ifprestonchthm\prestonchthmfalse
 \newif\ifprestonsecthm\prestonsecthmtrue
 \newif\ifprestonfancy\prestonfancytrue
+\newif\ifprestonplainhdr\prestonplainhdrfalse
+\newif\ifprestonqednow\prestonqednowfalse
 \newif\ifprestonpazo\prestonpazofalse
 \newif\ifprestonroboto\prestonrobotofalse
-\newif\ifprestonplainhdr\prestonplainhdrfalse
 \newif\ifprestonsetlinespacing\prestonsetlinespacingtrue
 \newif\ifprestonnoindent\prestonnoindentfalse
 \newif\ifprestonmarginset\prestonmarginsettrue
@@ -36,6 +37,7 @@
 \DeclareOption{fancy}{\prestonfancytrue}
 \DeclareOption{plainhdr}{\prestonplainhdrtrue}
 \DeclareOption{nofancy}{\prestonfancyfalse}
+\DeclareOption{qednow}{\prestonqednowtrue}
 \DeclareOption{pazo}{\prestonpazotrue}
 \DeclareOption{roboto}{\prestonrobototrue}
 \DeclareOption{noindent}{\prestonnoindenttrue}
@@ -43,18 +45,19 @@
 \DeclareOption{boldenum}{\prestonboldenumtrue}
 \DeclareOption{index}{\prestonindextrue}
 
-\@ifundefined{KOMAClassName}{}{
-    \prestonmdthmtrue
-    \prestonboldenumtrue
-}
-
-\DeclareOption{article}{
-    \prestoncolorfalse
-}
-
 \DeclareOption{amsart}{
     \prestoncolorfalse
     \prestonfancyfalse
+}
+
+\@ifundefined{KOMAClassName}{
+    \newcommand{\headingfont}{\bfseries}
+    \newcommand{\sansfont}{\normalfont}
+}{
+    \prestonmdthmtrue
+    \prestonboldenumtrue
+    \newcommand{\headingfont}{\sffamily\bfseries}
+    \newcommand{\sansfont}{\sffamily}
 }
 
 \ProcessOptions\relax
@@ -273,7 +276,7 @@
 \ifprestonsetlinespacing
     \ifprestonnoindent
         \setlength{\parindent}{0pt}
-        \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+        \setlength{\parskip}{0.3ex}
     \fi
     \renewcommand{\baselinestretch}{1.05}
 \fi
@@ -281,19 +284,24 @@
     \usepackage[margin=1in]{geometry}
 \fi
 \ifprestonpazo \usepackage{mathpazo} \fi
-\@ifundefined{KOMAClassName}
-{
-    \newcommand{\headingfont}{\bfseries}
-    \newcommand{\sansfont}{\normalfont}
-}
+\@ifundefined{KOMAClassName}{}
 {
     \ifprestonroboto
         \usepackage{roboto}
     \else
         \usepackage{lmodern}
     \fi
-    \newcommand{\headingfont}{\sffamily\bfseries}
-    \newcommand{\sansfont}{\sffamily}
+    \ifprestoncolor
+        \addtokomafont{section}{\headingfont\color{MidnightBlue}}
+        \addtokomafont{subsection}{\headingfont\color{MidnightBlue}}
+        \addtokomafont{subsubsection}{\headingfont\color{MidnightBlue}}
+        \renewcommand*{\@seccntformat}[1]{\headingfont\color{MidnightBlue}{\sffamily\S}\csname the#1\endcsname\quad}
+    \else
+        \addtokomafont{section}{\headingfont}
+        \addtokomafont{subsection}{\headingfont}
+        \addtokomafont{subsubsection}{\headingfont}
+        \renewcommand*{\@seccntformat}[1]{\headingfont{\sffamily\S}\csname the#1\endcsname\quad}
+    \fi
 }
 \ifprestonindex \makeindex[columns=2,intoc] \fi
 \ifprestonboldenum \setlist[enumerate]{font=\bfseries} \fi
@@ -445,7 +453,7 @@
         	\mdfdefinestyle{mdorangebox}{%
         		skipabove=8pt,
         		linewidth=0.5pt,
-        		backgroundcolor=Cerulean!10!Gray!50,
+        		backgroundcolor=RoyalBlue!20!Gray!30,
         	}
         
         	\declaretheoremstyle[
@@ -471,7 +479,7 @@
         	\mdfdefinestyle{mdblackbox}{%
         		skipabove=8pt,
         		linewidth=0.5pt,
-        		backgroundcolor=CornflowerBlue!20!Gray!30,
+        		backgroundcolor=Cerulean!10!Gray!40,
         	}
         
         	\declaretheoremstyle[
@@ -484,7 +492,7 @@
         	\mdfdefinestyle{mdpurplebox}{%
         		skipabove=8pt,
         		linewidth=0.5pt,
-        		backgroundcolor=MidnightBlue!10!Gray!40,
+        		backgroundcolor=MidnightBlue!10!Gray!35,
         	}
         
         	\declaretheoremstyle[
@@ -573,6 +581,7 @@
         \declaretheorem[style=thmpurplebox,name=Bogus Solution,numbered=no]{bogussol}
         \declaretheorem[style=thmpurplebox,name=Bogus Proof,numbered=no]{boguspf}
         \declaretheorem[style=thmgraybox,name=Solution,numbered=no]{boxsol}
+        \declaretheorem[style=thmgraybox,name=Proof,numbered=no]{boxpf}
     	
     	\theoremstyle{remark}
     	\declaretheorem[style=thmblackbox,name=Remark,numbered=no]{remark}
@@ -625,6 +634,7 @@
         \declaretheorem[style=thmbox,name=Bogus Solution,numbered=no]{bogussol}
         \declaretheorem[style=thmbox,name=Bogus Proof,numbered=no]{boguspf}
         \declaretheorem[style=thmbox,name=Solution,numbered=no]{boxsol}
+        \declaretheorem[style=thmbox,name=Proof,numbered=no]{boxpf}
     	
     	\theoremstyle{remark}
     	\declaretheorem[style=thmbox,name=Remark,numbered=no]{remark}
@@ -707,12 +717,12 @@
 \newenvironment{hint}{\scriptsize [Hint:}{\scriptsize\unskip]}
 \newcommand{\proofprob}{\begin{note}This is a proof problem. Instead of entering an answer into the boxes below, please attach your proof to this paper.\end{note}}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %%%%           PROOFS          %%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \renewcommand\qedsymbol{$\blacksquare$}
+
+\ifprestonqednow
+\renewenvironment{proof}[1][\proofname]{\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\itshape#1\@addpunct{.}]\ignorespaces}{\nolinebreak\qedsymbol\endtrivlist\@endpefalse}
+\fi
+
 \newenvironment{subproof}[1][\proofname]{\renewcommand{\qedsymbol}{$\Box$}\begin{proof}[#1]}{\end{proof}}
 \newenvironment{sol}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
 \newenvironment{solsketch}[1][Solution Sketch] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
@@ -720,6 +730,36 @@
 \newenvironment{progress}[1][Progress] {\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\itshape#1\@addpunct{.}]\ignorespaces}{\endtrivlist\@endpefalse}
 
 %% See above for bogus and boxed solution.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%           CODE            %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+    language=C++,
+    aboveskip=3mm,
+    belowskip=3mm,
+    showstringspaces=false,
+    columns=flexible,
+    basicstyle={\small\ttfamily},
+    numbers=left,
+    numbersep=5pt,
+    numberstyle=\tiny\color{gray},
+    keywordstyle=\color{blue},
+    commentstyle=\color{dkgreen},
+    stringstyle=\color{mauve},
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=4,
+    frame=single
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%         FANCYHDR          %%%%
