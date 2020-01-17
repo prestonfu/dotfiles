@@ -316,7 +316,39 @@
   %%%%          THEOREMS         %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%% Box names for monochrome and nocolor are stupid but preserve style.
+%% Blue and black make theorem and remark-styled boxes (resp.),
+%% while other ones do definition-style boxes with various colors.
+
 \ifprestonmdthm
+
+	\mdfdefinestyle{mdgraybox}{%
+		skipabove=8pt,
+		linewidth=0.5pt,
+		backgroundcolor=Gray!20,
+	}
+
+	\declaretheoremstyle[
+		headfont=\headingfont,
+		mdframed={style=mdgraybox},
+		headpunct={. },
+		postheadspace={0pt},
+	]{thmgraybox}
+    
+	\mdfdefinestyle{mdbox}{%
+		skipabove=8pt,
+		linewidth=0.5pt
+	}
+	
+	\declaretheoremstyle[
+		headfont=\headingfont,
+		mdframed={style=mdbox},
+		headpunct={. },
+		postheadspace={0pt},
+		spaceabove=2pt,
+		spacebelow=1pt
+	]{thmbox}
+	
     \ifprestoncolor
         \mdfdefinestyle{mdbluebox}{%
     		skipabove=8pt,
@@ -507,35 +539,29 @@
         		headpunct={. },
         		postheadspace={0pt},
         	]{thmpurplebox}
+        	
+        \else
+        	\declaretheoremstyle[
+        		headfont=\headingfont,
+        		bodyfont=\itshape,
+        		mdframed={style=mdbox},
+        		headpunct={. },
+        		postheadspace={0pt},
+        		spaceabove=2pt,
+        		spacebelow=1pt
+        	]{thmbluebox}
+        	
+        	\declaretheoremstyle[
+        		headfont=\itshape\headingfont,
+        		mdframed={style=mdbox},
+        		headpunct={. },
+        		postheadspace={0pt},
+        		spaceabove=2pt,
+        		spacebelow=1pt
+        	]{thmblackbox}
         \fi
     \fi
-    	
-	\mdfdefinestyle{mdgraybox}{%
-		skipabove=8pt,
-		linewidth=0.5pt,
-		backgroundcolor=Gray!20,
-	}
-
-	\declaretheoremstyle[
-		headfont=\headingfont,
-		mdframed={style=mdgraybox},
-		headpunct={. },
-		postheadspace={0pt},
-	]{thmgraybox}
-    
-	\mdfdefinestyle{mdbox}{%
-		skipabove=8pt,
-		linewidth=0.5pt
-	}
-	\declaretheoremstyle[
-		headfont=\headingfont,
-		mdframed={style=mdbox},
-		headpunct={. },
-		postheadspace={0pt},
-	]{thmbox}
 \fi
-
-\newcommand{\listhack}{$\empty$\vspace{-2em}}
 
 \ifprestonmdthm
     \if\ifprestoncolor T\else\ifprestonmonochrome T\else F\fi\fi T%
@@ -594,22 +620,22 @@
         \theoremstyle{plain} % Theorem, Lemma, Proposition, Corollary
         
         \ifprestonchthm
-            \declaretheorem[style=thmbox,name=Theorem,numberwithin=chapter]{thm}
+            \declaretheorem[style=thmbluebox,name=Theorem,numberwithin=chapter]{thm}
     	\else
         	\ifprestonsecthm
-        		\declaretheorem[style=thmbox,name=Theorem,numberwithin=section]{thm}
+        		\declaretheorem[style=thmbluebox,name=Theorem,numberwithin=section]{thm}
         	\else
-        		\declaretheorem[style=thmbox,name=Theorem]{thm}
+        		\declaretheorem[style=thmbluebox,name=Theorem]{thm}
         	\fi
     	\fi
-    	\declaretheorem[style=thmbox,name=Lemma,sibling=thm]{lemma}
-    	\declaretheorem[style=thmbox,name=Proposition,sibling=thm]{prop}
-    	\declaretheorem[style=thmbox,name=Corollary,sibling=thm]{cor}
+    	\declaretheorem[style=thmbluebox,name=Lemma,sibling=thm]{lemma}
+    	\declaretheorem[style=thmbluebox,name=Proposition,sibling=thm]{prop}
+    	\declaretheorem[style=thmbluebox,name=Corollary,sibling=thm]{cor}
     	
-        \declaretheorem[style=thmbox,name=Theorem,numbered=no]{thm*}
-    	\declaretheorem[style=thmbox,name=Lemma,numbered=no]{lemma*}
-    	\declaretheorem[style=thmbox,name=Proposition,numbered=no]{prop*}
-    	\declaretheorem[style=thmbox,name=Corollary,numbered=no]{cor*}
+        \declaretheorem[style=thmbluebox,name=Theorem,numbered=no]{thm*}
+    	\declaretheorem[style=thmbluebox,name=Lemma,numbered=no]{lemma*}
+    	\declaretheorem[style=thmbluebox,name=Proposition,numbered=no]{prop*}
+    	\declaretheorem[style=thmbluebox,name=Corollary,numbered=no]{cor*}
     	
         \theoremstyle{definition} % Problem, example, definition, claim,
         % definition, conjecture, fact, question, answer, notation,
@@ -617,16 +643,14 @@
     
         \ifprestonchthm
             \declaretheorem[name=Problem,numberwithin=chapter]{prob}
-            \declaretheorem[style=thmbox,name=Example,numberwithin=chapter]{ex}
         \else
             \ifprestonsecthm
             	\declaretheorem[name=Problem,numberwithin=section]{prob}
-            	\declaretheorem[style=thmbox,name=Example,numberwithin=section]{ex}
             \else
                 \declaretheorem[name=Problem]{prob}
-                \declaretheorem[style=thmbox,name=Example]{ex}
             \fi
         \fi
+        \declaretheorem[style=thmbox,name=Example,sibling=thm]{ex}
         \declaretheorem[name=Problem,numbered=no]{prob*}
         \declaretheorem[style=thmbox,name=Example,numbered=no]{ex*}
         
@@ -642,7 +666,7 @@
         \declaretheorem[style=thmbox,name=Proof,numbered=no]{boxpf}
     	
     	\theoremstyle{remark}
-    	\declaretheorem[style=thmbox,name=Remark,numbered=no]{remark}
+    	\declaretheorem[style=thmblackbox,name=Remark,numbered=no]{remark}
     \fi
 \else
     \theoremstyle{plain} % Theorem, Lemma, Proposition, Corollary
@@ -671,16 +695,14 @@
     
     \ifprestonchthm
         \declaretheorem[name=Problem,numberwithin=chapter]{prob}
-        \declaretheorem[name=Example,numberwithin=chapter]{ex}
     \else
         \ifprestonsecthm
         	\declaretheorem[name=Problem,numberwithin=section]{prob}
-        	\declaretheorem[name=Example,numberwithin=section]{ex}
         \else
             \declaretheorem[name=Problem]{prob}
-            \declaretheorem[name=Example]{ex}
         \fi
     \fi
+    \declaretheorem[name=Example,sibling=thm]{ex}
     \declaretheorem[name=Problem,numbered=no]{prob*}
     \declaretheorem[name=Example,numbered=no]{ex*}
     
