@@ -14,14 +14,12 @@
 \newif\ifprestonchthm\prestonchthmfalse
 \newif\ifprestonsecthm\prestonsecthmtrue
 \newif\ifprestonfancy\prestonfancytrue
-\newif\ifprestonplainhdr\prestonplainhdrfalse
 \newif\ifprestonqednow\prestonqednowfalse
 \newif\ifprestonpazo\prestonpazofalse
 \newif\ifprestonroboto\prestonrobotofalse
 \newif\ifprestonsetlinespacing\prestonsetlinespacingtrue
 \newif\ifprestonnoindent\prestonnoindentfalse
 \newif\ifprestonmarginset\prestonmarginsettrue
-\newif\ifprestonboldenum\prestonboldenumfalse
 \newif\ifprestonindex\prestonindexfalse
 
 \DeclareOption{mdthm}{\prestonmdthmtrue}
@@ -35,26 +33,23 @@
 \DeclareOption{nosecthm}{\prestonsecthmfalse}
 
 \DeclareOption{fancy}{\prestonfancytrue}
-\DeclareOption{plainhdr}{\prestonplainhdrtrue}
 \DeclareOption{nofancy}{\prestonfancyfalse}
 \DeclareOption{qednow}{\prestonqednowtrue}
 \DeclareOption{pazo}{\prestonpazotrue}
 \DeclareOption{roboto}{\prestonrobototrue}
 \DeclareOption{noindent}{\prestonnoindenttrue}
 \DeclareOption{nomarginset}{\prestonmarginsetfalse}
-\DeclareOption{boldenum}{\prestonboldenumtrue}
 \DeclareOption{index}{\prestonindextrue}
 
 \@ifundefined{KOMAClassName}{
     \newcommand{\headingfont}{\bfseries}
     \newcommand{\sansfont}{\normalfont}
     \prestoncolorfalse
-    \prestonplainhdrtrue
+    \prestonfancytrue
 }{
     \newcommand{\headingfont}{\sffamily\bfseries}
     \newcommand{\sansfont}{\sffamily}
     \prestonmdthmtrue
-    \prestonboldenumtrue
 }
 
 \DeclareOption{amsart}{
@@ -241,39 +236,41 @@
 \newenvironment{rnum}{ % (i), (ii), ...
 \begin{enumerate}[label = (\roman*)]}{\end{enumerate}}
 
-\newenvironment{myenum} % no space
-{ \begin{enumerate}[topsep = 0pt]
-    \setlength{\topsep}{0pt}
-    \setlength{\itemsep}{0pt}
+\newenvironment{myenum}{% no space
+    \begin{enumerate}[topsep = 0pt]
+    \setlength{\itemsep}{2pt}
     \setlength{\parskip}{0pt}
-    \setlength{\parsep}{0pt}     }
-{ \end{enumerate}                  }
+    \setlength{\parsep}{0pt}
+}{\end{enumerate}}
 
-\newenvironment{myitem} % no space
-{ \begin{itemize}[topsep = 0pt]
-    \setlength{\itemsep}{0pt}
+\newenvironment{boldenum}{%
+    \begin{enumerate}[label=\textbf{\arabic*.}]
+}{\end{enumerate}}
+
+\newenvironment{myitem}{% no space
+    \begin{itemize}[topsep = 0pt]
+    \setlength{\itemsep}{2pt}
     \setlength{\parskip}{0pt}
-    \setlength{\parsep}{0pt}     }
-{ \end{itemize}                  }
+    \setlength{\parsep}{0pt}
+}{\end{itemize}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%         HYPERREF          %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \definecolor{astral}{RGB}{46,116,181}
-\ifprestoncolor
-    \hypersetup{
-        colorlinks,
-        citecolor=astral,
-        filecolor=astral,
-        linkcolor=astral,
-        urlcolor=astral
-    }
-\fi
+\hypersetup{
+    colorlinks,
+    citecolor=astral,
+    filecolor=astral,
+    linkcolor=astral,
+    urlcolor=astral
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%            PAGE SETUP            %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \ifprestonsetlinespacing
     \ifprestonnoindent
         \setlength{\parindent}{0pt}
@@ -281,36 +278,63 @@
     \fi
     \renewcommand{\baselinestretch}{1.05}
 \fi
+
 \ifprestonmarginset
     \usepackage[margin=1in]{geometry}
+    \setlength{\headheight}{16pt}
+    \setlength{\headsep}{10pt}
 \fi
+
 \ifprestonpazo
     \usepackage{mathpazo}
 \fi
-\@ifundefined{KOMAClassName}{}
+
+\ifprestonroboto
+    \usepackage[condensed]{roboto}
+\fi
+
+\providecommand{\thetitle}{\@title}
+\providecommand{\theauthor}{\@author}
+\providecommand{\thedate}{\@date}
+
+\@ifundefined{KOMAClassName}
 {
-    \ifprestonroboto
-        \usepackage[condensed]{roboto}
+    \ifprestonfancy
+        \usepackage{fancyhdr}
+        \pagestyle{fancy}
+        \fancyhf{}
+        \lhead{\thetitle}
+        \rhead{\theauthor}
+        \renewcommand{\headrulewidth}{0.5pt}
+    \fi
+}
+{
+    \ifprestonfancy
+        \usepackage[headsepline]{scrlayer-scrpage}
+        \renewcommand{\headfont}{}
+        \setlength{\headsep}{10pt}
+        \newcommand{\lhead}[1]{\ihead{#1}}
+        \newcommand{\rhead}[1]{\ohead{#1}}
+        \lhead{\small\textbf{\theauthor} (\thedate)}
+        \rhead{\small\textbf{\thetitle}}
+        \cfoot{\pagemark}
     \fi
 
     \addtokomafont{subtitle}{\Large}
     \setkomafont{author}{\large}
     \setkomafont{date}{\large}
     
+    \addtokomafont{section}{\headingfont}
+    \addtokomafont{subsection}{\headingfont}
+    \addtokomafont{subsubsection}{\headingfont}
+    
     \ifprestoncolor
-        \addtokomafont{section}{\headingfont\color{MidnightBlue}}
-        \addtokomafont{subsection}{\headingfont\color{MidnightBlue}}
-        \addtokomafont{subsubsection}{\headingfont\color{MidnightBlue}}
-        \renewcommand*{\@seccntformat}[1]{\headingfont\color{MidnightBlue}{\sffamily\S}\csname the#1\endcsname\quad}
+        \renewcommand*{\@seccntformat}[1]{\headingfont\color{MidnightBlue!100!Cerulean!80}{\sffamily\S}\csname the#1\endcsname\quad}
     \else
-        \addtokomafont{section}{\headingfont}
-        \addtokomafont{subsection}{\headingfont}
-        \addtokomafont{subsubsection}{\headingfont}
         \renewcommand*{\@seccntformat}[1]{\headingfont{\sffamily\S}\csname the#1\endcsname\quad}
     \fi
 }
 \ifprestonindex \makeindex[columns=2,intoc] \fi
-\ifprestonboldenum \setlist[enumerate]{font=\bfseries} \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%          THEOREMS         %%%%
@@ -601,7 +625,7 @@
         \declaretheorem[name=Problem,numbered=no]{prob*}
         
     	\declaretheorem[style=thmgreenbox,name=Problem,sibling=prob]{boxprob}
-            \declaretheorem[style=thmredbox,name=Example,sibling=thm]{ex}
+        \declaretheorem[style=thmredbox,name=Example,sibling=thm]{ex}
     	\declaretheorem[style=thmorangebox,name=Claim,sibling=thm]{claim}
     	
     	\declaretheorem[style=thmgreenbox,name=Problem,numbered=no]{boxprob*}
@@ -724,13 +748,16 @@
 \declaretheorem[name=Definition,sibling=thm]{defn}
 \declaretheorem[name=Conjugate,sibling=thm]{conj}
 \declaretheorem[name=Fact,sibling=thm]{fact}
-\declaretheorem[name=Question,sibling=thm]{question}
-\declaretheorem[name=Answer,sibling=thm]{answer}
+\declaretheorem[name=Answer,sibling=prob]{fakeanswer}
+\newenvironment{answer}{
+    \addtocounter{prob}{-1}
+    \begin{fakeanswer}
+}{\end{fakeanswer}}
 
 \declaretheorem[name=Definition,numbered=no]{defn*}
 \declaretheorem[name=Conjugate,numbered=no]{conj*}
 \declaretheorem[name=Fact,numbered=no]{fact*}
-\declaretheorem[name=Question,numbered=no]{question*}
+\declaretheorem[name=Question,numbered=no]{question}
 \declaretheorem[name=Answer,numbered=no]{answer*}
 \declaretheorem[name=Notation,numbered=no]{notation}
 \declaretheorem[name=Terminology,numbered=no]{term}
@@ -795,24 +822,3 @@
     tabsize=4,
     frame=single
 }
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %%%%         FANCYHDR          %%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ifprestonfancy
-    \usepackage{fancyhdr}
-    
-    \ifprestonplainhdr
-        \pagestyle{fancy}
-        \lhead{{\Author} (\Date)}
-        \rhead{\Title}
-        \setlength{\headheight}{20pt} 
-        \setlength{\headsep}{3mm}
-    \else
-        \pagestyle{fancy}
-        \lhead{\small\textbf{\Author}  (\Date)}
-        \rhead{\small\textbf{\Title}}
-        \setlength{\headheight}{20pt} 
-        \setlength{\headsep}{3mm}
-    \fi
-\fi
