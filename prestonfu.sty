@@ -1,7 +1,8 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% prestonfu.sty - Copyright Preston Fu 2020       %
-% Thanks to Evan Chen and Eric Shen               %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% prestonfu.sty - Copyright Preston Fu 2020                        %
+% Thanks to Evan Chen and Eric Shen                                %
+% https://github.com/prestonfu/dotfiles/blob/master/prestonfu.sty  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ProvidesPackage{prestonfu}
 
@@ -290,12 +291,8 @@
 \fi
 
 \ifprestonroboto
-    \usepackage[condensed]{roboto}
+    \usepackage{roboto}
 \fi
-
-\providecommand{\thetitle}{\@title}
-\providecommand{\theauthor}{\@author}
-\providecommand{\thedate}{\@date}
 
 \@ifundefined{KOMAClassName}
 {
@@ -303,21 +300,42 @@
         \usepackage{fancyhdr}
         \pagestyle{fancy}
         \fancyhf{}
-        \lhead{\thetitle}
-        \rhead{\theauthor}
-        \renewcommand{\headrulewidth}{0.5pt}
+        \ifprestonchthm
+            \renewcommand\chaptermark[1]{\markboth{\thechapter. #1}{}}
+            \fancyhead[LO]{\bfseries\nouppercase{\rightmark}}
+            \fancyhead[RE]{\bfseries\nouppercase{\leftmark}}
+            \fancyhead[LE,RO]{\bfseries\thepage}
+            \renewcommand{\headrulewidth}{0pt}
+        \else
+            \lhead{\thetitle}
+            \rhead{\theauthor}
+            \cfoot{\thepage}
+            \renewcommand{\headrulewidth}{0.5pt}
+        \fi
     \fi
 }
 {
     \ifprestonfancy
-        \usepackage[headsepline]{scrlayer-scrpage}
-        \renewcommand{\headfont}{}
-        \setlength{\headsep}{10pt}
-        \newcommand{\lhead}[1]{\ihead{#1}}
-        \newcommand{\rhead}[1]{\ohead{#1}}
-        \lhead{\small\textbf{\theauthor} (\thedate)}
-        \rhead{\small\textbf{\thetitle}}
-        \cfoot{\pagemark}
+        \ifprestonchthm
+            \usepackage{scrlayer-scrpage}
+            \renewcommand{\headfont}{}
+            \setlength{\headsep}{10pt}
+            \renewcommand\chaptermark[1]{\markboth{\thechapter. #1}{}}
+            \renewcommand*{\headfont}{\bfseries\sffamily}
+            \renewcommand*{\pnumfont}{\bfseries\sffamily}
+            \ohead{\pagemark}
+            \ofoot{}
+            \ihead{\headmark}
+        \else
+            \usepackage[headsepline]{scrlayer-scrpage}
+            \renewcommand{\headfont}{}
+            \setlength{\headsep}{10pt}
+            \newcommand{\lhead}[1]{\ihead{#1}}
+            \newcommand{\rhead}[1]{\ohead{#1}}
+            \lhead{\small\textbf{\theauthor} (\thedate)}
+            \rhead{\small\textbf{\thetitle}}
+            \cfoot{\pagemark}
+        \fi
     \fi
 
     \addtokomafont{subtitle}{\Large}
@@ -329,12 +347,15 @@
     \addtokomafont{subsubsection}{\headingfont}
     
     \ifprestoncolor
-        \renewcommand*{\@seccntformat}[1]{\headingfont\color{MidnightBlue!100!Cerulean!80}{\sffamily\S}\csname the#1\endcsname\quad}
+        \renewcommand*{\@seccntformat}[1]{\headingfont\color{MidnightBlue}{\sffamily\S}\csname the#1\endcsname\quad}
     \else
         \renewcommand*{\@seccntformat}[1]{\headingfont{\sffamily\S}\csname the#1\endcsname\quad}
     \fi
 }
-\ifprestonindex \makeindex[columns=2,intoc] \fi
+
+\ifprestonindex
+    \makeindex[columns=2,intoc]
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%          THEOREMS         %%%%
