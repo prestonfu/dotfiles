@@ -29,9 +29,10 @@
 \DeclareOption{nocolor}{\prestoncolorfalse}
 \DeclareOption{monochrome}{\prestoncolorfalse\prestonmonochrometrue}
 
-\DeclareOption{chthm}{\prestonchthmtrue}
 \DeclareOption{secthm}{\prestonsecthmtrue}
 \DeclareOption{nosecthm}{\prestonsecthmfalse}
+\DeclareOption{chthm}{\prestonchthmtrue}
+\DeclareOption{book}{\prestonchthmtrue}
 
 \DeclareOption{fancy}{\prestonfancytrue}
 \DeclareOption{nofancy}{\prestonfancyfalse}
@@ -281,7 +282,6 @@
 \fi
 
 \ifprestonmarginset
-    \usepackage[margin=1in]{geometry}
     \setlength{\headheight}{16pt}
     \setlength{\headsep}{10pt}
 \fi
@@ -296,15 +296,18 @@
 
 \@ifundefined{KOMAClassName}
 {
+    \ifprestonmarginset
+        \usepackage[margin=1in]{geometry}
+    \fi
     \ifprestonfancy
         \usepackage{fancyhdr}
         \pagestyle{fancy}
         \fancyhf{}
         \ifprestonchthm
             \renewcommand\chaptermark[1]{\markboth{\thechapter. #1}{}}
-            \fancyhead[LO]{\bfseries\nouppercase{\rightmark}}
-            \fancyhead[RE]{\bfseries\nouppercase{\leftmark}}
-            \fancyhead[LE,RO]{\bfseries\thepage}
+            \fancyhead[LO]{\nouppercase{\rightmark}}
+            \fancyhead[RE]{\nouppercase{\leftmark}}
+            \fancyhead[LE,RO]{\thepage}
             \renewcommand{\headrulewidth}{0pt}
         \else
             \lhead{\thetitle}
@@ -318,8 +321,10 @@
     \ifprestonfancy
         \ifprestonchthm
             \usepackage{scrlayer-scrpage}
-            \renewcommand{\headfont}{}
-            \setlength{\headsep}{10pt}
+            \ifprestonmarginset
+                \usepackage[margin=1in]{geometry}
+    			\setlength{\footskip}{0.5in}
+    		\fi
             \renewcommand\chaptermark[1]{\markboth{\thechapter. #1}{}}
             \renewcommand*{\headfont}{\bfseries\sffamily}
             \renewcommand*{\pnumfont}{\bfseries\sffamily}
@@ -329,13 +334,16 @@
             \ihead{\headmark}
         \else
             \usepackage[headsepline]{scrlayer-scrpage}
-            \renewcommand{\headfont}{}
-            \setlength{\headsep}{10pt}
-            \newcommand{\lhead}[1]{\ihead{#1}}
-            \newcommand{\rhead}[1]{\ohead{#1}}
-            \lhead{\small\textbf{\theauthor} (\thedate)}
-            \rhead{\small\textbf{\thetitle}}
-            \cfoot{\pagemark}
+			\renewcommand{\headfont}{}
+			\ifprestonmarginset
+    			\usepackage[margin=1in]{geometry}
+    			\setlength{\footskip}{0.5in}
+    		\fi
+			\ihead{\small\textbf{\theauthor} (\thedate)}
+			\automark{section}
+			\chead{}
+			\ohead{\small\textbf{\thetitle}}
+			\cfoot{\pagemark}
         \fi
     \fi
 
