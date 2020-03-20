@@ -13,6 +13,7 @@
 \newif\ifprestoncolor\prestoncolortrue
 \newif\ifprestonmonochrome\prestonmonochromefalse
 \newif\ifprestonchthm\prestonchthmfalse
+\newif\ifprestonbook\prestonbookfalse
 \newif\ifprestonsecthm\prestonsecthmtrue
 \newif\ifprestonfancy\prestonfancytrue
 \newif\ifprestonqednow\prestonqednowfalse
@@ -28,12 +29,10 @@
 \DeclareOption{color}{\prestoncolortrue}
 \DeclareOption{nocolor}{\prestoncolorfalse}
 \DeclareOption{monochrome}{\prestoncolorfalse\prestonmonochrometrue}
-
 \DeclareOption{secthm}{\prestonsecthmtrue}
 \DeclareOption{nosecthm}{\prestonsecthmfalse}
 \DeclareOption{chthm}{\prestonchthmtrue}
-\DeclareOption{book}{\prestonchthmtrue}
-
+\DeclareOption{book}{\prestonbooktrue}
 \DeclareOption{fancy}{\prestonfancytrue}
 \DeclareOption{nofancy}{\prestonfancyfalse}
 \DeclareOption{qednow}{\prestonqednowtrue}
@@ -54,7 +53,7 @@
     \prestonmdthmtrue
 }
 
-\DeclareOption{amsart}{
+\DeclareOption{ams}{
     \prestoncolorfalse
     \prestonfancyfalse
 }
@@ -103,7 +102,7 @@
 \renewcommand{\deg}{^\circ}
 \renewcommand{\bold}[1]{{\boldmath\bfseries #1}}
 \ifprestoncolor
-    \newcommand{\vocab}[1]{\bold{\color{MidnightBlue} #1}}
+    \newcommand{\vocab}[1]{\bold{\color{NavyBlue} #1}}
 \else
     \newcommand{\vocab}[1]{\bold{#1}}
 \fi
@@ -306,7 +305,7 @@
         \usepackage{fancyhdr}
         \pagestyle{fancy}
         \fancyhf{}
-        \ifprestonchthm
+        \ifprestonbook
             \renewcommand\chaptermark[1]{\markboth{\thechapter. #1}{}}
             \fancyhead[LO]{\nouppercase{\rightmark}}
             \fancyhead[RE]{\nouppercase{\leftmark}}
@@ -322,7 +321,7 @@
 }
 {
     \ifprestonfancy
-        \ifprestonchthm
+        \ifprestonbook
             \usepackage{scrlayer-scrpage}
             \ifprestonmarginset
                 \usepackage[margin=1in]{geometry}
@@ -354,14 +353,33 @@
     \setkomafont{author}{\large}
     \setkomafont{date}{\large}
     
+    \@ifundefined{chapter}{}{
+        \addtokomafont{part}{\headingfont}
+        \addtokomafont{chapter}{\headingfont}
+    }
     \addtokomafont{section}{\headingfont}
     \addtokomafont{subsection}{\headingfont}
     \addtokomafont{subsubsection}{\headingfont}
     
     \ifprestoncolor
-        \renewcommand*{\@seccntformat}[1]{\headingfont\color{MidnightBlue}{\sffamily\S}\csname the#1\endcsname\quad}
-    \else
-        \renewcommand*{\@seccntformat}[1]{\headingfont{\sffamily\S}\csname the#1\endcsname\quad}
+        \@ifundefined{KOMAClassName}{}{
+			\@ifundefined{chapter}{}{
+				\addtokomafont{partprefix}{\rmfamily}
+				\renewcommand*{\partformat}{\color{NavyBlue}
+					\scalebox{2.5}{\thepart}\enlargethispage{2em}}
+				\addtokomafont{chapterprefix}{\raggedleft}
+				\RedeclareSectionCommand[beforeskip=0.5em]{chapter}
+				\renewcommand*{\chapterformat}{\mbox{%
+					\scalebox{1.5}{\chapappifchapterprefix{\nobreakspace}}%
+					\scalebox{2.718}{\color{NavyBlue}\thechapter}\enskip}}
+			}
+			\renewcommand*{\sectionformat}{\color{NavyBlue}\S\thesection\enskip}
+			\renewcommand*{\subsectionformat}{\color{NavyBlue}\S\thesubsection\enskip}
+			\renewcommand*{\subsubsectionformat}{\color{NavyBlue}\S\thesubsubsection\enskip}
+			\KOMAoptions{numbers=noenddot}
+			\usepackage[tocindentauto]{tocstyle}
+			\usetocstyle{KOMAlike}
+		}
     \fi
 }
 
@@ -414,12 +432,12 @@
     		leftline=true,
     		topline=false,
     		bottomline=false,
-    		linecolor=MidnightBlue,
+    		linecolor=NavyBlue,
     		backgroundcolor=TealBlue!5,
     	}
     
     	\declaretheoremstyle[
-    		headfont=\headingfont\color{MidnightBlue},
+    		headfont=\headingfont\color{NavyBlue},
     		bodyfont=\itshape,
     		mdframed={style=mdbluebox},
     		headpunct={. },
@@ -587,7 +605,7 @@
         	\mdfdefinestyle{mdpurplebox}{%
         		skipabove=8pt,
         		linewidth=0.5pt,
-        		backgroundcolor=MidnightBlue!10!Gray!35,
+        		backgroundcolor=NavyBlue!10!Gray!35,
         	}
         
         	\declaretheoremstyle[
@@ -825,6 +843,16 @@
 \newenvironment{progress}[1][Progress] {\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\itshape#1\@addpunct{.}]\ignorespaces}{\endtrivlist\@endpefalse}
 
 %% See above for bogus and boxed solution.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%%%          ASYMPTOTE          %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[inline]{asymptote}
+\begin{asydef}
+    usepackage("bm");
+    import olympiad;
+\end{asydef}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%           CODE            %%%%
