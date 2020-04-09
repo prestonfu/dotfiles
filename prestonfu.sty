@@ -15,6 +15,7 @@
 \newif\ifprestonchthm\prestonchthmfalse
 \newif\ifprestonbook\prestonbookfalse
 \newif\ifprestonsecthm\prestonsecthmtrue
+\newif\ifprestonfancysec\prestonfancysectrue
 \newif\ifprestonfancy\prestonfancytrue
 \newif\ifprestonqednow\prestonqednowfalse
 \newif\ifprestonpazo\prestonpazofalse
@@ -33,6 +34,8 @@
 \DeclareOption{nosecthm}{\prestonsecthmfalse}
 \DeclareOption{chthm}{\prestonchthmtrue}
 \DeclareOption{book}{\prestonbooktrue}
+\DeclareOption{fancysec}{\prestonfancysectrue}
+\DeclareOption{nofancysec}{\prestonfancysecfalse}
 \DeclareOption{fancy}{\prestonfancytrue}
 \DeclareOption{nofancy}{\prestonfancyfalse}
 \DeclareOption{qednow}{\prestonqednowtrue}
@@ -256,7 +259,8 @@
 }{\end{itemize}}
 
 % Custom footnote
-\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\@ifundefined{KOMAClassName}{}
+{\renewcommand{\thefootnote}{\fnsymbol{footnote}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%         HYPERREF          %%%%
@@ -267,7 +271,7 @@
     colorlinks,
     citecolor=astral,
     filecolor=astral,
-    linkcolor=astral,
+    linkcolor=black,
     urlcolor=astral
 }
 
@@ -361,26 +365,49 @@
     \addtokomafont{subsection}{\headingfont}
     \addtokomafont{subsubsection}{\headingfont}
     
-    \ifprestoncolor
-        \@ifundefined{KOMAClassName}{}{
-			\@ifundefined{chapter}{}{
-				\addtokomafont{partprefix}{\rmfamily}
-				\renewcommand*{\partformat}{\color{NavyBlue}
-					\scalebox{2.5}{\thepart}\enlargethispage{2em}}
-				\addtokomafont{chapterprefix}{\raggedleft}
-				\RedeclareSectionCommand[beforeskip=0.5em]{chapter}
-				\renewcommand*{\chapterformat}{\mbox{%
-					\scalebox{1.5}{\chapappifchapterprefix{\nobreakspace}}%
-					\scalebox{2.718}{\color{NavyBlue}\thechapter}\enskip}}
-			}
-			\renewcommand*{\sectionformat}{\color{NavyBlue}\S\thesection\enskip}
-			\renewcommand*{\subsectionformat}{\color{NavyBlue}\S\thesubsection\enskip}
-			\renewcommand*{\subsubsectionformat}{\color{NavyBlue}\S\thesubsubsection\enskip}
-			\KOMAoptions{numbers=noenddot}
-			\usepackage[tocindentauto]{tocstyle}
-			\usetocstyle{KOMAlike}
-		}
-    \fi
+    \@ifundefined{KOMAClassName}{}{
+		\KOMAoptions{numbers=noenddot}
+		\usepackage[tocindentauto]{tocstyle}
+		\usetocstyle{KOMAlike}
+		
+        \ifprestoncolor
+    	    \@ifundefined{chapter}{}{
+    			\addtokomafont{partprefix}{\rmfamily}
+    			\renewcommand*{\partformat}{\color{NavyBlue}
+    				\scalebox{2.5}{\thepart}\enlargethispage{2em}}
+    			\addtokomafont{chapterprefix}{\raggedleft}
+    			\RedeclareSectionCommand[beforeskip=0.5em]{chapter}
+    			\renewcommand*{\chapterformat}{\mbox{%
+    				\scalebox{1.5}{\chapappifchapterprefix{\nobreakspace}}%
+    				\scalebox{2.718}{\color{NavyBlue}\thechapter}\enskip}}
+    		}
+            \ifprestonfancysec
+        		\renewcommand*{\sectionformat}{\color{NavyBlue}\S\thesection\enskip}
+        		\renewcommand*{\subsectionformat}{\color{NavyBlue}\S\thesubsection\enskip}
+        		\renewcommand*{\subsubsectionformat}{\color{NavyBlue}\S\thesubsubsection\enskip}
+        	\else
+        		\renewcommand*{\sectionformat}{\color{NavyBlue}\thesection\enskip}
+        		\renewcommand*{\subsectionformat}{\color{NavyBlue}\thesubsection\enskip}
+        		\renewcommand*{\subsubsectionformat}{\color{NavyBlue}\thesubsubsection\enskip}
+        	\fi
+    	\else
+    	    \ifprestonfancysec
+        	    \@ifundefined{chapter}{}{
+        			\addtokomafont{partprefix}{\rmfamily}
+        			\renewcommand*{\partformat}{
+        				\scalebox{2.5}{\thepart}\enlargethispage{2em}}
+        			\addtokomafont{chapterprefix}{\raggedleft}
+        			\RedeclareSectionCommand[beforeskip=0.5em]{chapter}
+        			\renewcommand*{\chapterformat}{\mbox{%
+        				\scalebox{1.5}{\chapappifchapterprefix{\nobreakspace}}%
+        				\scalebox{2.718}{\thechapter}\enskip}}
+        		}
+        		\renewcommand*{\sectionformat}{\S\thesection\enskip}
+        		\renewcommand*{\subsectionformat}{\S\thesubsection\enskip}
+        		\renewcommand*{\subsubsectionformat}{\S\thesubsubsection\enskip}
+        	\fi
+		\fi
+	}
 }
 
 \ifprestonindex
@@ -539,7 +566,7 @@
             \mdfdefinestyle{mdbluebox}{%
         		skipabove=8pt,
         		linewidth=0.5pt,
-        		backgroundcolor=RoyalBlue!30!Gray!40,
+        		backgroundcolor=Gray!20,
         	}
         
         	\declaretheoremstyle[
@@ -553,7 +580,7 @@
         	\mdfdefinestyle{mdgreenbox}{%
         		skipabove=8pt,
         		linewidth=0.5pt,
-        		backgroundcolor=Cerulean!20!Gray!40,
+        		backgroundcolor=Gray!20,
         	}
         
         	\declaretheoremstyle[
@@ -566,7 +593,7 @@
         	\mdfdefinestyle{mdorangebox}{%
         		skipabove=8pt,
         		linewidth=0.5pt,
-        		backgroundcolor=RoyalBlue!20!Gray!30,
+        		backgroundcolor=Gray!20,
         	}
         
         	\declaretheoremstyle[
@@ -579,7 +606,7 @@
         	\mdfdefinestyle{mdredbox}{%
         		skipabove=8pt,
         		linewidth=0.5pt,
-        		backgroundcolor=Cerulean!20!Gray!40,
+        		backgroundcolor=Gray!20,
         	}
         
         	\declaretheoremstyle[
@@ -592,7 +619,7 @@
         	\mdfdefinestyle{mdblackbox}{%
         		skipabove=8pt,
         		linewidth=0.5pt,
-        		backgroundcolor=Cerulean!10!Gray!40,
+        		backgroundcolor=Gray!20,
         	}
         
         	\declaretheoremstyle[
@@ -605,7 +632,7 @@
         	\mdfdefinestyle{mdpurplebox}{%
         		skipabove=8pt,
         		linewidth=0.5pt,
-        		backgroundcolor=NavyBlue!10!Gray!35,
+        		backgroundcolor=Gray!20,
         	}
         
         	\declaretheoremstyle[
