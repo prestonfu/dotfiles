@@ -2,6 +2,7 @@
 % prestonfu.sty - Copyright Preston Fu 2020                        %
 % Thanks to Evan Chen and Eric Shen                                %
 % https://github.com/prestonfu/dotfiles/blob/master/prestonfu.sty  %
+% https://github.com/prestonfu/dotfiles/blob/master/printhint.tex  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ProvidesPackage{prestonfu}
@@ -18,6 +19,7 @@
 \newif\ifprestonfancysec\prestonfancysectrue
 \newif\ifprestonfancy\prestonfancytrue
 \newif\ifprestonqednow\prestonqednowfalse
+\newif\ifprestonfancyhint\prestonfancyhintfalse
 \newif\ifprestonpazo\prestonpazofalse
 \newif\ifprestonroboto\prestonrobotofalse
 \newif\ifprestonsetlinespacing\prestonsetlinespacingtrue
@@ -33,12 +35,12 @@
 \DeclareOption{secthm}{\prestonsecthmtrue}
 \DeclareOption{nosecthm}{\prestonsecthmfalse}
 \DeclareOption{chthm}{\prestonchthmtrue}
-\DeclareOption{book}{\prestonbooktrue}
 \DeclareOption{fancysec}{\prestonfancysectrue}
 \DeclareOption{nofancysec}{\prestonfancysecfalse}
 \DeclareOption{fancy}{\prestonfancytrue}
 \DeclareOption{nofancy}{\prestonfancyfalse}
 \DeclareOption{qednow}{\prestonqednowtrue}
+\DeclareOption{fancyhint}{\prestonfancyhinttrue}
 \DeclareOption{pazo}{\prestonpazotrue}
 \DeclareOption{roboto}{\prestonrobototrue}
 \DeclareOption{noindent}{\prestonnoindenttrue}
@@ -59,6 +61,12 @@
 \DeclareOption{ams}{
     \prestoncolorfalse
     \prestonfancyfalse
+}
+
+
+\DeclareOption{book}{
+    \prestonbooktrue
+    \prestonfancyhinttrue
 }
 
 \ProcessOptions\relax
@@ -847,8 +855,28 @@
 \theoremstyle{remark} % Remark, note
 
 \declaretheorem[name=Note,numbered=no]{note}
-\newenvironment{hint}{\scriptsize [Hint:}{\scriptsize\unskip]}
 \newcommand{\proofprob}{\begin{note}This is a proof problem. Instead of entering an answer into the boxes below, please attach your proof to this paper.\end{note}}
+
+
+\newenvironment{hints}{\footnotesize \normalfont \textbf{Hints: }}{\hspace{-0.5ex}}
+\newenvironment{hint}{\footnotesize \normalfont \textbf{Hint: }}{\hspace{-0.5ex}}
+
+\ifprestonfancyhint %% Done entirely by Evan Chen
+\usepackage{etoolbox}
+\usepackage{tikz}
+\usepackage{ifthen}
+\usepackage{answers}
+
+\newcounter{hindex}\setcounter{hindex}{0}
+\newcounter{hintcounter}\setcounter{hintcounter}{0}
+
+\newcommand\addhint[1]{%
+	\stepcounter{hintcounter}%
+	\ref{hint:\thehintcounter}%
+	\expandafter\gdef\csname hintlist\thehintcounter\endcsname{#1}%
+}
+\newcommand\gethint[1]{\item \csname hintlist#1\endcsname \label{hint:#1}}
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%          PROOFS          %%%%
