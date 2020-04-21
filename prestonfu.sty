@@ -862,20 +862,22 @@
 \newenvironment{hint}{\footnotesize \normalfont \textbf{Hint: }}{\hspace{-0.5ex}}
 
 \ifprestonfancyhint %% Done entirely by Evan Chen
-\usepackage{etoolbox}
-\usepackage{tikz}
-\usepackage{ifthen}
-\usepackage{answers}
-
-\newcounter{hindex}\setcounter{hindex}{0}
-\newcounter{hintcounter}\setcounter{hintcounter}{0}
-
-\newcommand\addhint[1]{%
-	\stepcounter{hintcounter}%
-	\ref{hint:\thehintcounter}%
-	\expandafter\gdef\csname hintlist\thehintcounter\endcsname{#1}%
-}
-\newcommand\gethint[1]{\item \csname hintlist#1\endcsname \label{hint:#1}}
+    \usepackage{etoolbox}
+    \usepackage{tikz}
+    \usepackage{ifthen}
+    \usepackage{answers}
+    
+    \newcounter{hindex}\setcounter{hindex}{0}
+    \newcounter{hintcounter}\setcounter{hintcounter}{0}
+    
+    \newcommand{\addhint}[1]{%
+    	\stepcounter{hintcounter}%
+    	\ref{hint:\thehintcounter}%
+    	\expandafter\gdef\csname hintlist\thehintcounter\endcsname{#1}%
+    }
+    \newcommand\gethint[1]{\item \csname hintlist#1\endcsname \label{hint:#1}}
+\else
+    \newcommand{\addhint}[1]{#1}
 \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
