@@ -90,6 +90,7 @@
 \usepackage{hyperref}
 \usepackage{mathrsfs}
 \usepackage{textcomp}
+\usepackage{emptypage}
 \usepackage{appendix}
 \usepackage{imakeidx}
 
@@ -556,9 +557,9 @@
     	
     	\mdfdefinestyle{mdpurplebox}{%
     		skipabove=8pt,
-    		linewidth=3pt,
+    		linewidth=0pt,
     		rightline=false,
-    		leftline=true,
+    		leftline=false,
     		topline=false,
     		bottomline=false,
     		linecolor=RoyalPurple,
@@ -642,7 +643,7 @@
         	
         	\mdfdefinestyle{mdpurplebox}{%
         		skipabove=8pt,
-        		linewidth=0.5pt,
+        		linewidth=0pt,
         		backgroundcolor=Gray!20,
         	}
         
@@ -859,6 +860,9 @@
 \declaretheorem[name=Note,numbered=no]{note}
 \newcommand{\proofprob}{\begin{note}This is a proof problem. Instead of entering an answer into the boxes below, please attach your proof to this paper.\end{note}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%           HINT           %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newenvironment{hints}{\footnotesize \normalfont \textbf{Hints: }}{\hspace{-0.5ex}}
 \newenvironment{hint}{\footnotesize \normalfont \textbf{Hint: }}{\hspace{-0.5ex}}
@@ -882,15 +886,37 @@
     \newcommand{\addhint}[1]{#1}
 \fi
 
-\IfFileExists{images/chili.png}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%          CHILI           %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newif\ifprestonchili\prestonchilifalse
+\IfFileExists{images/chili.png}{\prestonchilitrue}{}
+\IfFileExists{img/chili.png}{\prestonchilitrue}{}
+
+\ifprestonchili{
     \reversemarginpar
-    \@ifundefined{KOMAClassName}{
-        \ifprestonams
-            \newcommand{\prechili}{\vspace*{0.1em}\hspace*{-52em}}
+
+    \@ifundefined{chapter}{
+        \@ifundefined{KOMAClassName}{
+            \ifprestonams
+                \newcommand{\prechili}{\vspace*{0.1em}\hspace*{-52em}}
+            \else
+                \newcommand{\prechili}{\vspace*{0.1em}\hspace*{3.5em}}
+            \fi
+        }{\newcommand{\prechili}{\vspace*{0.1em}\hspace*{5em}}}
+    }{
+        \ifprestonbook
+            \ifprestonams
+                \newcommand{\prechili}{\vspace*{0.1em}\hspace*{-52.5em}}
+            \else
+                \newcommand{\prechili}{\vspace*{0.1em}\hspace*{9em}}
+            \fi
         \else
-            \newcommand{\prechili}{\vspace*{0.1em}\hspace*{3.5em}}
+            \@ifundefined{KOMAClassName}
+            {\newcommand{\prechili}{\vspace*{0.1em}\hspace*{3.5em}}}    {\newcommand{\prechili}{\vspace*{0.1em}\hspace*{5em}}}
         \fi
-    }{\newcommand{\prechili}{\vspace*{0.1em}\hspace*{5em}}}
+    }
     \newcommand{\nochili}{\hspace*{0.9em}}
     \ifprestoncolor
         \newcommand{\chili}{\includegraphics[width=1.5em]{images/chili.png}\hspace*{-0.6em}}
@@ -900,13 +926,13 @@
     \newcommand{\onechili}{\marginpar{\prechili\nochili\nochili\chili}}
     \newcommand{\twochili}{\marginpar{\prechili\nochili\chili\chili}}
     \newcommand{\threechili}{\marginpar{\prechili\chili\chili\chili}}
-}{
+\else
     \newcommand{\prechili}{}
     \newcommand{\nochili}{}
     \newcommand{\onechili}{}
     \newcommand{\twochili}{}
     \newcommand{\threechili}{}
-}
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%          PROOFS          %%%%
