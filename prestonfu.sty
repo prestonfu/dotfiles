@@ -890,11 +890,7 @@
   %%%%          CHILI           %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newif\ifprestonchili\prestonchilifalse
-\IfFileExists{images/chili.png}{\prestonchilitrue}{}
-\IfFileExists{img/chili.png}{\prestonchilitrue}{}
-
-\ifprestonchili{
+\IfFileExists{images/chili.png}{
     \reversemarginpar
 
     \@ifundefined{chapter}{
@@ -926,13 +922,13 @@
     \newcommand{\onechili}{\marginpar{\prechili\nochili\nochili\chili}}
     \newcommand{\twochili}{\marginpar{\prechili\nochili\chili\chili}}
     \newcommand{\threechili}{\marginpar{\prechili\chili\chili\chili}}
-\else
+}{
     \newcommand{\prechili}{}
     \newcommand{\nochili}{}
     \newcommand{\onechili}{}
     \newcommand{\twochili}{}
     \newcommand{\threechili}{}
-\fi
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%          PROOFS          %%%%
