@@ -20,6 +20,7 @@
 \newif\ifprestonfancy\prestonfancytrue
 \newif\ifprestonqednow\prestonqednowfalse
 \newif\ifprestonfancyhint\prestonfancyhintfalse
+\newif\ifprestonams\prestonamsfalse
 \newif\ifprestonpazo\prestonpazofalse
 \newif\ifprestonroboto\prestonrobotofalse
 \newif\ifprestonsetlinespacing\prestonsetlinespacingtrue
@@ -61,6 +62,7 @@
 \DeclareOption{ams}{
     \prestoncolorfalse
     \prestonfancyfalse
+    \prestonamstrue
 }
 
 
@@ -880,6 +882,32 @@
     \newcommand{\addhint}[1]{#1}
 \fi
 
+\IfFileExists{images/chili.png}{
+    \reversemarginpar
+    \@ifundefined{KOMAClassName}{
+        \ifprestonams
+            \newcommand{\prechili}{\vspace*{0.1em}\hspace*{-52em}}
+        \else
+            \newcommand{\prechili}{\vspace*{0.1em}\hspace*{3.5em}}
+        \fi
+    }{\newcommand{\prechili}{\vspace*{0.1em}\hspace*{5em}}}
+    \newcommand{\nochili}{\hspace*{0.9em}}
+    \ifprestoncolor
+        \newcommand{\chili}{\includegraphics[width=1.5em]{images/chili.png}\hspace*{-0.6em}}
+    \else
+        \newcommand{\chili}{\includegraphics[width=1.5em]{images/chilibw.png}\hspace*{-0.6em}}
+    \fi
+    \newcommand{\onechili}{\marginpar{\prechili\nochili\nochili\chili}}
+    \newcommand{\twochili}{\marginpar{\prechili\nochili\chili\chili}}
+    \newcommand{\threechili}{\marginpar{\prechili\chili\chili\chili}}
+}{
+    \newcommand{\prechili}{}
+    \newcommand{\nochili}{}
+    \newcommand{\onechili}{}
+    \newcommand{\twochili}{}
+    \newcommand{\threechili}{}
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%          PROOFS          %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -895,7 +923,7 @@
     \newenvironment{sol}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
     \newenvironment{solsketch}[1][Solution Sketch] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
     \newenvironment{pfsketch}[1][Proof Sketch] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
-\fi
+\fi 
 
 \newenvironment{subproof}[1][\proofname]{\renewcommand{\qedsymbol}{$\Box$}\begin{proof}[#1]}{\end{proof}}
 \newenvironment{progress}[1][Progress] {\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\itshape#1\@addpunct{.}]\ignorespaces}{\endtrivlist\@endpefalse}
@@ -908,8 +936,11 @@
 
 \usepackage[inline]{asymptote}
 \begin{asydef}
-    usepackage("bm");
     import olympiad;
+	usepackage("bm");
+    usepackage("amsmath");
+	usepackage("amssymb");
+	defaultpen(fontsize(11pt));
 \end{asydef}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
