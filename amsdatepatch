@@ -1,0 +1,12 @@
+\ifprestonams
+    \makeatletter
+    \patchcmd{\@maketitle}
+      {\ifx\@empty\@dedicatory}
+      {\ifx\@empty\@date \else {\vskip3ex \centering\footnotesize\MakeUppercase\@date\par\vskip1ex}\fi
+       \ifx\@empty\@dedicatory}
+      {}{}
+    \patchcmd{\@adminfootnotes}
+      {\ifx\@empty\@date\else \@footnotetext{\@setdate}\fi}
+      {}{}{}
+    \makeatother
+\fi
