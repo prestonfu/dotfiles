@@ -129,7 +129,7 @@
 \DeclareMathOperator*{\lcm}{lcm} % least common multiple
 \DeclareMathOperator*{\re}{Re} % real part
 \DeclareMathOperator*{\im}{Im} % imaginary part
-\DeclareMathOperator*{\pow}{Pow} % power
+\DeclareMathOperator*{\Pow}{Pow} % power
 \DeclareMathOperator*{\diam}{diam} % diameter
 \DeclareMathOperator*{\mesh}{mesh} % mesh
 \DeclareMathOperator*{\ord}{ord} % order
@@ -145,6 +145,7 @@
 \DeclareMathOperator*{\Aut}{Aut} % automorphism
 \DeclareMathOperator*{\Inn}{Inn} % inner automorphism
 \DeclareMathOperator*{\image}{im} % image
+\DeclareMathOperator*{\GL}{GL} % general linear
 
 % Sums and Products
 \newcommand{\cycsum}{\sum_{\mathrm{cyc}}}
@@ -153,31 +154,90 @@
 \newcommand{\symprod}{\prod_{\mathrm{sym}}}
 
 % Letters
+\newcommand{\BB}{\mathbb B}
 \newcommand{\CC}{\mathbb C}
+\newcommand{\DD}{\mathbb D}
 \newcommand{\EE}{\mathbb E}
 \newcommand{\FF}{\mathbb F}
+\newcommand{\GG}{\mathbb G}
 \newcommand{\HH}{\mathbb H}
+\newcommand{\II}{\mathbb I}
+\newcommand{\JJ}{\mathbb J}
+\newcommand{\KK}{\mathbb K}
+\newcommand{\LL}{\mathbb L}
+\newcommand{\MM}{\mathbb M}
 \newcommand{\NN}{\mathbb N}
+\newcommand{\OO}{\mathbb O}
 \newcommand{\PP}{\mathbb P}
 \newcommand{\QQ}{\mathbb Q}
-\newcommand{\TT}{\mathbb T}
 \newcommand{\RR}{\mathbb R}
+\newcommand{\TT}{\mathbb T}
 \newcommand{\UU}{\mathbb U}
+\newcommand{\VV}{\mathbb V}
+\newcommand{\WW}{\mathbb W}
+\newcommand{\XX}{\mathbb X}
+\newcommand{\YY}{\mathbb Y}
 \newcommand{\ZZ}{\mathbb Z}
-\newcommand{\Qbar}{\overline{\QQ}}
-\newcommand{\Zbar}{\overline{\ZZ}}
-\newcommand{\ii}{\mathbf i}
-\newcommand{\jj}{\mathbf j}
-\newcommand{\kk}{\mathbf k}
 
+\newcommand{\ii}{\textbf \i}
+\newcommand{\jj}{\textbf \j}
+\newcommand{\kk}{\textbf k}
+\newcommand{\ihat}{\hat\ii}
+\newcommand{\jhat}{\hat\jj}
+\newcommand{\khat}{\hat\kk}
+
+\newcommand{\mfA}{\mathfrak A}
+\newcommand{\mfB}{\mathfrak B}
+\newcommand{\mfC}{\mathfrak C}
+\newcommand{\mfD}{\mathfrak D}
+\newcommand{\mfE}{\mathfrak E}
+\newcommand{\mfF}{\mathfrak F}
+\newcommand{\mfG}{\mathfrak G}
+\newcommand{\mfH}{\mathfrak H}
+\newcommand{\mfI}{\mathfrak I}
+\newcommand{\mfJ}{\mathfrak J}
+\newcommand{\mfK}{\mathfrak K}
+\newcommand{\mfL}{\mathfrak L}
+\newcommand{\mfM}{\mathfrak M}
+\newcommand{\mfN}{\mathfrak N}
+\newcommand{\mfO}{\mathfrak O}
+\newcommand{\mfP}{\mathfrak P}
+\newcommand{\mfQ}{\mathfrak Q}
+\newcommand{\mfR}{\mathfrak R}
+\newcommand{\mfS}{\mathfrak S}
+\newcommand{\mfT}{\mathfrak T}
+\newcommand{\mfU}{\mathfrak U}
+\newcommand{\mfV}{\mathfrak V}
+\newcommand{\mfW}{\mathfrak W}
+\newcommand{\mfX}{\mathfrak X}
+\newcommand{\mfY}{\mathfrak Y}
+\newcommand{\mfZ}{\mathfrak Z}
+
+\newcommand{\mfa}{\mathfrak a}
 \newcommand{\mfb}{\mathfrak b}
+\newcommand{\mfc}{\mathfrak c}
+\newcommand{\mfd}{\mathfrak d}
+\newcommand{\mfe}{\mathfrak e}
+\newcommand{\mff}{\mathfrak f}
 \newcommand{\mfg}{\mathfrak g}
 \newcommand{\mfh}{\mathfrak h}
+\newcommand{\mfi}{\mathfrak i}
+\newcommand{\mfj}{\mathfrak j}
+\newcommand{\mfk}{\mathfrak k}
+\newcommand{\mfl}{\mathfrak l}
 \newcommand{\mfm}{\mathfrak m}
 \newcommand{\mfn}{\mathfrak n}
+\newcommand{\mfo}{\mathfrak o}
 \newcommand{\mfp}{\mathfrak p}
 \newcommand{\mfq}{\mathfrak q}
+\newcommand{\mfr}{\mathfrak r}
+\newcommand{\mfs}{\mathfrak s}
+\newcommand{\mft}{\mathfrak t}
 \newcommand{\mfu}{\mathfrak u}
+\newcommand{\mfv}{\mathfrak v}
+\newcommand{\mfw}{\mathfrak w}
+\newcommand{\mfx}{\mathfrak x}
+\newcommand{\mfy}{\mathfrak y}
 \newcommand{\mfz}{\mathfrak z}
 
 \newcommand{\mcA}{\mathcal A} 
@@ -885,50 +945,6 @@
 \else
     \newcommand{\addhint}[1]{#1}
 \fi
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %%%%          CHILI           %%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\IfFileExists{images/chili.png}{
-    \reversemarginpar
-
-    \@ifundefined{chapter}{
-        \@ifundefined{KOMAClassName}{
-            \ifprestonams
-                \newcommand{\prechili}{\vspace*{0.1em}\hspace*{-52em}}
-            \else
-                \newcommand{\prechili}{\vspace*{0.1em}\hspace*{3.5em}}
-            \fi
-        }{\newcommand{\prechili}{\vspace*{0.1em}\hspace*{5em}}}
-    }{
-        \ifprestonbook
-            \ifprestonams
-                \newcommand{\prechili}{\vspace*{0.1em}\hspace*{-52.5em}}
-            \else
-                \newcommand{\prechili}{\vspace*{0.1em}\hspace*{9em}}
-            \fi
-        \else
-            \@ifundefined{KOMAClassName}
-            {\newcommand{\prechili}{\vspace*{0.1em}\hspace*{3.5em}}}    {\newcommand{\prechili}{\vspace*{0.1em}\hspace*{5em}}}
-        \fi
-    }
-    \newcommand{\nochili}{\hspace*{0.9em}}
-    \ifprestoncolor
-        \newcommand{\chili}{\includegraphics[width=1.5em]{images/chili.png}\hspace*{-0.6em}}
-    \else
-        \newcommand{\chili}{\includegraphics[width=1.5em]{images/chilibw.png}\hspace*{-0.6em}}
-    \fi
-    \newcommand{\onechili}{\marginpar{\prechili\nochili\nochili\chili}}
-    \newcommand{\twochili}{\marginpar{\prechili\nochili\chili\chili}}
-    \newcommand{\threechili}{\marginpar{\prechili\chili\chili\chili}}
-}{
-    \newcommand{\prechili}{}
-    \newcommand{\nochili}{}
-    \newcommand{\onechili}{}
-    \newcommand{\twochili}{}
-    \newcommand{\threechili}{}
-}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%          PROOFS          %%%%
