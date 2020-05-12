@@ -1,0 +1,39 @@
+\IfFileExists{images/chili.png}{
+    \reversemarginpar
+
+    \@ifundefined{chapter}{
+        \@ifundefined{KOMAClassName}{
+            \ifprestonams
+                \newcommand{\prechili}{\vspace*{0.1em}\hspace*{-52em}}
+            \else
+                \newcommand{\prechili}{\vspace*{0.1em}\hspace*{3.5em}}
+            \fi
+        }{\newcommand{\prechili}{\vspace*{0.1em}\hspace*{5em}}}
+    }{
+        \ifprestonbook
+            \ifprestonams
+                \newcommand{\prechili}{\vspace*{0.1em}\hspace*{-52.5em}}
+            \else
+                \newcommand{\prechili}{\vspace*{0.1em}\hspace*{9em}}
+            \fi
+        \else
+            \@ifundefined{KOMAClassName}
+            {\newcommand{\prechili}{\vspace*{0.1em}\hspace*{3.5em}}}    {\newcommand{\prechili}{\vspace*{0.1em}\hspace*{5em}}}
+        \fi
+    }
+    \newcommand{\nochili}{\hspace*{0.9em}}
+    \ifprestoncolor
+        \newcommand{\chili}{\includegraphics[width=1.5em]{images/chili.png}\hspace*{-0.6em}}
+    \else
+        \newcommand{\chili}{\includegraphics[width=1.5em]{images/chilibw.png}\hspace*{-0.6em}}
+    \fi
+    \newcommand{\onechili}{\marginpar{\prechili\nochili\nochili\chili}}
+    \newcommand{\twochili}{\marginpar{\prechili\nochili\chili\chili}}
+    \newcommand{\threechili}{\marginpar{\prechili\chili\chili\chili}}
+}{
+    \newcommand{\prechili}{}
+    \newcommand{\nochili}{}
+    \newcommand{\onechili}{}
+    \newcommand{\twochili}{}
+    \newcommand{\threechili}{}
+}
