@@ -376,6 +376,7 @@
     \ifprestonmarginset
         \usepackage[margin=1in]{geometry}
     \fi
+    
     \ifprestonfancy
         \usepackage{fancyhdr}
         \pagestyle{fancy}
@@ -395,13 +396,14 @@
     \fi
 }
 {
+    \ifprestonmarginset
+        \usepackage[margin=1in]{geometry}
+		\setlength{\footskip}{0.5in}
+	\fi
+	
     \ifprestonfancy
         \ifprestonbook
             \usepackage{scrlayer-scrpage}
-            \ifprestonmarginset
-                \usepackage[margin=1in]{geometry}
-    			\setlength{\footskip}{0.5in}
-    		\fi
             \renewcommand\chaptermark[1]{\markboth{\thechapter. #1}{}}
             \renewcommand*{\headfont}{\bfseries\sffamily}
             \renewcommand*{\pnumfont}{\bfseries\sffamily}
