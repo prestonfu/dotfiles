@@ -114,21 +114,25 @@
 \newcommand{\ul}{\underline}
 \newcommand{\eps}{\varepsilon}
 \renewcommand{\deg}{^\circ}
+\newcommand{\inv}{^{-1}}
 \renewcommand{\bold}[1]{{\boldmath\bfseries #1}}
 \ifprestoncolor
     \newcommand{\vocab}[1]{\bold{\color{NavyBlue} #1}}
 \else
-    \newcommand{\vocab}[1]{\bold{#1}}
+    \ifprestonams
+        \newcommand{\vocab}[1]{\emph{#1}}
+    \else
+        \newcommand{\vocab}[1]{\bold{#1}}
+    \fi
 \fi
 \newcommand{\hrulebar}{\begin{center}\nointerlineskip\vspace{5pt}\rule{\textwidth}{.7pt}\hspace{\fill}\end{center}}
 \newcommand{\ans}[5]{\textbf{(A) }#1\qquad\textbf{(B) }#2\qquad\textbf{(C) }#3\qquad\textbf{(D) }#4\qquad\textbf{(E) }#5}
-\newcommand{\id}{\mathrm{id}}
-\newcommand{\inv}{^{-1}}
 
 % Functions
 \DeclareMathOperator*{\lcm}{lcm} % least common multiple
 \DeclareMathOperator*{\re}{Re} % real part
 \DeclareMathOperator*{\im}{Im} % imaginary part
+\DeclareMathOperator*{\id}{id} % identity
 \DeclareMathOperator*{\Pow}{Pow} % power
 \DeclareMathOperator*{\diam}{diam} % diameter
 \DeclareMathOperator*{\mesh}{mesh} % mesh
@@ -339,13 +343,24 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \definecolor{astral}{RGB}{46,116,181}
-\hypersetup{
-    colorlinks,
-    citecolor=astral,
-    filecolor=astral,
-    linkcolor=black,
-    urlcolor=astral
-}
+
+\ifprestoncolor
+    \hypersetup{
+        colorlinks,
+        citecolor=astral,
+        filecolor=astral,
+        linkcolor=black,
+        urlcolor=astral
+    }
+\else
+    \hypersetup{
+        colorlinks,
+        citecolor=black,
+        filecolor=black,
+        linkcolor=black,
+        urlcolor=black
+    }
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%            PAGE SETUP            %%%%
