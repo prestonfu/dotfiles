@@ -183,11 +183,11 @@
 \newcommand{\YY}{\mathbb Y}
 \newcommand{\ZZ}{\mathbb Z}
 
-\newcommand{\ii}{\textbf \i}
-\newcommand{\jj}{\textbf \j}
+\newcommand{\ii}{\textbf i}
+\newcommand{\jj}{\textbf j}
 \newcommand{\kk}{\textbf k}
-\newcommand{\ihat}{\hat\ii}
-\newcommand{\jhat}{\hat\jj}
+\newcommand{\ihat}{\hat{\textbf \i}}
+\newcommand{\jhat}{\hat{\textbf \j}}
 \newcommand{\khat}{\hat\kk}
 
 \newcommand{\mfA}{\mathfrak A}
@@ -524,7 +524,7 @@
     		bottomline=false,
     		linecolor=NavyBlue,
     		backgroundcolor=TealBlue!5,
-    		innertopmargin=8pt,
+    		innertopmargin=6pt,
     	}
     
     	\declaretheoremstyle[
@@ -544,7 +544,7 @@
     		bottomline=false,
     		linecolor=ForestGreen,
     		backgroundcolor=ForestGreen!5,
-    		innertopmargin=8pt,
+    		innertopmargin=6pt,
     	}
     
     	\declaretheoremstyle[
@@ -563,7 +563,7 @@
     		bottomline=false,
     		linecolor=orange,
     		backgroundcolor=Crimson!4,
-    		innertopmargin=8pt,
+    		innertopmargin=6pt,
     	}
     
     	\declaretheoremstyle[
@@ -582,7 +582,7 @@
     		bottomline=false,
     		linecolor=RawSienna,
     		backgroundcolor=Salmon!5,
-    		innertopmargin=8pt,
+    		innertopmargin=6pt,
     	}
     
     	\declaretheoremstyle[
@@ -601,7 +601,7 @@
     		bottomline=false,
     		linecolor=BrickRed,
     		backgroundcolor=VioletRed!5,
-    		innertopmargin=8pt,
+    		innertopmargin=6pt,
     	}
     
     	\declaretheoremstyle[
@@ -620,7 +620,7 @@
     		bottomline=false,
     		linecolor=black,
     		backgroundcolor=RedViolet!5!gray!5,
-    		innertopmargin=8pt,
+    		innertopmargin=6pt,
     	}
     
     	\declaretheoremstyle[
@@ -632,14 +632,14 @@
     	
     	\mdfdefinestyle{mdpurplebox}{%
     		skipabove=8pt,
-    		linewidth=0pt,
+    		linewidth=3pt,
     		rightline=false,
-    		leftline=false,
+    		leftline=true,
     		topline=false,
     		bottomline=false,
     		linecolor=RoyalPurple,
     		backgroundcolor=Plum!10,
-    		innertopmargin=8pt,
+    		innertopmargin=6pt,
     	}
     
     	\declaretheoremstyle[
@@ -653,7 +653,7 @@
     		skipabove=8pt,
     		linewidth=0pt,
     		backgroundcolor=Gray!20,
-    		innertopmargin=8pt,
+    		innertopmargin=6pt,
     	}
     	
     \else
@@ -662,7 +662,7 @@
     		skipabove=8pt,
     		linewidth=0.5pt,
     		backgroundcolor=Gray!20,
-    		innertopmargin=8pt,
+    		innertopmargin=6pt,
     	}
 	
         \ifprestonmonochrome
@@ -701,7 +701,7 @@
 	\mdfdefinestyle{mdwhitebox}{%
 		skipabove=8pt,
 		linewidth=0.5pt,
-		innertopmargin=8pt,
+		innertopmargin=6pt,
 	}
 	
 	\declaretheoremstyle[
@@ -766,7 +766,7 @@
             \ifprestonsecthm
             	\declaretheorem[name=Problem,numberwithin=section]{prob}
             \else
-                \declaretheorem[name=Problem]{prob}
+                \declaretheorem[Problem]{prob}
             \fi
         \fi
         \declaretheorem[name=Problem,numbered=no]{prob*}
@@ -974,7 +974,8 @@
 \theoremstyle{remark}
 
 \declaretheorem[name=Note,numbered=no]{note}
-\declaretheorem[name=Exercise,numbered=no]{exer}
+\declaretheorem[name=Exercise,sibling=thm]{exer}
+\declaretheorem[name=Exercise,numbered=no]{exer*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%           HINT           %%%%
