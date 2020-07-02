@@ -785,6 +785,8 @@
     	\declaretheorem[style=thmorangebox,name=Claim,numbered=no]{claim*}
         \declaretheorem[style=thmbrownbox,name=Example,numbered=no]{ex*}
         \declaretheorem[style=thmredbox,name=Concept,numbered=no]{concept}
+        \declaretheorem[style=thmredbox,name=Idea,numbered=no]{idea}
+        \declaretheorem[style=thmredbox,name=Takeaway,numbered=no]{takeaway}
     	\declaretheorem[style=thmpurplebox,name=Warning,numbered=no]{warn}
     	
         \declaretheorem[style=thmpurplebox,name=Bogus Solution,numbered=no]{bogussol}
@@ -840,6 +842,8 @@
     	\declaretheorem[style=thmgraydefbox,name=Claim,numbered=no]{claim*}
         \declaretheorem[style=thmgraydefbox,name=Example,numbered=no]{ex*}
         \declaretheorem[style=thmgraydefbox,name=Concept,numbered=no]{concept}
+        \declaretheorem[style=thmgraydefbox,name=Idea,numbered=no]{idea}
+        \declaretheorem[style=thmgraydefbox,name=Takeaway,numbered=no]{takeaway}
     	\declaretheorem[style=thmgraydefbox,name=Warning,numbered=no]{warn}
     	
         \declaretheorem[style=thmgraydefbox,name=Bogus Solution,numbered=no]{bogussol}
@@ -894,6 +898,8 @@
     	\declaretheorem[style=thmwhitedefbox,name=Problem,numbered=no]{boxprob*}
     	\declaretheorem[style=thmwhitedefbox,name=Claim,numbered=no]{claim*}
     	\declaretheorem[style=thmwhitedefbox,name=Concept,numbered=no]{concept}
+    	\declaretheorem[style=thmwhitedefbox,name=Idea,numbered=no]{idea}
+    	\declaretheorem[style=thmwhitedefbox,name=Takeaway,numbered=no]{takeaway}
     	\declaretheorem[style=thmwhitedefbox,name=Warning,numbered=no]{warn}
     	
         \declaretheorem[style=thmwhitedefbox,name=Bogus Solution,numbered=no]{bogussol}
@@ -946,6 +952,8 @@
 	\declaretheorem[name=Claim]{iclaim}
 	\declaretheorem[name=Claim,numbered=no]{claim*}
 	\declaretheorem[name=Concept,numbered=no]{concept}
+	\declaretheorem[name=Idea,numbered=no]{idea}
+	\declaretheorem[name=Takeaway,numbered=no]{Takeaway}
 	\declaretheorem[name=Warning,numbered=no]{warn}
 	
 	 \newenvironment{bogussol}[1][Bogus Solution] {\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\endtrivlist\@endpefalse}
@@ -960,19 +968,16 @@
 \theoremstyle{definition}
 
 \declaretheorem[name=Definition,sibling=thm]{defn}
-\declaretheorem[name=Conjugate,sibling=thm]{conj}
+\declaretheorem[name=Conjecture,sibling=thm]{conj}
 \declaretheorem[name=Fact,sibling=thm]{fact}
-\declaretheorem[name=Answer,sibling=prob]{fakeanswer}
-\newenvironment{answer}{
-    \addtocounter{prob}{-1}
-    \begin{fakeanswer}
-}{\end{fakeanswer}}
+\declaretheorem[name=Question,sibling=thm]{question}
+\declaretheorem[name=Answer,numbered=no]{answer}
 
 \declaretheorem[name=Definition,numbered=no]{defn*}
-\declaretheorem[name=Conjugate,numbered=no]{conj*}
+\declaretheorem[name=Conjecture,numbered=no]{conj*}
 \declaretheorem[name=Fact,numbered=no]{fact*}
-\declaretheorem[name=Question,numbered=no]{question}
 \declaretheorem[name=Answer,numbered=no]{answer*}
+\declaretheorem[name=Abuse of Notation,numbered=no]{abuse}
 \declaretheorem[name=Notation,numbered=no]{notation}
 \declaretheorem[name=Upshot,numbered=no]{upshot}
 
@@ -986,8 +991,8 @@
   %%%%           HINT           %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newenvironment{hints}{\footnotesize \normalfont \textbf{Hints: }}{\hspace{-0.5ex}}
-\newenvironment{hint}{\footnotesize \normalfont \textbf{Hint: }}{\hspace{-0.5ex}}
+\newenvironment{hints}{\footnotesize \normalfont \textbf{Hints:}}{\hspace{-0.5ex}}
+\newenvironment{hint}{\footnotesize \normalfont \textbf{Hint:}}{\hspace{-0.5ex}}
 
 \ifprestonfancyhint %% Evan Chen
     \usepackage{etoolbox}
