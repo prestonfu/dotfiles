@@ -686,13 +686,6 @@
         		headpunct={. },
         		postheadspace={0pt},
         	]{thmgraydefbox}
-        
-        	\declaretheoremstyle[
-        		headfont=\itshape\headingfont,
-        		mdframed={style=mdgraybox},
-        		headpunct={. },
-        		postheadspace={0pt},
-        	]{thmgrayrembox}
         \fi
     \fi
 
@@ -727,15 +720,6 @@
 		spaceabove=2pt,
 		spacebelow=1pt
 	]{thmwhitedefbox}
-	
-	\declaretheoremstyle[
-		headfont=\headingfont,
-		mdframed={style=mdwhitebox},
-		headpunct={. },
-		postheadspace={0pt},
-		spaceabove=2pt,
-		spacebelow=1pt
-	]{thmwhiterembox}
 \fi
 
 \ifprestonmdthm
@@ -793,8 +777,7 @@
         \declaretheorem[style=thmpurplebox,name=Bogus Proof,numbered=no]{boguspf}
         \declaretheorem[style=thmgraybox,name=Solution,numbered=no]{boxsol}
         \declaretheorem[style=thmgraybox,name=Proof,numbered=no]{boxpf}
-    	
-    	\theoremstyle{remark}
+
     	\declaretheorem[style=thmblackbox,name=Remark,numbered=no]{remark}
     	\declaretheorem[style=thmblackbox,name=Remark,numbered=no]{remark*}
     	
@@ -851,10 +834,8 @@
         \declaretheorem[style=thmgraydefbox,name=Bogus Proof,numbered=no]{boguspf}
         \declaretheorem[style=thmgraydefbox,name=Solution,numbered=no]{boxsol}
         \declaretheorem[style=thmgraydefbox,name=Proof,numbered=no]{boxpf}
-    	
-    	\theoremstyle{remark}
-    	\declaretheorem[style=thmgrayrembox,name=Remark,numbered=no]{remark}
-    	\declaretheorem[style=thmgrayrembox,name=Remark,numbered=no]{remark*}
+    	\declaretheorem[style=thmgraydefbox,name=Remark,numbered=no]{remark}
+    	\declaretheorem[style=thmgraydefbox,name=Remark,numbered=no]{remark*}
     	
     \else
     
@@ -908,10 +889,9 @@
         \declaretheorem[style=thmwhitedefbox,name=Bogus Proof,numbered=no]{boguspf}
         \declaretheorem[style=thmwhitedefbox,name=Solution,numbered=no]{boxsol}
         \declaretheorem[style=thmwhitedefbox,name=Proof,numbered=no]{boxpf}
-    	
-    	\theoremstyle{remark}
-    	\declaretheorem[style=thmwhiterembox,name=Remark,numbered=no]{remark}
-    	\declaretheorem[style=thmwhiterembox,name=Remark,numbered=no]{remark*}
+
+    	\declaretheorem[style=thmwhitedefbox,name=Remark,numbered=no]{remark}
+    	\declaretheorem[style=thmwhitedefbox,name=Remark,numbered=no]{remark*}
     \fi
     \fi
 \else
@@ -961,8 +941,7 @@
 	
 	 \newenvironment{bogussol}[1][Bogus Solution] {\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\endtrivlist\@endpefalse}
     \newenvironment{boguspf}[1][Bogus Proof] {\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\endtrivlist\@endpefalse}
-	
-	\theoremstyle{remark}
+
 	\declaretheorem[name=Remark,numbered=no]{remark}
 	\declaretheorem[name=Remark,numbered=no]{remark*}
 \fi
@@ -985,9 +964,9 @@
 \declaretheorem[name=Algorithm,numbered=no]{algo}
 \declaretheorem[name=Abuse of Notation,numbered=no]{abuse}
 \declaretheorem[name=Notation,numbered=no]{notation}
+\declaretheorem[name=Terminology,numbered=no]{term}
 \declaretheorem[name=Upshot,numbered=no]{upshot}
 
-\theoremstyle{remark}
 
 \declaretheorem[name=Note,numbered=no]{note}
 \declaretheorem[name=Exercise,sibling=thm]{exer}
