@@ -667,7 +667,6 @@
         
         \declaretheoremstyle[
         	headfont=\sffamily\bfseries\color{dkturquoise},
-        	bodyfont=\itshape,
         	mdframed={style=mdaquabox},
         	headpunct={. },
         	postheadspace={0pt}
@@ -726,7 +725,6 @@
         
         \declaretheoremstyle[
         	headfont=\sffamily\bfseries\color{coldblue},
-        	bodyfont=\itshape,
         	mdframed={style=mdthemebox},
         	headpunct={. },
         	postheadspace={0pt}
@@ -785,7 +783,6 @@
         
         \declaretheoremstyle[
         	headfont=\sffamily\bfseries\color{Gray!40!Black!100},
-        	bodyfont=\itshape,
         	mdframed={style=mdgraybox},
         	headpunct={. },
         	postheadspace={0pt}
@@ -885,6 +882,7 @@
         \fi
     \fi
     
+    \declaretheorem[style=thmgreenbox,name=Problem,numbered=no]{prob*}
 	\declaretheorem[style=thmgreenbox,name=Problem,sibling=prob]{boxprob}
 	\declaretheorem[style=thmgreenbox,name=Problem,numbered=no]{boxprob*}
 	\declaretheorem[style=thmgreenbox,name=Exercise,sibling=thm]{exer}
@@ -953,9 +951,8 @@
             \declaretheorem[Problem]{prob}
         \fi
     \fi
-    
-	\declaretheorem[name=Problem,sibling=prob]{boxprob}
-	\declaretheorem[name=Problem,numbered=no]{boxprob*}
+
+	\declaretheorem[name=Problem,numbered=no]{prob*}
 	\declaretheorem[name=Exercise,sibling=thm]{exer}
 	\declaretheorem[name=Exercise,numbered=no]{exer*}
     
