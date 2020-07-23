@@ -51,8 +51,8 @@
 \DeclareOption{nofancychap}{\prestonfancychapfalse}
 \DeclareOption{fancysec}{\prestonfancysectrue}
 \DeclareOption{nofancysec}{\prestonfancysecfalse}
-\DeclareOption{colorheadings}{\prestoncolorheadingtrue}
-\DeclareOption{nocolorheadings}{\prestoncolorheadingfalse}
+\DeclareOption{colorheading}{\prestoncolorheadingtrue}
+\DeclareOption{nocolorheading}{\prestoncolorheadingfalse}
 \DeclareOption{qednow}{\prestonqednowtrue}
 \DeclareOption{qedright}{\prestonqednowfalse}
 \DeclareOption{fancyhint}{\prestonfancyhinttrue}
@@ -878,7 +878,7 @@
         \ifprestonsecthm
         	\declaretheorem[name=Problem,numberwithin=section]{prob}
         \else
-            \declaretheorem[Problem]{prob}
+            \declaretheorem[name=Problem]{prob}
         \fi
     \fi
     
@@ -948,7 +948,7 @@
         \ifprestonsecthm
         	\declaretheorem[name=Problem,numberwithin=section]{prob}
         \else
-            \declaretheorem[Problem]{prob}
+            \declaretheorem[name=Problem]{prob}
         \fi
     \fi
 
