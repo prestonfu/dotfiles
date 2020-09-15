@@ -453,7 +453,10 @@
 			\cfoot{\pagemark}
         \fi
     \fi
-
+    
+    \makeatletter
+        \patchcmd{\@maketitle}{\huge}{\LARGE}{}{}
+    \makeatother
     \addtokomafont{subtitle}{\Large}
     \setkomafont{author}{\large}
     \setkomafont{date}{\large}
