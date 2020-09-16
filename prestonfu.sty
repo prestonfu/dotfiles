@@ -26,7 +26,6 @@
 \newif\ifprestonfancychap\prestonfancychaptrue
 \newif\ifprestonfancysec\prestonfancysecfalse
 \newif\ifprestoncolorheading\prestoncolorheadingfalse
-\newif\ifprestonqednow\prestonqednowfalse
 \newif\ifprestonfancyhint\prestonfancyhintfalse
 \newif\ifprestonpazo\prestonpazofalse
 \newif\ifprestonroboto\prestonrobotofalse
@@ -53,8 +52,6 @@
 \DeclareOption{nofancysec}{\prestonfancysecfalse}
 \DeclareOption{colorheading}{\prestoncolorheadingtrue}
 \DeclareOption{nocolorheading}{\prestoncolorheadingfalse}
-\DeclareOption{qednow}{\prestonqednowtrue}
-\DeclareOption{qedright}{\prestonqednowfalse}
 \DeclareOption{fancyhint}{\prestonfancyhinttrue}
 \DeclareOption{nofancyhint}{\prestonfancyhintfalse}
 \DeclareOption{pazo}{\prestonpazotrue}
@@ -951,19 +948,12 @@
 
 \renewcommand\qedsymbol{$\blacksquare$}
 
-\ifprestonqednow
-    \renewenvironment{proof}[1][\proofname]{\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\itshape#1\@addpunct{.}]\ignorespaces}{\nolinebreak\qedsymbol\endtrivlist\@endpefalse}
-    \newenvironment{sol}[1][Solution]{\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\nolinebreak\qedsymbol\endtrivlist\@endpefalse}
-    \newenvironment{solsketch}[1][Solution Sketch]{\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\nolinebreak\qedsymbol\endtrivlist\@endpefalse}
-    \newenvironment{pfsketch}[1][Proof Sketch]{\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\nolinebreak\qedsymbol\endtrivlist\@endpefalse}
-\else
-    \newenvironment{sol}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
-    \newenvironment{solsketch}[1][Solution Sketch] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
-    \newenvironment{pfsketch}[1][Proof Sketch] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
-\fi 
-
-\newenvironment{subproof}[1][\proofname]{\renewcommand{\qedsymbol}{$\Box$}\begin{proof}[#1]}{\end{proof}}
+\makeatletter
+\newenvironment{sol}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
+\newenvironment{solsketch}[1][Solution Sketch] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
+\newenvironment{pfsketch}[1][Proof Sketch] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
 \newenvironment{progress}[1][Progress] {\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\itshape#1\@addpunct{.}]\ignorespaces}{\endtrivlist\@endpefalse}
+\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  %%%%          ASYMPTOTE          %%%%
