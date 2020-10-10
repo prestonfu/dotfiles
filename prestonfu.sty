@@ -18,8 +18,10 @@
 \newif\ifprestonmdthm\prestonmdthmfalse
 \newif\ifprestonbook\prestonbookfalse
 \newif\ifprestonams\prestonamsfalse
+\newif\ifprestonbeamer\prestonbeamerfalse
 \newif\ifprestoncolor\prestoncolortrue
 \newif\ifprestonmonochrome\prestonmonochromefalse
+\newif\ifprestonthmenabled\prestonthmenabledtrue
 \newif\ifprestonchthm\prestonchthmfalse
 \newif\ifprestonsecthm\prestonsecthmtrue
 \newif\ifprestonfancy\prestonfancytrue
@@ -41,6 +43,7 @@
 \DeclareOption{color}{\prestoncolortrue}
 \DeclareOption{monochrome}{\prestoncolorfalse\prestonmonochrometrue}
 \DeclareOption{nocolor}{\prestoncolorfalse}
+\DeclareOption{nothm}{\prestonthmenabledfalse}
 \DeclareOption{chthm}{\prestonchthmtrue}
 \DeclareOption{secthm}{\prestonsecthmtrue}
 \DeclareOption{nosecthm}{\prestonsecthmfalse}
@@ -78,6 +81,13 @@
     \prestonamstrue
 }
 
+\DeclareOption{beamer}{
+    \prestonbeamertrue
+    \prestonfancyfalse
+    \prestonmarginsetfalse
+    \prestonthmenabledfalse
+}
+
 \ProcessOptions\relax
 
 \usepackage[utf8]{inputenc}
@@ -91,7 +101,6 @@
 \usepackage{mathdots}
 \usepackage[final]{pdfpages}
 \usepackage[framemethod=TikZ]{mdframed}
-\usepackage{enumitem}
 \usepackage{mathtools}
 \usepackage{epigraph}
 \usepackage{hyperref}
@@ -100,6 +109,10 @@
 \usepackage{emptypage}
 \usepackage{appendix}
 \usepackage{imakeidx}
+
+\ifprestonbeamer\else
+    \usepackage{enumitem}
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%      USEFUL COMMANDS      %%%%
@@ -355,10 +368,6 @@
     \setlength{\parsep}{0pt}
 }{\end{itemize}}
 
-% Custom footnote
-\@ifundefined{KOMAClassName}{}
-{\renewcommand{\thefootnote}{\fnsymbol{footnote}}}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%         HYPERREF          %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -517,6 +526,7 @@
   %%%%          THEOREMS         %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\ifprestonthmenabled
 \ifprestonmdthm
 
     \ifprestonmdline
@@ -909,7 +919,6 @@
 \declaretheorem[name=Conjecture,numbered=no]{conj*}
 \declaretheorem[name=Question,numbered=no]{question*}
 \declaretheorem[name=Answer,numbered=no]{answer*}
-\declaretheorem[name=Note,numbered=no]{note}
 \declaretheorem[name=Algorithm,numbered=no]{algo}
 \declaretheorem[name=Abuse of Notation,numbered=no]{abuse}
 \declaretheorem[name=Upshot,numbered=no]{upshot}
@@ -918,13 +927,54 @@
 
 \declaretheorem[name=Remark,numbered=no]{remark}
 \declaretheorem[name=Remark,numbered=no]{remark*}
+\declaretheorem[name=Note,numbered=no]{note}
+\fi
+
+\ifprestonbeamer
+    \newenvironment{thm}[1][]{
+        \ifthenelse{\isempty{#1}}{\begin{block}{Theorem}}{\begin{block}{Theorem (#1)}}
+        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
+    }
+    \newenvironment{prop}[1][]{
+        \ifthenelse{\isempty{#1}}{\begin{block}{Proposition}}{\begin{block}{Proposition (#1)}}
+        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
+    }
+    \newenvironment{cor}[1][]{
+        \ifthenelse{\isempty{#1}}{\begin{block}{Proposition}}{\begin{block}{Proposition (#1)}}
+        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
+    }
+    \newenvironment{conj}[1][]{
+        \ifthenelse{\isempty{#1}}{\begin{block}{Conjecture}}{\begin{block}{Conjecture (#1)}}
+        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
+    }
+    \newenvironment{prob}[1][]{
+        \ifthenelse{\isempty{#1}}{\begin{exampleblock}{Problem}}{\begin{exampleblock}{Problem (#1)}}
+        }{\ifthenelse{\isempty{}}{\end{exampleblock}}{\end{exampleblock}}
+    }
+    \renewenvironment{lemma}[1][]{
+        \ifthenelse{\isempty{#1}}{\begin{alertblock}{Lemma}}{\begin{alertblock}{Lemma (#1)}}
+        }{\ifthenelse{\isempty{}}{\end{alertblock}}{\end{alertblock}}
+    }
+    \renewenvironment{fact}[1][]{
+        \ifthenelse{\isempty{#1}}{\begin{alertblock}{Fact}}{\begin{alertblock}{Fact (#1)}}
+        }{\ifthenelse{\isempty{}}{\end{alertblock}}{\end{alertblock}}
+    }
+    \newenvironment{claim}[1][]{
+        \ifthenelse{\isempty{#1}}{\begin{alertblock}{Claim}}{\begin{alertblock}{Fact (#1)}}
+        }{\ifthenelse{\isempty{}}{\end{alertblock}}{\end{alertblock}}
+    }
+    \newenvironment{defn}[1][]{
+        \ifthenelse{\isempty{#1}}{\begin{alertblock}{Definition}}{\begin{alertblock}{Fact (#1)}}
+        }{\ifthenelse{\isempty{}}{\end{alertblock}}{\end{alertblock}}
+    }
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%           HINT           %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newenvironment{hints}{\noindent\footnotesize\normalfont\textbf{Hints: }}{\hspace{-0.5ex}}
-\newenvironment{hint}{\noindent\footnotesize\normalfont\textbf{Hint: }}{\hspace{-0.5ex}}
+\newenvironment{hints}{\noindent\footnotesize\normalfont\textbf{Hints:}}{\hspace{-0.5ex}}
+\newenvironment{hint}{\noindent\footnotesize\normalfont\textbf{Hint:}}{\hspace{-0.5ex}}
 
 \ifprestonfancyhint %% Evan Chen
     \usepackage{etoolbox}
