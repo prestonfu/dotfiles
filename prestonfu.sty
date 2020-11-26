@@ -41,7 +41,7 @@
 \DeclareOption{nomdthm}{\prestonmdthmfalse}
 \DeclareOption{book}{\prestonbooktrue}
 \DeclareOption{color}{\prestoncolortrue}
-\DeclareOption{monochrome}{\prestoncolorfalse\prestonmonochrometrue}
+\DeclareOption{monochrome}{\prestoncolortrue\prestonmonochrometrue}
 \DeclareOption{nocolor}{\prestoncolorfalse}
 \DeclareOption{nothm}{\prestonthmenabledfalse}
 \DeclareOption{chthm}{\prestonchthmtrue}
@@ -139,21 +139,19 @@
 \newcommand{\anschoices}[5]{\textbf{(A) }#1\qquad\textbf{(B) }#2\qquad\textbf{(C) }#3\qquad\textbf{(D) }#4\qquad\textbf{(E) }#5}
 
 \definecolor{astral}{RGB}{46,116,181}
-\definecolor{coldblue}{RGB}{0,81,120}
 \definecolor{dkturquoise}{RGB}{0,131,138}
 \definecolor{dkgreen}{RGB}{0,153,0}
 \definecolor{gray}{RGB}{128,128,128}
 \definecolor{mauve}{RGB}{148,0,210}
+\definecolor{theme}{RGB}{0,81,120}
 
 \renewcommand{\bold}[1]{{\boldmath\bfseries #1}}
 \ifprestoncolor
-    \colorlet{theme}{NavyBlue}
-\else
-    \ifprestonmonochrome
-        \colorlet{theme}{coldblue}
-    \else
-        \colorlet{theme}{Black}
+    \ifprestonmonochrome\else
+        \colorlet{theme}{NavyBlue}
     \fi
+\else
+    \colorlet{theme}{Black}
 \fi
 
 \ifprestonams
@@ -372,13 +370,23 @@
   %%%%         HYPERREF          %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\hypersetup{
-    colorlinks,
-    citecolor=astral,
-    filecolor=astral,
-    linkcolor=black,
-    urlcolor=astral
-}
+\ifprestoncolor
+    \hypersetup{
+        colorlinks,
+        citecolor=astral,
+        filecolor=astral,
+        linkcolor=black,
+        urlcolor=astral
+    }
+\else
+    \hypersetup{
+        colorlinks,
+        citecolor=black,
+        filecolor=black,
+        linkcolor=black,
+        urlcolor=black
+    }
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%            PAGE SETUP            %%%%
@@ -633,8 +641,8 @@
 		leftline=true,
 		topline=false,
 		bottomline=false,
-		linecolor=coldblue,
-		backgroundcolor=coldblue!7,
+		linecolor=theme,
+		backgroundcolor=theme!7,
 		innertopmargin=6pt,
 		innerbottommargin=6pt
 	}
@@ -653,87 +661,91 @@
 	}
 	
 	\ifprestoncolor
+	
+	    \ifprestonmonochrome
+            
+            \declaretheoremstyle[
+        		headfont=\sffamily\bfseries\color{theme},
+        		bodyfont=\itshape,
+        		mdframed={style=mdthemebox},
+        		headpunct={. },
+        		postheadspace={0pt}
+        	]{thmbluebox}
+        
+        	\declaretheoremstyle[
+        		headfont=\sffamily\bfseries\color{theme},
+        		mdframed={style=mdthemebox},
+        		headpunct={. },
+        		postheadspace={0pt},
+        	]{thmredbox}
+        
+        	\declaretheoremstyle[
+        		headfont=\sffamily\bfseries\color{theme},
+        		mdframed={style=mdthemebox},
+        		headpunct={. },
+        		postheadspace={0pt},
+        	]{thmbrownbox}
+        
+        	\declaretheoremstyle[
+        		headfont=\sffamily\bfseries\color{theme},
+        		mdframed={style=mdthemebox},
+        		headpunct={. },
+        		postheadspace={0pt},
+        	]{thmgreenbox}
+        
+        	\declaretheoremstyle[
+        		headfont=\sffamily\bfseries\color{theme},
+        		mdframed={style=mdthemebox},
+        		headpunct={. },
+        		postheadspace={0pt},
+        	]{thmorangebox}
+        
+        	\declaretheoremstyle[
+        		headfont=\sffamily\bfseries\color{theme},
+        		mdframed={style=mdthemebox},
+        		headpunct={. },
+        		postheadspace={0pt},
+        	]{thmpurplebox}
+        
+        \else
 
-    	\declaretheoremstyle[
-    		headfont=\sffamily\bfseries\color{NavyBlue},
-    		bodyfont=\itshape,
-    		mdframed={style=mdbluebox},
-    		headpunct={. },
-    		postheadspace={0pt}
-    	]{thmbluebox}
-    
-    	\declaretheoremstyle[
-    		headfont=\sffamily\bfseries\color{RawSienna},
-    		mdframed={style=mdbrownbox},
-    		headpunct={. },
-    		postheadspace={0pt},
-    	]{thmbrownbox}
-    
-    	\declaretheoremstyle[
-    		headfont=\sffamily\bfseries\color{ForestGreen},
-    		mdframed={style=mdgreenbox},
-    		headpunct={. },
-    		postheadspace={0pt},
-    	]{thmgreenbox}
-    
-    	\declaretheoremstyle[
-    		headfont=\sffamily\bfseries\color{orange},
-    		mdframed={style=mdorangebox},
-    		headpunct={. },
-    		postheadspace={0pt},
-    	]{thmorangebox}
-    
-    	\declaretheoremstyle[
-    		headfont=\sffamily\bfseries\color{RoyalPurple},
-    		mdframed={style=mdpurplebox},
-    		headpunct={. },
-    		postheadspace={0pt},
-    	]{thmpurplebox}
+        	\declaretheoremstyle[
+        		headfont=\sffamily\bfseries\color{NavyBlue},
+        		bodyfont=\itshape,
+        		mdframed={style=mdbluebox},
+        		headpunct={. },
+        		postheadspace={0pt}
+        	]{thmbluebox}
         
-    \else\ifprestonmonochrome
+        	\declaretheoremstyle[
+        		headfont=\sffamily\bfseries\color{RawSienna},
+        		mdframed={style=mdbrownbox},
+        		headpunct={. },
+        		postheadspace={0pt},
+        	]{thmbrownbox}
         
-        \declaretheoremstyle[
-    		headfont=\sffamily\bfseries\color{coldblue},
-    		bodyfont=\itshape,
-    		mdframed={style=mdthemebox},
-    		headpunct={. },
-    		postheadspace={0pt}
-    	]{thmbluebox}
-    
-    	\declaretheoremstyle[
-    		headfont=\sffamily\bfseries\color{coldblue},
-    		mdframed={style=mdthemebox},
-    		headpunct={. },
-    		postheadspace={0pt},
-    	]{thmredbox}
-    
-    	\declaretheoremstyle[
-    		headfont=\sffamily\bfseries\color{coldblue},
-    		mdframed={style=mdthemebox},
-    		headpunct={. },
-    		postheadspace={0pt},
-    	]{thmbrownbox}
-    
-    	\declaretheoremstyle[
-    		headfont=\sffamily\bfseries\color{coldblue},
-    		mdframed={style=mdthemebox},
-    		headpunct={. },
-    		postheadspace={0pt},
-    	]{thmgreenbox}
-    
-    	\declaretheoremstyle[
-    		headfont=\sffamily\bfseries\color{coldblue},
-    		mdframed={style=mdthemebox},
-    		headpunct={. },
-    		postheadspace={0pt},
-    	]{thmorangebox}
-    
-    	\declaretheoremstyle[
-    		headfont=\sffamily\bfseries\color{coldblue},
-    		mdframed={style=mdthemebox},
-    		headpunct={. },
-    		postheadspace={0pt},
-    	]{thmpurplebox}
+        	\declaretheoremstyle[
+        		headfont=\sffamily\bfseries\color{ForestGreen},
+        		mdframed={style=mdgreenbox},
+        		headpunct={. },
+        		postheadspace={0pt},
+        	]{thmgreenbox}
+        
+        	\declaretheoremstyle[
+        		headfont=\sffamily\bfseries\color{orange},
+        		mdframed={style=mdorangebox},
+        		headpunct={. },
+        		postheadspace={0pt},
+        	]{thmorangebox}
+        
+        	\declaretheoremstyle[
+        		headfont=\sffamily\bfseries\color{RoyalPurple},
+        		mdframed={style=mdpurplebox},
+        		headpunct={. },
+        		postheadspace={0pt},
+        	]{thmpurplebox}
+        
+        \fi
         
     \else 
         
@@ -779,8 +791,6 @@
     		headpunct={. },
     		postheadspace={0pt},
     	]{thmpurplebox}
-        
-    \fi
     \fi
     
     \theoremstyle{plain}
@@ -931,48 +941,48 @@
 \fi
 
 \ifprestonbeamer\AtBeginDocument{
-        \newenvironment{thm}[1][]{
-            \ifthenelse{\isempty{#1}}{\begin{block}{Theorem}}{\begin{block}{Theorem (#1)}}
-            }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
-        }
-        \newenvironment{proposition}[1][]{
-            \ifthenelse{\isempty{#1}}{\begin{block}{Proposition}}{\begin{block}{Proposition (#1)}}
-            }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
-        }
-        \newenvironment{conjecture}[1][]{
-            \ifthenelse{\isempty{#1}}{\begin{block}{Conjecture}}{\begin{block}{Conjecture (#1)}}
-            }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
-        }
-        \newenvironment{prob}[1][]{
-            \ifthenelse{\isempty{#1}}{\begin{exampleblock}{Problem}}{\begin{exampleblock}{Problem (#1)}}
-            }{\ifthenelse{\isempty{}}{\end{exampleblock}}{\end{exampleblock}}
-        }
-        \newenvironment{}{}{}
-        
-        \renewenvironment{lemma}[1][]{
-            \ifthenelse{\isempty{#1}}{\begin{alertblock}{Lemma}}{\begin{alertblock}{Lemma (#1)}}
-            }{\ifthenelse{\isempty{}}{\end{alertblock}}{\end{alertblock}}
-        }
-        \newenvironment{fact}[1][]{
-            \ifthenelse{\isempty{#1}}{\begin{alertblock}{Fact}}{\begin{alertblock}{Fact (#1)}}
-            }{\ifthenelse{\isempty{}}{\end{alertblock}}{\end{alertblock}}
-        }
-        \newenvironment{claim}[1][]{
-            \setbeamercolor{block title}{bg=BurntOrange,fg=white}
-            \ifthenelse{\isempty{#1}}{\begin{block}{Claim}}{\begin{block}{Claim (#1)}}
-            }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
-        }
-        \newenvironment{definition}[1][]{
-            \setbeamercolor{block title}{bg=RoyalPurple,fg=white}
-            \ifthenelse{\isempty{#1}}{\begin{block}{Definition}}{\begin{block}{Definition (#1)}}
-            }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
-        }
-        \newenvironment{corollary}[1][]{
-            \setbeamercolor{block title}{bg=MidnightBlue,fg=white}
-            \ifthenelse{\isempty{#1}}{\begin{block}{Corollary}}{\begin{block}{Corollary (#1)}}
-            }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
-        }
+    \newenvironment{thm}[1][]{
+        \ifthenelse{\isempty{#1}}{\begin{block}{Theorem}}{\begin{block}{Theorem (#1)}}
+        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
     }
+    \newenvironment{proposition}[1][]{
+        \ifthenelse{\isempty{#1}}{\begin{block}{Proposition}}{\begin{block}{Proposition (#1)}}
+        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
+    }
+    \newenvironment{conjecture}[1][]{
+        \ifthenelse{\isempty{#1}}{\begin{block}{Conjecture}}{\begin{block}{Conjecture (#1)}}
+        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
+    }
+    \newenvironment{prob}[1][]{
+        \ifthenelse{\isempty{#1}}{\begin{exampleblock}{Problem}}{\begin{exampleblock}{Problem (#1)}}
+        }{\ifthenelse{\isempty{}}{\end{exampleblock}}{\end{exampleblock}}
+    }
+    \newenvironment{}{}{}
+    
+    \renewenvironment{lemma}[1][]{
+        \ifthenelse{\isempty{#1}}{\begin{alertblock}{Lemma}}{\begin{alertblock}{Lemma (#1)}}
+        }{\ifthenelse{\isempty{}}{\end{alertblock}}{\end{alertblock}}
+    }
+    \newenvironment{fact}[1][]{
+        \ifthenelse{\isempty{#1}}{\begin{alertblock}{Fact}}{\begin{alertblock}{Fact (#1)}}
+        }{\ifthenelse{\isempty{}}{\end{alertblock}}{\end{alertblock}}
+    }
+    \newenvironment{claim}[1][]{
+        \setbeamercolor{block title}{bg=BurntOrange,fg=white}
+        \ifthenelse{\isempty{#1}}{\begin{block}{Claim}}{\begin{block}{Claim (#1)}}
+        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
+    }
+    \newenvironment{definition}[1][]{
+        \setbeamercolor{block title}{bg=RoyalPurple,fg=white}
+        \ifthenelse{\isempty{#1}}{\begin{block}{Definition}}{\begin{block}{Definition (#1)}}
+        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
+    }
+    \newenvironment{corollary}[1][]{
+        \setbeamercolor{block title}{bg=MidnightBlue,fg=white}
+        \ifthenelse{\isempty{#1}}{\begin{block}{Corollary}}{\begin{block}{Corollary (#1)}}
+        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
+    }
+}
 \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
