@@ -63,7 +63,7 @@
 \DeclareOption{noroboto}{\prestonrobotofalse}
 \DeclareOption{mdline}{\prestonmdlinetrue}
 \DeclareOption{nomdline}{\prestonmdlinefalse}
-\DeclareOption{nosetlinespace}{\preston}
+\DeclareOption{nosetlinespacing}{\prestonsetlinespacingfalse}
 \DeclareOption{noindent}{\prestonnoindenttrue}
 \DeclareOption{nomarginset}{\prestonmarginsetfalse}
 \DeclareOption{index}{\prestonindextrue}
@@ -930,42 +930,48 @@
 \declaretheorem[name=Note,numbered=no]{note}
 \fi
 
-\ifprestonbeamer
-    \newenvironment{thm}[1][]{
-        \ifthenelse{\isempty{#1}}{\begin{block}{Theorem}}{\begin{block}{Theorem (#1)}}
-        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
-    }
-    \newenvironment{prop}[1][]{
-        \ifthenelse{\isempty{#1}}{\begin{block}{Proposition}}{\begin{block}{Proposition (#1)}}
-        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
-    }
-    \newenvironment{cor}[1][]{
-        \ifthenelse{\isempty{#1}}{\begin{block}{Proposition}}{\begin{block}{Proposition (#1)}}
-        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
-    }
-    \newenvironment{conj}[1][]{
-        \ifthenelse{\isempty{#1}}{\begin{block}{Conjecture}}{\begin{block}{Conjecture (#1)}}
-        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
-    }
-    \newenvironment{prob}[1][]{
-        \ifthenelse{\isempty{#1}}{\begin{exampleblock}{Problem}}{\begin{exampleblock}{Problem (#1)}}
-        }{\ifthenelse{\isempty{}}{\end{exampleblock}}{\end{exampleblock}}
-    }
-    \renewenvironment{lemma}[1][]{
-        \ifthenelse{\isempty{#1}}{\begin{alertblock}{Lemma}}{\begin{alertblock}{Lemma (#1)}}
-        }{\ifthenelse{\isempty{}}{\end{alertblock}}{\end{alertblock}}
-    }
-    \renewenvironment{fact}[1][]{
-        \ifthenelse{\isempty{#1}}{\begin{alertblock}{Fact}}{\begin{alertblock}{Fact (#1)}}
-        }{\ifthenelse{\isempty{}}{\end{alertblock}}{\end{alertblock}}
-    }
-    \newenvironment{claim}[1][]{
-        \ifthenelse{\isempty{#1}}{\begin{alertblock}{Claim}}{\begin{alertblock}{Fact (#1)}}
-        }{\ifthenelse{\isempty{}}{\end{alertblock}}{\end{alertblock}}
-    }
-    \newenvironment{defn}[1][]{
-        \ifthenelse{\isempty{#1}}{\begin{alertblock}{Definition}}{\begin{alertblock}{Fact (#1)}}
-        }{\ifthenelse{\isempty{}}{\end{alertblock}}{\end{alertblock}}
+\ifprestonbeamer\AtBeginDocument{
+        \newenvironment{thm}[1][]{
+            \ifthenelse{\isempty{#1}}{\begin{block}{Theorem}}{\begin{block}{Theorem (#1)}}
+            }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
+        }
+        \newenvironment{proposition}[1][]{
+            \ifthenelse{\isempty{#1}}{\begin{block}{Proposition}}{\begin{block}{Proposition (#1)}}
+            }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
+        }
+        \newenvironment{conjecture}[1][]{
+            \ifthenelse{\isempty{#1}}{\begin{block}{Conjecture}}{\begin{block}{Conjecture (#1)}}
+            }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
+        }
+        \newenvironment{prob}[1][]{
+            \ifthenelse{\isempty{#1}}{\begin{exampleblock}{Problem}}{\begin{exampleblock}{Problem (#1)}}
+            }{\ifthenelse{\isempty{}}{\end{exampleblock}}{\end{exampleblock}}
+        }
+        \newenvironment{}{}{}
+        
+        \renewenvironment{lemma}[1][]{
+            \ifthenelse{\isempty{#1}}{\begin{alertblock}{Lemma}}{\begin{alertblock}{Lemma (#1)}}
+            }{\ifthenelse{\isempty{}}{\end{alertblock}}{\end{alertblock}}
+        }
+        \newenvironment{fact}[1][]{
+            \ifthenelse{\isempty{#1}}{\begin{alertblock}{Fact}}{\begin{alertblock}{Fact (#1)}}
+            }{\ifthenelse{\isempty{}}{\end{alertblock}}{\end{alertblock}}
+        }
+        \newenvironment{claim}[1][]{
+            \setbeamercolor{block title}{bg=BurntOrange,fg=white}
+            \ifthenelse{\isempty{#1}}{\begin{block}{Claim}}{\begin{block}{Claim (#1)}}
+            }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
+        }
+        \newenvironment{definition}[1][]{
+            \setbeamercolor{block title}{bg=RoyalPurple,fg=white}
+            \ifthenelse{\isempty{#1}}{\begin{block}{Definition}}{\begin{block}{Definition (#1)}}
+            }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
+        }
+        \newenvironment{corollary}[1][]{
+            \setbeamercolor{block title}{bg=MidnightBlue,fg=white}
+            \ifthenelse{\isempty{#1}}{\begin{block}{Corollary}}{\begin{block}{Corollary (#1)}}
+            }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
+        }
     }
 \fi
 
