@@ -400,10 +400,11 @@
     \renewcommand{\baselinestretch}{1.05}
 \fi
 
+\ifprestonams\else
 \ifprestonmarginset
     \setlength{\headheight}{16pt}
     \setlength{\headsep}{10pt}
-\fi
+\fi\fi
 
 \ifprestonpazo
     \usepackage{mathpazo}
