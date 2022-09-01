@@ -370,13 +370,24 @@
   %%%%         HYPERREF          %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\hypersetup{
-    colorlinks,
-    citecolor=astral,
-    filecolor=astral,
-    linkcolor=black,
-    urlcolor=astral
-}
+\ifprestoncolor
+    \hypersetup{
+        colorlinks,
+        citecolor=astral,
+        filecolor=astral,
+        linkcolor=black,
+        urlcolor=astral
+    }
+\else
+    \hypersetup{
+        colorlinks,
+        citecolor=black,
+        filecolor=black,
+        linkcolor=black,
+        urlcolor=black
+    }
+
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%            PAGE SETUP            %%%%
@@ -1023,6 +1034,7 @@
 
 \usepackage[inline]{asymptote}
 \usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 
 \begin{asydef}
     import olympiad;
