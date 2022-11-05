@@ -6,7 +6,7 @@
 % may not be reproduced or used in any manner whatsoever
 % without the express written permission of the publisher.
 % 
-% Thanks to Evan Chen and Eric Shen.
+% Thanks to Evan Chen, Eric Shen, and Jeffrey Hu.
 % https://tinyurl.com/prestonfu-sty
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -161,6 +161,8 @@
 \fi
 
 % Functions
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\lcm}{lcm} % least common multiple
 \DeclareMathOperator*{\re}{Re} % real part
 \DeclareMathOperator*{\im}{Im} % imaginary part
@@ -340,26 +342,89 @@
 \DeclareMathAccent{\wideparen}{\mathord}{yhlargesymbols}{"F3}
 \newcommand{\arc}[1]{\wideparen{#1}}
 
-% Custom enumerates
-\newenvironment{anum}{ % (a), (b), ...
-\begin{enumerate}[label = (\alph*)]}{\end{enumerate}}
-\newenvironment{Rnum}{ % (I), (II), ...
-\begin{enumerate}[label = (\Roman*)]}{\end{enumerate}}
-\newenvironment{rnum}{ % (i), (ii), ...
-\begin{enumerate}[label = (\roman*)]}{\end{enumerate}}
+% Units
+\newcommand{\ukm}{\text{km}}
+\newcommand{\um}{\text{m}}
+\newcommand{\ucm}{\text{cm}}
+\newcommand{\umm}{\text{mm}}
+\newcommand{\unm}{\text{nm}}
+\newcommand{\uft}{\text{ft}}
+\newcommand{\uinch}{\text{in}}
+\newcommand{\us}{\text{s}}
+\newcommand{\uminn}{\text{min}}
+\newcommand{\uhr}{\text{hr}}
+\newcommand{\umol}{\text{mol}}
+\newcommand{\ukg}{\text{kg}}
+\newcommand{\ug}{\text{g}}
+\newcommand{\umg}{\text{mg}}
+\newcommand{\uoz}{\text{oz}}
+\newcommand{\uamu}{\text{u}}
+\newcommand{\uA}{\text{A}}
+\newcommand{\uohm}{\Omega}
+\newcommand{\uK}{\text{K}}
+\newcommand{\uC}{\degs\text{C}}
+\newcommand{\uF}{\degs\text{F}}
+\newcommand{\uMega}{\text{M}}
+\newcommand{\ukilo}{\text{k}}
+\newcommand{\umilli}{\text{m}}
+\newcommand{\umicro}{\mu}
+\newcommand{\unano}{\text{n}}
+\newcommand{\upico}{\text{p}}
+\newcommand{\uL}{\text{L}}
+\newcommand{\umL}{\text{mL}}
+\newcommand{\ums}{\um/\us}
+\newcommand{\umss}{\um/\us^2}
+\newcommand{\ukmhr}{\ukm/\uhr}
+\newcommand{\ukgps}{\ukg/\us}
+\newcommand{\uN}{\text{N}}
+\newcommand{\uNpm}{\uN/\um}
+\newcommand{\uNs}{\uN\us}
+\newcommand{\uJ}{\text{J}}
+\newcommand{\ukcal}{\text{kcal}}
+\newcommand{\ueV}{\text{eV}}
+\newcommand{\urad}{\text{rad}}
+\newcommand{\urev}{\text{rev}}
+\newcommand{\urpm}{\text{rpm}}
+\newcommand{\uNm}{\uN\um}
+\newcommand{\uW}{\text{W}}
+\newcommand{\uhp}{\text{hp}}
+\newcommand{\ukgmmm}{\ukg/\um^3}
+\newcommand{\uPa}{\text{Pa}}
+\newcommand{\ukPa}{\text{kPa}}
+\newcommand{\uatm}{\text{atm}}
+\newcommand{\ummHg}{\text{mm Hg}}
+\newcommand{\uHz}{\text{Hz}}
+\newcommand{\uRatm}{\uL\ \uatm\ \uK\inv\ \umol\inv}
+\newcommand{\uRPa}{\uJ\ \uK\inv\ \umol\inv}
+\newcommand{\uClmb}{\text{C}}
+\newcommand{\uV}{\text{V}}
+\newcommand{\uFarad}{\text{F}}
+\newcommand{\uT}{\text{T}}
 
-\newenvironment{myenum}{% no space
+% Forced label enumerates
+\newenvironment{inum}{ % 1. 2. 3.
+\begin{enumerate}[label = \arabic*.]}{\end{enumerate}}
+\newenvironment{anum}{ % (a) (b) (c)
+\begin{enumerate}[label = (\alph*)]}{\end{enumerate}}
+\newenvironment{Anum}{ % A. B. C.
+\begin{enumerate}[label = \Alph*.]}{\end{enumerate}}
+\newenvironment{rnum}{ % (i) (ii) (iii)
+\begin{enumerate}[label = (\roman*)]}{\end{enumerate}}
+\newenvironment{Rnum}{ % I. II. III.
+\begin{enumerate}[label = \Roman*.]}{\end{enumerate}}
+
+\newenvironment{tightenum}{
     \begin{enumerate}[topsep = 0pt]
     \setlength{\itemsep}{2pt}
     \setlength{\parskip}{0pt}
     \setlength{\parsep}{0pt}
 }{\end{enumerate}}
 
-\newenvironment{boldenum}{%
+\newenvironment{boldenum}{
     \begin{enumerate}[label=\textbf{\arabic*.}]
 }{\end{enumerate}}
 
-\newenvironment{myitem}{% no space
+\newenvironment{tightitem}{
     \begin{itemize}[topsep = 0pt]
     \setlength{\itemsep}{2pt}
     \setlength{\parskip}{0pt}
@@ -1034,7 +1099,6 @@
 
 \usepackage[inline]{asymptote}
 \usepackage{pgfplots}
-\pgfplotsset{compat=1.18}
 
 \begin{asydef}
     import olympiad;
