@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % prestonfu.sty
-% Copyright (c) 2022 by Preston Fu
+% Copyright (c) 2020 by Preston Fu
 %
 % All rights reserved. This file or any portion thereof
 % may not be reproduced or used in any manner whatsoever
@@ -102,6 +102,7 @@
 \usepackage[final]{pdfpages}
 \usepackage[framemethod=TikZ]{mdframed}
 \usepackage{mathtools}
+\usepackage{physics}
 \usepackage{epigraph}
 \usepackage{hyperref}
 \usepackage{mathrsfs}
@@ -123,7 +124,7 @@
 \newcommand{\cbrt}[1]{\sqrt[3]{#1}}
 \newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
 \newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
-\newcommand{\braces}[1]{\left \{ #1 \right \}}
+\renewcommand{\braces}[1]{\left \{ #1 \right \}}
 \newcommand{\set}[1]{\left \{ #1 \right \}}
 \newcommand{\parens}[1]{\left( #1 \right)}
 \newcommand{\brackets}[1]{\left[ #1 \right]}
@@ -176,9 +177,9 @@
 \DeclareMathOperator*{\cur}{curl} % curl
 \DeclareMathOperator*{\die}{div} % divergence
 \DeclareMathOperator*{\cis}{cis} % cis
-\DeclareMathOperator*{\rank}{rank} % rank
+% \DeclareMathOperator*{\rank}{rank} % rank
 \DeclareMathOperator*{\Spec}{Spec} % spectrum
-\DeclareMathOperator*{\Tr}{Tr} % trace
+% \DeclareMathOperator*{\Tr}{Tr} % trace
 \DeclareMathOperator*{\Dom}{Dom} % domain
 \DeclareMathOperator*{\Rng}{Rng} % range
 \DeclareMathOperator*{\Aut}{Aut} % automorphism
@@ -333,8 +334,8 @@
 \newcommand{\msZ}{\mathscr Z}
 
 % Geometry
-\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
-\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\renewcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\renewcommand{\norm}[1]{\left\lVert #1 \right\rVert}
 \newcommand{\dang}{\measuredangle}
 \newcommand{\ray}[1]{\overrightarrow{#1}} 
 \newcommand{\seg}[1]{\overline{#1}}
