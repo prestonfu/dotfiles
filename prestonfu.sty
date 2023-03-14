@@ -917,7 +917,6 @@
     \declaretheorem[style=thmpurplebox,name=Bogus Proof,numbered=no]{bogusproof}
     
 \else
-
     \theoremstyle{plain}
 
     \ifprestonchthm
@@ -947,8 +946,6 @@
     \declaretheorem[name=Takeaway,numbered=no]{takeaway}
     \declaretheorem[name=Concept,numbered=no]{concept}
     \declaretheorem[name=Idea,numbered=no]{idea}
-    \declaretheorem[name=Example,sibling=thm]{ex}
-    \declaretheorem[name=Example,numbered=no]{ex*}
 
     \ifprestonchthm
         \declaretheorem[name=Problem,numberwithin=chapter]{prob}
@@ -974,6 +971,8 @@
     
 \declaretheorem[name=Definition,sibling=thm]{defn}
 \declaretheorem[name=Definition,numbered=no]{defn*}
+\declaretheorem[name=Example,sibling=thm]{ex}
+\declaretheorem[name=Example,numbered=no]{ex*}
 \declaretheorem[name=Notation,sibling=thm]{notn}
 \declaretheorem[name=Notation,numbered=no]{notn*}
 \declaretheorem[name=Terminology,sibling=thm]{term}
@@ -982,8 +981,6 @@
 \declaretheorem[name=Conjecture,numbered=no]{conj*}
 \declaretheorem[name=Question,sibling=thm]{question}
 \declaretheorem[name=Question,numbered=no]{question*}
-\declaretheorem[name=Example,sibling=thm]{ex}
-\declaretheorem[name=Example,numbered=no]{ex*}
 \declaretheorem[name=Exercise,sibling=thm]{exer}
 \declaretheorem[name=Exercise,numbered=no]{exer*}
 
