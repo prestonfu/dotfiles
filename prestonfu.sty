@@ -101,6 +101,7 @@
 \usepackage{mathdots}
 \usepackage[final]{pdfpages}
 \usepackage[framemethod=TikZ]{mdframed}
+\usepackage{tikz-cd}
 \usepackage{mathtools}
 \usepackage{physics}
 \usepackage{epigraph}
@@ -946,7 +947,6 @@
     \declaretheorem[name=Takeaway,numbered=no]{takeaway}
     \declaretheorem[name=Concept,numbered=no]{concept}
     \declaretheorem[name=Idea,numbered=no]{idea}
-    
     \declaretheorem[name=Example,sibling=thm]{ex}
     \declaretheorem[name=Example,numbered=no]{ex*}
 
@@ -961,16 +961,13 @@
     \fi
 
 	\declaretheorem[name=Problem,numbered=no]{prob*}
-    
 	\declaretheorem[name=Claim,sibling=thm]{claim}
 	\declaretheorem[name=Claim]{iclaim}
 	\declaretheorem[name=Claim,numbered=no]{claim*}
-	
 	\declaretheorem[name=Warning,sibling=thm]{warn}
 	\declaretheorem[name=Warning,numbered=no]{warn*}
     \declaretheorem[name=Bogus Solution,numbered=no]{bogussol}
     \declaretheorem[name=Bogus Proof,numbered=no]{bogusproof}
-
 \fi
 
 \theoremstyle{definition}
@@ -982,27 +979,19 @@
 \declaretheorem[name=Terminology,sibling=thm]{term}
 \declaretheorem[name=Terminology,numbered=no]{term*}
 \declaretheorem[name=Conjecture,sibling=thm]{conj}
+\declaretheorem[name=Conjecture,numbered=no]{conj*}
 \declaretheorem[name=Question,sibling=thm]{question}
+\declaretheorem[name=Question,numbered=no]{question*}
 \declaretheorem[name=Example,sibling=thm]{ex}
+\declaretheorem[name=Example,numbered=no]{ex*}
 \declaretheorem[name=Exercise,sibling=thm]{exer}
 \declaretheorem[name=Exercise,numbered=no]{exer*}
 
-\ifprestonchthm
-    \declaretheorem[name=Answer,numberwithin=chapter]{answer}
-\else
-	\ifprestonsecthm
-		\declaretheorem[name=Answer,numberwithin=section]{answer}
-	\else
-		\declaretheorem[name=Answer]{answer}
-	\fi
-\fi
-
-\declaretheorem[name=Conjecture,numbered=no]{conj*}
-\declaretheorem[name=Question,numbered=no]{question*}
-\declaretheorem[name=Answer,numbered=no]{answer*}
+\declaretheorem[name=Answer,numbered=no]{answer}
 \declaretheorem[name=Algorithm,numbered=no]{algo}
 \declaretheorem[name=Abuse of Notation,numbered=no]{abuse}
 \declaretheorem[name=Upshot,numbered=no]{upshot}
+
 
 \theoremstyle{remark}
 
