@@ -129,6 +129,7 @@
 \newcommand{\parens}[1]{\left( #1 \right)}
 \newcommand{\brackets}[1]{\left[ #1 \right]}
 \newcommand{\angleb}[1]{\left\langle #1 \right\rangle}
+\newcommand{\innerprod}[2]{\angleb{#1, #2}}
 \newcommand{\pfrac}[2]{\parens{\frac{#1}{#2}}}
 \newcommand{\mailto}[1]{\href{mailto:#1}{\texttt{#1}}}
 \newcommand{\ol}{\overline}
@@ -161,7 +162,7 @@
     \newcommand{\vocab}[1]{\bold{\color{theme}{#1}}}
 \fi
 
-% Functions
+% Misc Functions
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\lcm}{lcm} % least common multiple
@@ -185,6 +186,19 @@
 \DeclareMathOperator*{\Aut}{Aut} % automorphism
 \DeclareMathOperator*{\image}{im} % image
 \DeclareMathOperator*{\Gal}{Gal} % Galois Group
+
+% Probability
+\newcommand{\one}{\mathbf{1}}
+\newcommand\Geom{\textnormal{Geometric}}
+\newcommand\Bern{\textnormal{Bernoulli}}
+\newcommand\Bin{\textnormal{Binomial}}
+\newcommand\Pois{\textnormal{Poisson}}
+\newcommand\Expo{\textnormal{Exponential}}
+\newcommand\Unif{U}
+\newcommand\Normal{\mcN}
+\newcommand{\transpose}{^\top}
+\newcommand{\T}{\transpose}
+\newcommand{\iid}{\stackrel{\text{iid}}{\sim}}
 
 % Sums and Products
 \newcommand{\cycsum}{\sum_{\mathrm{cyc}}}
@@ -436,24 +450,13 @@
   %%%%         HYPERREF          %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ifprestoncolor
-    \hypersetup{
-        colorlinks,
-        citecolor=astral,
-        filecolor=astral,
-        linkcolor=black,
-        urlcolor=astral
-    }
-\else
-    \hypersetup{
-        colorlinks,
-        citecolor=black,
-        filecolor=black,
-        linkcolor=black,
-        urlcolor=black
-    }
-
-\fi
+\hypersetup{
+    colorlinks,
+    citecolor=astral,
+    filecolor=astral,
+    linkcolor=black,
+    urlcolor=astral
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%            PAGE SETUP            %%%%
@@ -542,6 +545,7 @@
     \addtokomafont{subtitle}{\Large}
     \setkomafont{author}{\large}
     \setkomafont{date}{\large}
+    \setkomafont{section}{\Large}
     
     \@ifundefined{chapter}{}{
         \addtokomafont{part}{\sffamily\bfseries}
@@ -715,13 +719,13 @@
 	
 	\mdfdefinestyle{mdgraybox}{%
 		skipabove=8pt,
-		linewidth=\mdlinewidth,
+		linewidth=1pt,
 		rightline=false,
-		leftline=true,
-		topline=false,
-		bottomline=false,
-		linecolor=Gray!40!Black!60,
-		backgroundcolor=Gray!10,
+		leftline=false,
+		topline=true,
+		bottomline=true,
+		linecolor=Gray!50,
+		backgroundcolor=Gray!5,
 		innertopmargin=6pt,
 		innerbottommargin=6pt,
 	}
@@ -884,13 +888,9 @@
 	\declaretheorem[style=thmbluebox,name=Corollary,numbered=no]{cor*}
 	
     \theoremstyle{definition}
-
-    \declaretheorem[style=thmgreenbox,name=Takeaway,numbered=no]{takeaway}
-    \declaretheorem[style=thmgreenbox,name=Concept,numbered=no]{concept}
-    \declaretheorem[style=thmgreenbox,name=Idea,numbered=no]{idea}
-    
-    \declaretheorem[style=thmbrownbox,name=Example,sibling=thm]{ex}
-    \declaretheorem[style=thmbrownbox,name=Example,numbered=no]{ex*}
+    \declaretheorem[style=thmgreenbox,name=Takeaway,sibling=thm]{takeaway}
+    \declaretheorem[style=thmgreenbox,name=Concept,sibling=thm]{concept}
+    \declaretheorem[style=thmgreenbox,name=Idea,sibling=thm]{idea}
 
     \ifprestonchthm
         \declaretheorem[name=Problem,numberwithin=chapter]{prob}
@@ -983,6 +983,7 @@
 \declaretheorem[name=Terminology,numbered=no]{term*}
 \declaretheorem[name=Conjecture,sibling=thm]{conj}
 \declaretheorem[name=Question,sibling=thm]{question}
+\declaretheorem[name=Example,sibling=thm]{ex}
 \declaretheorem[name=Exercise,sibling=thm]{exer}
 \declaretheorem[name=Exercise,numbered=no]{exer*}
 
@@ -1013,15 +1014,15 @@
 \ifprestonbeamer\AtBeginDocument{
     \newenvironment{thm}[1][]{
         \ifthenelse{\isempty{#1}}{\begin{block}{Theorem}}{\begin{block}{Theorem (#1)}}
-        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
+        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
     }
     \newenvironment{proposition}[1][]{
         \ifthenelse{\isempty{#1}}{\begin{block}{Proposition}}{\begin{block}{Proposition (#1)}}
-        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
+        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
     }
     \newenvironment{conjecture}[1][]{
         \ifthenelse{\isempty{#1}}{\begin{block}{Conjecture}}{\begin{block}{Conjecture (#1)}}
-        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
+        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
     }
     \newenvironment{prob}[1][]{
         \ifthenelse{\isempty{#1}}{\begin{exampleblock}{Problem}}{\begin{exampleblock}{Problem (#1)}}
@@ -1045,12 +1046,12 @@
     \newenvironment{definition}[1][]{
         \setbeamercolor{block title}{bg=RoyalPurple,fg=white}
         \ifthenelse{\isempty{#1}}{\begin{block}{Definition}}{\begin{block}{Definition (#1)}}
-        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
+        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
     }
     \newenvironment{corollary}[1][]{
         \setbeamercolor{block title}{bg=MidnightBlue,fg=white}
         \ifthenelse{\isempty{#1}}{\begin{block}{Corollary}}{\begin{block}{Corollary (#1)}}
-        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}} % vim alignment fix
+        }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
     }
 }
 \fi
@@ -1093,19 +1094,3 @@
 \newenvironment{pfsketch}[1][Proof Sketch] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
 \newenvironment{progress}[1][Progress] {\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\itshape#1\@addpunct{.}]\ignorespaces}{\endtrivlist\@endpefalse}
 \makeatother
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- %%%%          ASYMPTOTE          %%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\usepackage[inline]{asymptote}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.16}
-
-\begin{asydef}
-    import olympiad;
-	usepackage("bm");
-    usepackage("amsmath");
-	usepackage("amssymb");
-	defaultpen(fontsize(11pt));
-\end{asydef}
