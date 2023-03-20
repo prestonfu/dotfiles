@@ -142,10 +142,6 @@
 \newcommand{\anschoices}[5]{\textbf{(A) }#1\qquad\textbf{(B) }#2\qquad\textbf{(C) }#3\qquad\textbf{(D) }#4\qquad\textbf{(E) }#5}
 
 \definecolor{astral}{RGB}{46,116,181}
-\definecolor{dkturquoise}{RGB}{0,131,138}
-\definecolor{dkgreen}{RGB}{0,153,0}
-\definecolor{gray}{RGB}{128,128,128}
-\definecolor{mauve}{RGB}{148,0,210}
 \definecolor{theme}{RGB}{0,81,120}
 
 \renewcommand{\bold}[1]{{\boldmath\bfseries #1}}
@@ -1080,3 +1076,39 @@
 \newenvironment{pfsketch}[1][Proof Sketch] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
 \newenvironment{progress}[1][Progress] {\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\itshape#1\@addpunct{.}]\ignorespaces}{\endtrivlist\@endpefalse}
 \makeatother
+
+\newenvironment{subproof}[1][\proofname]{\renewcommand{\qedsymbol}{$\Box$}\begin{proof}[#1]}{\end{proof}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%           CODE          %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily, keywordstyle=\bfseries}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{codebackcolor}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{defaultstyle}{
+    backgroundcolor=\color{codebackcolor},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\scriptsize\color{black},
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=defaultstyle}
