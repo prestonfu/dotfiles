@@ -111,6 +111,10 @@
 \usepackage{emptypage}
 \usepackage{appendix}
 \usepackage{imakeidx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{booktabs}
+\usepackage{todonotes}
 
 \ifprestonbeamer\else
     \usepackage{enumitem}
@@ -135,8 +139,11 @@
 \newcommand{\mailto}[1]{\href{mailto:#1}{\texttt{#1}}}
 \newcommand{\ol}{\overline}
 \newcommand{\ul}{\underline}
+\renewcommand{\vec}[1]{\mathbf{#1}}
 \newcommand{\eps}{\varepsilon}
 \newcommand{\degs}{^\circ}
+\newcommand{\transpose}{^\top}
+\newcommand{\T}{\transpose}
 \newcommand{\inv}{^{-1}}
 \newcommand{\hrulebar}{\begin{center}\nointerlineskip\vspace{5pt}\rule{\textwidth}{.7pt}\hspace{\fill}\end{center}}
 \newcommand{\anschoices}[5]{\textbf{(A) }#1\qquad\textbf{(B) }#2\qquad\textbf{(C) }#3\qquad\textbf{(D) }#4\qquad\textbf{(E) }#5}
@@ -194,8 +201,8 @@
 \newcommand\Expo{\operatorname{Exponential}}
 \newcommand\Unif{U}
 \newcommand\Normal{\mcN}
-\newcommand{\transpose}{^\top}
-\newcommand{\T}{\transpose}
+\newcommand\MLE{{\operatorname{MLE}}}
+\newcommand\MAP{{\operatorname{MAP}}}
 \newcommand{\iid}{\stackrel{\text{iid}}{\sim}}
 
 % Sums and Products
@@ -230,12 +237,9 @@
 \newcommand{\YY}{\mathbb Y}
 \newcommand{\ZZ}{\mathbb Z}
 
-\newcommand{\ii}{\textbf i}
-\newcommand{\jj}{\textbf j}
-\newcommand{\kk}{\textbf k}
-\newcommand{\ihat}{\hat{\textbf \i}}
-\newcommand{\jhat}{\hat{\textbf \j}}
-\newcommand{\khat}{\hat\kk}
+\newcommand{\ii}{\vec i}
+\newcommand{\jj}{\vec j}
+\newcommand{\kk}{\vec k}
 
 \newcommand{\mfA}{\mathfrak A}
 \newcommand{\mfB}{\mathfrak B}
