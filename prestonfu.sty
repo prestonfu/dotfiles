@@ -115,6 +115,7 @@
 \usepackage{algpseudocode}
 \usepackage{booktabs}
 \usepackage{todonotes}
+\usepackage{bbm}
 
 \ifprestonbeamer\else
     \usepackage{enumitem}
@@ -139,10 +140,10 @@
 \newcommand{\mailto}[1]{\href{mailto:#1}{\texttt{#1}}}
 \newcommand{\ol}{\overline}
 \newcommand{\ul}{\underline}
-\renewcommand{\vec}[1]{\mathbf{#1}}
+\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
 \newcommand{\eps}{\varepsilon}
 \newcommand{\degs}{^\circ}
-\newcommand{\transpose}{^\top}
+\newcommand{\transpose}{{}^{\!\top\!}}
 \newcommand{\T}{\transpose}
 \newcommand{\inv}{^{-1}}
 \newcommand{\hrulebar}{\begin{center}\nointerlineskip\vspace{5pt}\rule{\textwidth}{.7pt}\hspace{\fill}\end{center}}
@@ -193,17 +194,19 @@
 \DeclareMathOperator*{\Gal}{Gal} % Galois Group
 
 % Probability
-\newcommand{\one}{\mathbf{1}}
-\newcommand\Geom{\operatorname{Geometric}}
-\newcommand\Bern{\operatorname{Bernoulli}}
-\newcommand\Bin{\operatorname{Binomial}}
-\newcommand\Pois{\operatorname{Poisson}}
-\newcommand\Expo{\operatorname{Exponential}}
+\newcommand{\one}{\mathbbm{1}}
+\DeclareMathOperator*{\Geom}{\text{Geometric}}
+\DeclareMathOperator*{\Bern}{\text{Bern}}
+\DeclareMathOperator*{\Bin}{\text{Bin}}
+\DeclareMathOperator*{\Pois}{\text{Poisson}}
+\DeclareMathOperator*{\Expo}{\text{Exp}}
+\DeclareMathOperator*{\MLE}{\text{MLE}}
+\DeclareMathOperator*{\MAP}{\text{MAP}}
 \newcommand\Unif{U}
 \newcommand\Normal{\mcN}
-\newcommand\MLE{{\operatorname{MLE}}}
-\newcommand\MAP{{\operatorname{MAP}}}
 \newcommand{\iid}{\stackrel{\text{iid}}{\sim}}
+\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\comp}{^{\text{c}}}
 
 % Sums and Products
 \newcommand{\cycsum}{\sum_{\mathrm{cyc}}}
