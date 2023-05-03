@@ -116,6 +116,7 @@
 \usepackage{booktabs}
 \usepackage{todonotes}
 \usepackage{bbm}
+\usepackage{bm}
 
 \ifprestonbeamer\else
     \usepackage{enumitem}
@@ -140,7 +141,7 @@
 \newcommand{\mailto}[1]{\href{mailto:#1}{\texttt{#1}}}
 \newcommand{\ol}{\overline}
 \newcommand{\ul}{\underline}
-\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
+\renewcommand{\vec}[1]{\if#1\relax\bm{#1}\else\mathbf{#1}\fi}
 \newcommand{\eps}{\varepsilon}
 \newcommand{\degs}{^\circ}
 \newcommand{\transpose}{{}^{\!\top\!}}
