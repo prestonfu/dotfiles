@@ -110,7 +110,6 @@
 \usepackage{textcomp}
 \usepackage{emptypage}
 \usepackage{appendix}
-\usepackage{imakeidx}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{booktabs}
@@ -167,9 +166,14 @@
 \fi
 
 \ifprestonams
-    \newcommand{\vocab}[1]{\emph{#1}}
+    \newcommand{\basevocab}[1]{\emph{#1}}
 \else
-    \newcommand{\vocab}[1]{\bold{\color{theme}{#1}}}
+    \newcommand{\basevocab}[1]{\bold{\color{theme}{#1}}}
+\fi
+\ifprestonindex
+    \newcommand{\vocab}[1]{\basevocab{#1}\index{#1}}
+\else
+    \newcommand{\vocab}[1]{\basevocab{#1}}
 \fi
 
 % Misc Functions
@@ -190,13 +194,17 @@
 \DeclareMathOperator*{\die}{div} % divergence
 \DeclareMathOperator*{\cis}{cis} % cis
 % \DeclareMathOperator*{\rank}{rank} % rank
+\DeclareMathOperator*{\nul}{null}
+\DeclareMathOperator*{\nullity}{nullity}
+% \DeclareMathOperator*{\ker}{ker}
+\DeclareMathOperator*{\range}{range}
+\DeclareMathOperator*{\image}{im} % image
+\DeclareMathOperator*{\row}{row}
+\DeclareMathOperator*{\col}{col}
 \DeclareMathOperator*{\Spec}{Spec} % spectrum
 % \DeclareMathOperator*{\Tr}{Tr} % trace
 \DeclareMathOperator*{\diag}{diag} % diagonal
-\DeclareMathOperator*{\Dom}{Dom} % domain
-\DeclareMathOperator*{\Rng}{Rng} % range
 \DeclareMathOperator*{\Aut}{Aut} % automorphism
-\DeclareMathOperator*{\image}{im} % image
 \DeclareMathOperator*{\Gal}{Gal} % Galois Group
 
 % Probability
@@ -608,6 +616,7 @@
 }
 
 \ifprestonindex
+    \usepackage{imakeidx}
     \makeindex[columns=2,intoc]
 \fi
 
@@ -619,7 +628,7 @@
 \ifprestonmdthm
 
     \ifprestonmdline
-        \def\mdlinewidth{3pt}
+        \def\mdlinewidth{2pt}
     \else
         \def\mdlinewidth{0pt}
     \fi
