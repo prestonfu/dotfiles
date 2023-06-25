@@ -147,7 +147,7 @@
 \renewcommand{\vec}[1]{\if#1\relax\bm{#1}\else\mathbf{#1}\fi}
 \newcommand{\eps}{\varepsilon}
 \newcommand{\degs}{^\circ}
-\newcommand{\transpose}{{}^{\!\top\!}}
+\newcommand{\transpose}{^{\!\top\!}}
 \newcommand{\T}{\transpose}
 \newcommand{\inv}{^{-1}}
 \newcommand{\hrulebar}{\begin{center}\nointerlineskip\vspace{5pt}\rule{\textwidth}{.7pt}\hspace{\fill}\end{center}}
@@ -198,7 +198,7 @@
 \DeclareMathOperator*{\nullity}{nullity}
 % \DeclareMathOperator*{\ker}{ker}
 \DeclareMathOperator*{\range}{range}
-\DeclareMathOperator*{\image}{im} % image
+\DeclareMathOperator*{\image}{im}
 \DeclareMathOperator*{\row}{row}
 \DeclareMathOperator*{\col}{col}
 \DeclareMathOperator*{\Spec}{Spec} % spectrum
@@ -209,15 +209,22 @@
 
 % Probability
 \newcommand{\one}{\mathbbm{1}}
+\newcommand{\indicator}[1]{\one_{\set{#1}}}
 \DeclareMathOperator*{\Geom}{\text{Geometric}}
 \DeclareMathOperator*{\Bern}{\text{Bern}}
 \DeclareMathOperator*{\Bin}{\text{Bin}}
 \DeclareMathOperator*{\Pois}{\text{Poisson}}
 \DeclareMathOperator*{\Expo}{\text{Exp}}
-\DeclareMathOperator*{\MLE}{\text{MLE}}
-\DeclareMathOperator*{\MAP}{\text{MAP}}
 \newcommand\Unif{U}
 \newcommand\Normal{\mcN}
+\newcommand{\Geometric}{\Geom}
+\newcommand{\Bernoulli}{\Bern}
+\newcommand{\Poisson}{\Pois}
+\newcommand{\Exponential}{\Expo}
+\newcommand{\Uniform}{\Unif}
+\newcommand{\poisp}{\operatorname{PP}}
+\DeclareMathOperator*{\MLE}{\text{MLE}}
+\DeclareMathOperator*{\MAP}{\text{MAP}}
 \newcommand{\iid}{\stackrel{\text{iid}}{\sim}}
 \renewcommand{\Pr}{\mathbb{P}}
 \newcommand{\comp}{^{\text{c}}}
