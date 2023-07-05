@@ -21,6 +21,7 @@
 \newif\ifprestonbeamer\prestonbeamerfalse
 \newif\ifprestoncolor\prestoncolortrue
 \newif\ifprestonmonochrome\prestonmonochromefalse
+\newif\ifprestoncolorlinks\prestoncolorlinkstrue
 \newif\ifprestonthmenabled\prestonthmenabledtrue
 \newif\ifprestonchthm\prestonchthmfalse
 \newif\ifprestonsecthm\prestonsecthmtrue
@@ -31,6 +32,7 @@
 \newif\ifprestonfancyhint\prestonfancyhintfalse
 \newif\ifprestonpazo\prestonpazofalse
 \newif\ifprestonroboto\prestonrobotofalse
+\newif\ifprestontimes\prestontimesfalse
 \newif\ifprestonmdline\prestonmdlinetrue
 \newif\ifprestonsetlinespacing\prestonsetlinespacingtrue
 \newif\ifprestonnoindent\prestonnoindentfalse
@@ -43,6 +45,7 @@
 \DeclareOption{color}{\prestoncolortrue}
 \DeclareOption{monochrome}{\prestoncolortrue\prestonmonochrometrue}
 \DeclareOption{nocolor}{\prestoncolorfalse}
+\DeclareOption{nocolorlinks}{\prestoncolorlinksfalse}
 \DeclareOption{nothm}{\prestonthmenabledfalse}
 \DeclareOption{chthm}{\prestonchthmtrue}
 \DeclareOption{secthm}{\prestonsecthmtrue}
@@ -61,6 +64,8 @@
 \DeclareOption{nopazo}{\prestonpazofalse}
 \DeclareOption{roboto}{\prestonrobototrue}
 \DeclareOption{noroboto}{\prestonrobotofalse}
+\DeclareOption{times}{\prestontimestrue}
+\DeclareOption{notimes}{\prestontimesfalse}
 \DeclareOption{mdline}{\prestonmdlinetrue}
 \DeclareOption{nomdline}{\prestonmdlinefalse}
 \DeclareOption{nosetlinespacing}{\prestonsetlinespacingfalse}
@@ -118,6 +123,9 @@
 \usepackage{subcaption}
 \usepackage{multicol}
 \usepackage{todonotes}
+
+\newcommand\hmmax{0}
+\newcommand\bmmax{0}
 \usepackage{bbm}
 \usepackage{bm}
 
@@ -476,13 +484,23 @@
   %%%%         HYPERREF          %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\hypersetup{
-    colorlinks,
-    citecolor=astral,
-    filecolor=astral,
-    linkcolor=black,
-    urlcolor=astral
-}
+\ifprestoncolorlinks
+    \hypersetup{
+        colorlinks,
+        citecolor=astral,
+        filecolor=astral,
+        linkcolor=black,
+        urlcolor=astral
+    }
+\else
+    \hypersetup{
+        colorlinks,
+        citecolor=black,
+        filecolor=black,
+        linkcolor=black,
+        urlcolor=black
+    }
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%            PAGE SETUP            %%%%
@@ -508,6 +526,11 @@
 
 \ifprestonroboto
     \usepackage{roboto}
+\fi
+
+\ifprestontimes
+    \usepackage{times}
+    \usepackage{txfonts}
 \fi
 
 \@ifundefined{KOMAClassName}
