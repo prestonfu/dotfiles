@@ -217,7 +217,7 @@
 
 % Probability
 \newcommand{\one}{\mathbbm{1}}
-\newcommand{\indicator}[1]{\one_{\set{#1}}}
+\newcommand{\indicator}[1]{\one{\set{#1}}}
 \DeclareMathOperator*{\Geom}{\text{Geometric}}
 \DeclareMathOperator*{\Bern}{\text{Bern}}
 \DeclareMathOperator*{\Bin}{\text{Bin}}
@@ -236,6 +236,8 @@
 \newcommand{\iid}{\stackrel{\text{iid}}{\sim}}
 \renewcommand{\Pr}{\mathbb{P}}
 \newcommand{\comp}{^{\text{c}}}
+\newcommand{\condexp}[2]{\EE\left[ #1 \,\middle|\, #2 \right]} % conditional expectation
+\newcommand{\KL}[2]{D_{\text{KL}}(#1 \!\!\parallel\!\! #2)}
 
 % Sums and Products
 \newcommand{\cycsum}{\sum_{\mathrm{cyc}}}
@@ -1125,11 +1127,11 @@
 
 \makeatletter
 \newenvironment{sol}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
+\newenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
 \newenvironment{solsketch}[1][Solution Sketch] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
 \newenvironment{pfsketch}[1][Proof Sketch] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
 \newenvironment{progress}[1][Progress] {\par\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\itshape#1\@addpunct{.}]\ignorespaces}{\endtrivlist\@endpefalse}
 \makeatother
-
 \newenvironment{subproof}[1][\proofname]{\renewcommand{\qedsymbol}{$\Box$}\begin{proof}[#1]}{\end{proof}}
 
 
