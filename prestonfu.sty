@@ -74,23 +74,23 @@
 \DeclareOption{index}{\prestonindextrue}
 
 \@ifundefined{KOMAClassName}{
-  \prestoncolorfalse
-  \prestonfancytrue
+	\prestoncolorfalse
+	\prestonfancytrue
 }{
-  \prestonmdthmtrue
+	\prestonmdthmtrue
 }
 
 \DeclareOption{ams}{
-  \prestoncolorfalse
-  \prestonfancyfalse
-  \prestonamstrue
+	\prestoncolorfalse
+	\prestonfancyfalse
+	\prestonamstrue
 }
 
 \DeclareOption{beamer}{
-  \prestonbeamertrue
-  \prestonfancyfalse
-  \prestonmarginsetfalse
-  \prestonthmenabledfalse
+	\prestonbeamertrue
+	\prestonfancyfalse
+	\prestonmarginsetfalse
+	\prestonthmenabledfalse
 }
 
 \ProcessOptions\relax
@@ -124,6 +124,9 @@
 \usepackage{multicol}
 \usepackage{todonotes}
 \usepackage[nameinlink]{cleveref}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{cancel}
 
 \newcommand\hmmax{0}
 \newcommand\bmmax{0}
@@ -131,11 +134,11 @@
 \usepackage{bm}
 
 \ifprestonbeamer\else
-  \usepackage{enumitem}
+	\usepackage{enumitem}
 \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%      USEFUL COMMANDS      %%%%
+%%%%         GENERAL UTILS         %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\dotp}{\boldsymbol{\cdot}}
@@ -167,22 +170,22 @@
 
 \renewcommand{\bold}[1]{{\boldmath\bfseries #1}}
 \ifprestoncolor
-  \ifprestonmonochrome\else
-    \colorlet{theme}{NavyBlue}
-  \fi
+	\ifprestonmonochrome\else
+		\colorlet{theme}{NavyBlue}
+	\fi
 \else
-  \colorlet{theme}{Black}
+	\colorlet{theme}{Black}
 \fi
 
 \ifprestonams
-  \newcommand{\basevocab}[1]{\emph{#1}}
+	\newcommand{\basevocab}[1]{\emph{#1}}
 \else
-  \newcommand{\basevocab}[1]{\bold{\color{theme}{#1}}}
+	\newcommand{\basevocab}[1]{\bold{\color{theme}{#1}}}
 \fi
 \ifprestonindex
-  \newcommand{\vocab}[1]{\basevocab{#1}\index{#1}}
+	\newcommand{\vocab}[1]{\basevocab{#1}\index{#1}}
 \else
-  \newcommand{\vocab}[1]{\basevocab{#1}}
+	\newcommand{\vocab}[1]{\basevocab{#1}}
 \fi
 
 % Misc Functions
@@ -236,20 +239,30 @@
 \newcommand{\Exponential}{\Expo}
 \newcommand{\Uniform}{\Unif}
 \newcommand{\poisp}{\operatorname{PP}}
-\DeclareMathOperator*{\MLE}{\text{MLE}}
-\DeclareMathOperator*{\MAP}{\text{MAP}}
+\newcommand{\mle}{\operatorname{MLE}}
+\newcommand{\map}{\operatorname{MAP}}
+\newcommand{\mse}{\operatorname{MSE}}
+\newcommand{\rss}{\operatorname{RSS}}
 \newcommand{\iid}{\stackrel{\text{iid}}{\sim}}
 \renewcommand{\Pr}{\mathbb{P}}
 \newcommand{\comp}{^{\text{c}}}
 \newcommand{\condexp}[2]{\EE\left[ #1 \,\middle|\, #2 \right]} % conditional expectation
 \newcommand{\condexpsub}[3]{\EE_{#1}\left[ #2 \,\middle|\, #3 \right]} % conditional expectation
 \newcommand{\KL}[2]{D_{\text{KL}}(#1 \parallel #2)}
+\newcommand{\regret}{\operatorname{regret}}
+\newcommand{\indep}{\mathrel{\perp\!\!\!\!\perp}}
 
 % Sums and Products
 \newcommand{\cycsum}{\sum_{\mathrm{cyc}}}
 \newcommand{\symsum}{\sum_{\mathrm{sym}}}
 \newcommand{\cycprod}{\prod_{\mathrm{cyc}}}
 \newcommand{\symprod}{\prod_{\mathrm{sym}}}
+
+% Algorithm
+\algnewcommand{\algorithmicand}{\textbf{and }}
+\algnewcommand{\algorithmicor}{\textbf{or }}
+\algnewcommand{\Or}{\algorithmicor}
+\algnewcommand{\And}{\algorithmicand}
 
 % Letters
 \newcommand{\BB}{\mathbb B}
@@ -457,204 +470,210 @@
 \newcommand{\uV}{\text{V}}
 \newcommand{\uFarad}{\text{F}}
 \newcommand{\uT}{\text{T}}
+\newcommand{\ulm}{\mathrm{lm}}
+\newcommand{\usr}{\mathrm{sr}}
+\newcommand{\ucd}{\mathrm{cd}}
+\newcommand{\ulux}{\mathrm{lux}}
+\newcommand{\unit}{\mathrm{nit}}
 
 % Forced label enumerates
 \newenvironment{inum}{ % 1. 2. 3.
-  \begin{enumerate}[label = \arabic*.]}{\end{enumerate}}
+	\begin{enumerate}[label = \arabic*.]}{\end{enumerate}}
 \newenvironment{anum}{ % (a) (b) (c)
-  \begin{enumerate}[label = (\alph*)]}{\end{enumerate}}
+	\begin{enumerate}[label = (\alph*)]}{\end{enumerate}}
 \newenvironment{Anum}{ % A. B. C.
-  \begin{enumerate}[label = \Alph*.]}{\end{enumerate}}
+	\begin{enumerate}[label = \Alph*.]}{\end{enumerate}}
 \newenvironment{rnum}{ % (i) (ii) (iii)
-  \begin{enumerate}[label = (\roman*)]}{\end{enumerate}}
+	\begin{enumerate}[label = (\roman*)]}{\end{enumerate}}
 \newenvironment{Rnum}{ % I. II. III.
-  \begin{enumerate}[label = \Roman*.]}{\end{enumerate}}
+	\begin{enumerate}[label = \Roman*.]}{\end{enumerate}}
 
 \newenvironment{tightenum}{
-  \begin{enumerate}[topsep = 0pt]
-    \setlength{\itemsep}{2pt}
-    \setlength{\parskip}{0pt}
-    \setlength{\parsep}{0pt}
-    }{\end{enumerate}}
+	\begin{enumerate}[topsep = 0pt]
+		\setlength{\itemsep}{2pt}
+		\setlength{\parskip}{0pt}
+		\setlength{\parsep}{0pt}
+		}{\end{enumerate}}
 
 \newenvironment{boldenum}{
-  \begin{enumerate}[label=\textbf{\arabic*.}]
-    }{\end{enumerate}}
+	\begin{enumerate}[label=\textbf{\arabic*.}]
+		}{\end{enumerate}}
 
 \newenvironment{tightitem}{
-  \begin{itemize}[topsep = 0pt]
-    \setlength{\itemsep}{2pt}
-    \setlength{\parskip}{0pt}
-    \setlength{\parsep}{0pt}
-    }{\end{itemize}}
+	\begin{itemize}[topsep = 0pt]
+		\setlength{\itemsep}{2pt}
+		\setlength{\parskip}{0pt}
+		\setlength{\parsep}{0pt}
+		}{\end{itemize}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%         HYPERREF          %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ifprestoncolorlinks
-  \hypersetup{
-    colorlinks,
-    citecolor=astral,
-    filecolor=astral,
-    linkcolor=black,
-    urlcolor=astral
-  }
+	\hypersetup{
+		colorlinks,
+		citecolor=astral,
+		filecolor=astral,
+		linkcolor=black,
+		urlcolor=astral
+	}
 \else
-  \hypersetup{
-    colorlinks,
-    citecolor=black,
-    filecolor=black,
-    linkcolor=black,
-    urlcolor=black
-  }
+	\hypersetup{
+		colorlinks,
+		citecolor=black,
+		filecolor=black,
+		linkcolor=black,
+		urlcolor=black
+	}
 \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%            PAGE SETUP            %%%%
+%%%%             PAGE SETUP               %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ifprestonsetlinespacing
-  \ifprestonnoindent
-    \setlength{\parindent}{0pt}
-  \fi
-  \setlength{\parskip}{0.6ex}
-  \renewcommand{\baselinestretch}{1.05}
+	\ifprestonnoindent
+		\setlength{\parindent}{0pt}
+	\fi
+	\setlength{\parskip}{0.6ex}
+	\renewcommand{\baselinestretch}{1.05}
 \fi
 
 \ifprestonams\else
-  \ifprestonmarginset
-    \setlength{\headheight}{16pt}
-    \setlength{\headsep}{10pt}
-  \fi\fi
+	\ifprestonmarginset
+		\setlength{\headheight}{16pt}
+		\setlength{\headsep}{10pt}
+	\fi\fi
 
 \ifprestonpazo
-  \usepackage{mathpazo}
+	\usepackage{mathpazo}
 \fi
 
 \ifprestonroboto
-  \usepackage{roboto}
+	\usepackage{roboto}
 \fi
 
 \ifprestontimes
-  \usepackage{times}
-  \usepackage{txfonts}
+	\usepackage{times}
+	\usepackage{txfonts}
 \fi
+
+\captionsetup{format=plain}
+\captionsetup{labelfont=bf}
+\captionsetup{labelsep=period}
 
 \@ifundefined{KOMAClassName}
 {
-  \ifprestonmarginset
-    \usepackage[margin=1in]{geometry}
-  \fi
+	\ifprestonmarginset
+		\usepackage[margin=1in]{geometry}
+	\fi
 
-  \ifprestonfancy
-    \usepackage{fancyhdr}
-    \pagestyle{fancy}
-    \fancyhf{}
-    \ifprestonbook
-      \renewcommand\chaptermark[1]{\markboth{#1}{}}
-      \fancyhead[CO]{\textit{\nouppercase{\rightmark}}}
-      \fancyhead[CE]{\textit{\nouppercase{\leftmark}}}
-      \fancyhead[LE,RO]{\thepage}
-      \renewcommand{\headrulewidth}{0pt}
-    \else
-      \lhead{\thetitle}
-      \rhead{\theauthor}
-      \cfoot{\thepage}
-      \renewcommand{\headrulewidth}{0.5pt}
-    \fi
-  \fi
+	\ifprestonfancy
+		\usepackage{fancyhdr}
+		\pagestyle{fancy}
+		\fancyhf{}
+		\ifprestonbook
+			\renewcommand\chaptermark[1]{\markboth{#1}{}}
+			\fancyhead[CO]{\textit{\nouppercase{\rightmark}}}
+			\fancyhead[CE]{\textit{\nouppercase{\leftmark}}}
+			\fancyhead[LE,RO]{\thepage}
+			\renewcommand{\headrulewidth}{0pt}
+		\else
+			\lhead{\thetitle}
+			\rhead{\theauthor}
+			\cfoot{\thepage}
+			\renewcommand{\headrulewidth}{0.5pt}
+		\fi
+	\fi
 }
 {
-  \ifprestonmarginset
-    \usepackage[margin=1in]{geometry}
-    \setlength{\footskip}{0.5in}
-  \fi
+	\ifprestonmarginset
+		\usepackage[margin=1in]{geometry}
+		\setlength{\footskip}{0.5in}
+	\fi
 
-  \ifprestonfancy
-    \ifprestonbook
-      \usepackage{scrlayer-scrpage}
-      \renewcommand\chaptermark[1]{\markboth{#1}{}}
-      \renewcommand*{\headfont}{\itshape\small\sffamily}
-      \renewcommand*{\pnumfont}{\normalfont\small\sffamily}
-      \ohead{\pagemark}
-      \ofoot{}
-      \cfoot{}
-      \chead{\headmark}
-    \else
-      \usepackage[headsepline]{scrlayer-scrpage}
-      \renewcommand{\headfont}{}
-      \ifprestonmarginset
-        \usepackage[margin=1in]{geometry}
-        \setlength{\footskip}{0.5in}
-      \fi
-      \ihead{\small\textbf{\thetitle}}
-      \automark{section}
-      \chead{}
-      \ohead{\small\textbf{\theauthor}}
-      \cfoot{\pagemark}
-    \fi
-  \fi
+	\ifprestonfancy
+		\ifprestonbook
+			\usepackage{scrlayer-scrpage}
+			\renewcommand\chaptermark[1]{\markboth{#1}{}}
+			\renewcommand*{\headfont}{\itshape\small\sffamily}
+			\renewcommand*{\pnumfont}{\normalfont\small\sffamily}
+			\ohead{\pagemark}
+			\ofoot{}
+			\cfoot{}
+			\chead{\headmark}
+		\else
+			\usepackage[headsepline]{scrlayer-scrpage}
+			\renewcommand{\headfont}{}
+			\ifprestonmarginset
+				\usepackage[margin=1in]{geometry}
+				\setlength{\footskip}{0.5in}
+			\fi
+			\ihead{\small\textbf{\thetitle}}
+			\automark{section}
+			\chead{}
+			\ohead{\small\textbf{\theauthor}}
+			\cfoot{\pagemark}
+		\fi
+	\fi
 
-  \makeatletter
-  \patchcmd{\@maketitle}{\huge}{\LARGE}{}{}
-  \makeatother
-  \addtokomafont{subtitle}{\Large}
-  \setkomafont{author}{\large}
-  \setkomafont{date}{\large}
-  \setkomafont{section}{\Large}
+	\makeatletter
+	\patchcmd{\@maketitle}{\huge}{\Large}{}{}
+	\makeatother
+	\addtokomafont{subtitle}{\Large}
+	\setkomafont{author}{\large}
+	\setkomafont{date}{\large}
+	\setkomafont{section}{\large}
 
-  \@ifundefined{chapter}{}{
-    \addtokomafont{part}{\sffamily\bfseries}
-    \addtokomafont{chapter}{\sffamily\bfseries}
-  }
-  \addtokomafont{section}{\sffamily\bfseries}
-  \addtokomafont{subsection}{\sffamily\bfseries}
-  \addtokomafont{subsubsection}{\sffamily\bfseries}
+	\@ifundefined{chapter}{}{
+		\addtokomafont{part}{\LARGE}
+		\addtokomafont{chapter}{\Large}
+	}
 
-  \@ifundefined{KOMAClassName}{}{
-    \KOMAoptions{numbers=noenddot}
+	\@ifundefined{KOMAClassName}{}{
+		\KOMAoptions{numbers=noenddot}
 
-    \ifprestoncolorheading
-      \colorlet{heading}{theme}
-    \else
-      \colorlet{heading}{Black}
-    \fi
+		\ifprestoncolorheading
+			\colorlet{heading}{theme}
+		\else
+			\colorlet{heading}{Black}
+		\fi
 
-    \@ifundefined{chapter}{}{
-      \addtokomafont{partprefix}{\rmfamily}
-      \renewcommand*{\partformat}{\color{heading}
-        \scalebox{2.5}{\thepart}\enlargethispage{2em}}
+		\@ifundefined{chapter}{}{
+			\addtokomafont{partprefix}{\rmfamily}
+			\renewcommand*{\partformat}{\color{heading}
+				\scalebox{2.5}{\thepart}\enlargethispage{2em}}
 
-      \ifprestonfancychap
-        \addtokomafont{chapterprefix}{\raggedleft}
-        \RedeclareSectionCommand[beforeskip=0.5em]{chapter}
-        \renewcommand*{\chapterformat}{\mbox{%
-            \scalebox{1.5}{\chapappifchapterprefix{\nobreakspace}}%
-            \scalebox{2.718}{\color{heading}\thechapter}\enskip}}
-      \else
-        \renewcommand*{\chapterformat}{\color{heading}\thechapter\enskip}
-      \fi
-    }
+			\ifprestonfancychap
+				\addtokomafont{chapterprefix}{\raggedleft}
+				\RedeclareSectionCommand[beforeskip=0.5em]{chapter}
+				\renewcommand*{\chapterformat}{\mbox{%
+						\scalebox{1.5}{\chapappifchapterprefix{\nobreakspace}}%
+						\scalebox{2.718}{\color{heading}\thechapter}\enskip}}
+			\else
+				\renewcommand*{\chapterformat}{\color{heading}\thechapter\enskip}
+			\fi
+		}
 
-    \ifprestonfancychap
+		\ifprestonfancychap
 \fi
 
-    \ifprestonfancysec
-      \renewcommand*{\sectionformat}{\color{heading}\S\thesection\enskip}
-      \renewcommand*{\subsectionformat}{\color{heading}\S\thesubsection\enskip}
-      \renewcommand*{\subsubsectionformat}{\color{heading}\S\thesubsubsection\enskip}
-    \else
-      \renewcommand*{\sectionformat}{\color{heading}\thesection\enskip}
-      \renewcommand*{\subsectionformat}{\color{heading}\thesubsection\enskip}
-      \renewcommand*{\subsubsectionformat}{\color{heading}\thesubsubsection\enskip}
-    \fi
-  }
+		\ifprestonfancysec
+			\renewcommand*{\sectionformat}{\color{heading}\S\thesection\enskip}
+			\renewcommand*{\subsectionformat}{\color{heading}\S\thesubsection\enskip}
+			\renewcommand*{\subsubsectionformat}{\color{heading}\S\thesubsubsection\enskip}
+		\else
+			\renewcommand*{\sectionformat}{\color{heading}\thesection\enskip}
+			\renewcommand*{\subsectionformat}{\color{heading}\thesubsection\enskip}
+			\renewcommand*{\subsubsectionformat}{\color{heading}\thesubsubsection\enskip}
+		\fi
+	}
 }
 
 \ifprestonindex
-  \usepackage{imakeidx}
-  \makeindex[columns=2,intoc]
+	\usepackage{imakeidx}
+	\makeindex[columns=2,intoc]
 \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -662,459 +681,458 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ifprestonthmenabled
-  \ifprestonmdthm
+	\ifprestonmdthm
 
-    \ifprestonmdline
-      \def\mdlinewidth{2pt}
-    \else
-      \def\mdlinewidth{0pt}
-    \fi
+		\ifprestonmdline
+			\def\mdlinewidth{2pt}
+		\else
+			\def\mdlinewidth{0pt}
+		\fi
 
-    \mdfdefinestyle{mdbluebox}{%
-      skipabove=8pt,
-      linewidth=\mdlinewidth,
-      rightline=false,
-      leftline=true,
-      topline=false,
-      bottomline=false,
-      linecolor=NavyBlue,
-      backgroundcolor=TealBlue!5,
-      innertopmargin=6pt,
-      innerbottommargin=6pt,
-    }
+		\mdfdefinestyle{mdbluebox}{%
+			skipabove=8pt,
+			linewidth=\mdlinewidth,
+			rightline=false,
+			leftline=true,
+			topline=false,
+			bottomline=false,
+			linecolor=NavyBlue,
+			backgroundcolor=TealBlue!5,
+			innertopmargin=6pt,
+			innerbottommargin=6pt,
+		}
 
-    \mdfdefinestyle{mdredbox}{%
-      skipabove=8pt,
-      linewidth=\mdlinewidth,
-      rightline=false,
-      leftline=true,
-      topline=false,
-      bottomline=false,
-      linecolor=BrickRed,
-      backgroundcolor=VioletRed!5,
-      innertopmargin=6pt,
-      innerbottommargin=6pt,
-    }
+		\mdfdefinestyle{mdredbox}{%
+			skipabove=8pt,
+			linewidth=\mdlinewidth,
+			rightline=false,
+			leftline=true,
+			topline=false,
+			bottomline=false,
+			linecolor=BrickRed,
+			backgroundcolor=VioletRed!5,
+			innertopmargin=6pt,
+			innerbottommargin=6pt,
+		}
 
-    \mdfdefinestyle{mdbrownbox}{%
-      skipabove=8pt,
-      linewidth=\mdlinewidth,
-      rightline=false,
-      leftline=true,
-      topline=false,
-      bottomline=false,
-      linecolor=RawSienna,
-      backgroundcolor=Salmon!5,
-      innertopmargin=6pt,
-      innerbottommargin=6pt,
-    }
+		\mdfdefinestyle{mdbrownbox}{%
+			skipabove=8pt,
+			linewidth=\mdlinewidth,
+			rightline=false,
+			leftline=true,
+			topline=false,
+			bottomline=false,
+			linecolor=RawSienna,
+			backgroundcolor=Salmon!5,
+			innertopmargin=6pt,
+			innerbottommargin=6pt,
+		}
 
-    \mdfdefinestyle{mdgreenbox}{%
-      skipabove=8pt,
-      linewidth=\mdlinewidth,
-      rightline=false,
-      leftline=true,
-      topline=false,
-      bottomline=false,
-      linecolor=ForestGreen,
-      backgroundcolor=ForestGreen!5,
-      innertopmargin=6pt,
-      innerbottommargin=6pt,
-    }
+		\mdfdefinestyle{mdgreenbox}{%
+			skipabove=8pt,
+			linewidth=\mdlinewidth,
+			rightline=false,
+			leftline=true,
+			topline=false,
+			bottomline=false,
+			linecolor=ForestGreen,
+			backgroundcolor=ForestGreen!5,
+			innertopmargin=6pt,
+			innerbottommargin=6pt,
+		}
 
-    \mdfdefinestyle{mdorangebox}{%
-      skipabove=8pt,
-      linewidth=\mdlinewidth,
-      rightline=false,
-      leftline=true,
-      topline=false,
-      bottomline=false,
-      linecolor=orange,
-      backgroundcolor=Crimson!4,
-      innertopmargin=6pt,
-      innerbottommargin=6pt,
-    }
+		\mdfdefinestyle{mdorangebox}{%
+			skipabove=8pt,
+			linewidth=\mdlinewidth,
+			rightline=false,
+			leftline=true,
+			topline=false,
+			bottomline=false,
+			linecolor=orange,
+			backgroundcolor=Crimson!4,
+			innertopmargin=6pt,
+			innerbottommargin=6pt,
+		}
 
-    \mdfdefinestyle{mdpurplebox}{%
-      skipabove=8pt,
-      linewidth=\mdlinewidth,
-      rightline=false,
-      leftline=true,
-      topline=false,
-      bottomline=false,
-      linecolor=RoyalPurple,
-      backgroundcolor=Plum!10,
-      innertopmargin=6pt,
-      innerbottommargin=6pt,
-    }
+		\mdfdefinestyle{mdpurplebox}{%
+			skipabove=8pt,
+			linewidth=\mdlinewidth,
+			rightline=false,
+			leftline=true,
+			topline=false,
+			bottomline=false,
+			linecolor=RoyalPurple,
+			backgroundcolor=Plum!10,
+			innertopmargin=6pt,
+			innerbottommargin=6pt,
+		}
 
-    \mdfdefinestyle{mdblackbox}{%
-      skipabove=8pt,
-      linewidth=\mdlinewidth,
-      rightline=false,
-      leftline=true,
-      topline=false,
-      bottomline=false,
-      linecolor=black,
-      backgroundcolor=RedViolet!5!gray!5,
-      innertopmargin=6pt,
-      innerbottommargin=6pt,
-    }
+		\mdfdefinestyle{mdblackbox}{%
+			skipabove=8pt,
+			linewidth=\mdlinewidth,
+			rightline=false,
+			leftline=true,
+			topline=false,
+			bottomline=false,
+			linecolor=black,
+			backgroundcolor=RedViolet!5!gray!5,
+			innertopmargin=6pt,
+			innerbottommargin=6pt,
+		}
 
-    \mdfdefinestyle{mdthemebox}{%
-      skipabove=8pt,
-      linewidth=\mdlinewidth,
-      rightline=false,
-      leftline=true,
-      topline=false,
-      bottomline=false,
-      linecolor=theme,
-      backgroundcolor=theme!7,
-      innertopmargin=6pt,
-      innerbottommargin=6pt
-    }
+		\mdfdefinestyle{mdthemebox}{%
+			skipabove=8pt,
+			linewidth=\mdlinewidth,
+			rightline=false,
+			leftline=true,
+			topline=false,
+			bottomline=false,
+			linecolor=theme,
+			backgroundcolor=theme!7,
+			innertopmargin=6pt,
+			innerbottommargin=6pt
+		}
 
-    \mdfdefinestyle{mdgraybox}{%
-      skipabove=8pt,
-      linewidth=1pt,
-      rightline=false,
-      leftline=false,
-      topline=true,
-      bottomline=true,
-      linecolor=Gray!50,
-      backgroundcolor=Gray!5,
-      innertopmargin=6pt,
-      innerbottommargin=6pt,
-    }
+		\mdfdefinestyle{mdgraybox}{%
+			skipabove=8pt,
+			linewidth=1pt,
+			rightline=false,
+			leftline=false,
+			topline=true,
+			bottomline=true,
+			linecolor=Gray!50,
+			backgroundcolor=Gray!5,
+			innertopmargin=6pt,
+			innerbottommargin=6pt,
+		}
 
-    \ifprestoncolor
+		\ifprestoncolor
 
-      \ifprestonmonochrome
+			\ifprestonmonochrome
 
-        \declaretheoremstyle[
-          headfont=\sffamily\bfseries\color{theme},
-          bodyfont=\itshape,
-          mdframed={style=mdthemebox},
-          headpunct={. },
-          postheadspace={0pt}
-        ]{thmbluebox}
+				\declaretheoremstyle[
+					headfont=\sffamily\bfseries\color{theme},
+					bodyfont=\itshape,
+					mdframed={style=mdthemebox},
+					headpunct={. },
+					postheadspace={0pt}
+				]{thmbluebox}
 
-        \declaretheoremstyle[
-          headfont=\sffamily\bfseries\color{theme},
-          mdframed={style=mdthemebox},
-          headpunct={. },
-          postheadspace={0pt},
-        ]{thmredbox}
+				\declaretheoremstyle[
+					headfont=\sffamily\bfseries\color{theme},
+					mdframed={style=mdthemebox},
+					headpunct={. },
+					postheadspace={0pt},
+				]{thmredbox}
 
-        \declaretheoremstyle[
-          headfont=\sffamily\bfseries\color{theme},
-          mdframed={style=mdthemebox},
-          headpunct={. },
-          postheadspace={0pt},
-        ]{thmbrownbox}
+				\declaretheoremstyle[
+					headfont=\sffamily\bfseries\color{theme},
+					mdframed={style=mdthemebox},
+					headpunct={. },
+					postheadspace={0pt},
+				]{thmbrownbox}
 
-        \declaretheoremstyle[
-          headfont=\sffamily\bfseries\color{theme},
-          mdframed={style=mdthemebox},
-          headpunct={. },
-          postheadspace={0pt},
-        ]{thmgreenbox}
+				\declaretheoremstyle[
+					headfont=\sffamily\bfseries\color{theme},
+					mdframed={style=mdthemebox},
+					headpunct={. },
+					postheadspace={0pt},
+				]{thmgreenbox}
 
-        \declaretheoremstyle[
-          headfont=\sffamily\bfseries\color{theme},
-          mdframed={style=mdthemebox},
-          headpunct={. },
-          postheadspace={0pt},
-        ]{thmorangebox}
+				\declaretheoremstyle[
+					headfont=\sffamily\bfseries\color{theme},
+					mdframed={style=mdthemebox},
+					headpunct={. },
+					postheadspace={0pt},
+				]{thmorangebox}
 
-        \declaretheoremstyle[
-          headfont=\sffamily\bfseries\color{theme},
-          mdframed={style=mdthemebox},
-          headpunct={. },
-          postheadspace={0pt},
-        ]{thmpurplebox}
+				\declaretheoremstyle[
+					headfont=\sffamily\bfseries\color{theme},
+					mdframed={style=mdthemebox},
+					headpunct={. },
+					postheadspace={0pt},
+				]{thmpurplebox}
 
-      \else
+			\else
 
-        \declaretheoremstyle[
-          headfont=\sffamily\bfseries\color{NavyBlue},
-          bodyfont=\itshape,
-          mdframed={style=mdbluebox},
-          headpunct={. },
-          postheadspace={0pt}
-        ]{thmbluebox}
+				\declaretheoremstyle[
+					headfont=\sffamily\bfseries\color{NavyBlue},
+					bodyfont=\itshape,
+					mdframed={style=mdbluebox},
+					headpunct={. },
+					postheadspace={0pt}
+				]{thmbluebox}
 
-        \declaretheoremstyle[
-          headfont=\sffamily\bfseries\color{RawSienna},
-          mdframed={style=mdbrownbox},
-          headpunct={. },
-          postheadspace={0pt},
-        ]{thmbrownbox}
+				\declaretheoremstyle[
+					headfont=\sffamily\bfseries\color{RawSienna},
+					mdframed={style=mdbrownbox},
+					headpunct={. },
+					postheadspace={0pt},
+				]{thmbrownbox}
 
-        \declaretheoremstyle[
-          headfont=\sffamily\bfseries\color{ForestGreen},
-          mdframed={style=mdgreenbox},
-          headpunct={. },
-          postheadspace={0pt},
-        ]{thmgreenbox}
+				\declaretheoremstyle[
+					headfont=\sffamily\bfseries\color{ForestGreen},
+					mdframed={style=mdgreenbox},
+					headpunct={. },
+					postheadspace={0pt},
+				]{thmgreenbox}
 
-        \declaretheoremstyle[
-          headfont=\sffamily\bfseries\color{orange},
-          mdframed={style=mdorangebox},
-          headpunct={. },
-          postheadspace={0pt},
-        ]{thmorangebox}
+				\declaretheoremstyle[
+					headfont=\sffamily\bfseries\color{orange},
+					mdframed={style=mdorangebox},
+					headpunct={. },
+					postheadspace={0pt},
+				]{thmorangebox}
 
-        \declaretheoremstyle[
-          headfont=\sffamily\bfseries\color{RoyalPurple},
-          mdframed={style=mdpurplebox},
-          headpunct={. },
-          postheadspace={0pt},
-        ]{thmpurplebox}
+				\declaretheoremstyle[
+					headfont=\sffamily\bfseries\color{RoyalPurple},
+					mdframed={style=mdpurplebox},
+					headpunct={. },
+					postheadspace={0pt},
+				]{thmpurplebox}
 
-      \fi
+			\fi
 
-    \else
+		\else
 
-      \declaretheoremstyle[
-        headfont=\sffamily\bfseries\color{Gray!40!Black!100},
-        bodyfont=\itshape,
-        mdframed={style=mdgraybox},
-        headpunct={. },
-        postheadspace={0pt}
-      ]{thmbluebox}
+			\declaretheoremstyle[
+				headfont=\sffamily\bfseries\color{Gray!40!Black!100},
+				bodyfont=\itshape,
+				mdframed={style=mdgraybox},
+				headpunct={. },
+				postheadspace={0pt}
+			]{thmbluebox}
 
-      \declaretheoremstyle[
-        headfont=\sffamily\bfseries\color{Gray!40!Black!100},
-        mdframed={style=mdgraybox},
-        headpunct={. },
-        postheadspace={0pt},
-      ]{thmredbox}
+			\declaretheoremstyle[
+				headfont=\sffamily\bfseries\color{Gray!40!Black!100},
+				mdframed={style=mdgraybox},
+				headpunct={. },
+				postheadspace={0pt},
+			]{thmredbox}
 
-      \declaretheoremstyle[
-        headfont=\sffamily\bfseries\color{Gray!40!Black!100},
-        mdframed={style=mdgraybox},
-        headpunct={. },
-        postheadspace={0pt},
-      ]{thmbrownbox}
+			\declaretheoremstyle[
+				headfont=\sffamily\bfseries\color{Gray!40!Black!100},
+				mdframed={style=mdgraybox},
+				headpunct={. },
+				postheadspace={0pt},
+			]{thmbrownbox}
 
-      \declaretheoremstyle[
-        headfont=\sffamily\bfseries\color{Gray!40!Black!100},
-        mdframed={style=mdgraybox},
-        headpunct={. },
-        postheadspace={0pt},
-      ]{thmgreenbox}
+			\declaretheoremstyle[
+				headfont=\sffamily\bfseries\color{Gray!40!Black!100},
+				mdframed={style=mdgraybox},
+				headpunct={. },
+				postheadspace={0pt},
+			]{thmgreenbox}
 
-      \declaretheoremstyle[
-        headfont=\sffamily\bfseries\color{Gray!40!Black!100},
-        mdframed={style=mdgraybox},
-        headpunct={. },
-        postheadspace={0pt},
-      ]{thmorangebox}
+			\declaretheoremstyle[
+				headfont=\sffamily\bfseries\color{Gray!40!Black!100},
+				mdframed={style=mdgraybox},
+				headpunct={. },
+				postheadspace={0pt},
+			]{thmorangebox}
 
-      \declaretheoremstyle[
-        headfont=\sffamily\bfseries\color{Gray!40!Black!100},
-        mdframed={style=mdgraybox},
-        headpunct={. },
-        postheadspace={0pt},
-      ]{thmpurplebox}
-    \fi
+			\declaretheoremstyle[
+				headfont=\sffamily\bfseries\color{Gray!40!Black!100},
+				mdframed={style=mdgraybox},
+				headpunct={. },
+				postheadspace={0pt},
+			]{thmpurplebox}
+		\fi
 
-    \theoremstyle{plain}
+		\theoremstyle{plain}
 
-    \ifprestonchthm
-      \declaretheorem[style=thmbluebox,name=Theorem,numberwithin=chapter]{thm}
-    \else
-      \ifprestonsecthm
-        \declaretheorem[style=thmbluebox,name=Theorem,numberwithin=section]{thm}
-      \else
-        \declaretheorem[style=thmbluebox,name=Theorem]{thm}
-      \fi
-    \fi
+		\ifprestonchthm
+			\declaretheorem[style=thmbluebox,name=Theorem,numberwithin=chapter]{thm}
+		\else
+			\ifprestonsecthm
+				\declaretheorem[style=thmbluebox,name=Theorem,numberwithin=section]{thm}
+			\else
+				\declaretheorem[style=thmbluebox,name=Theorem]{thm}
+			\fi
+		\fi
 
-    \declaretheorem[style=thmbluebox,name=Lemma,sibling=thm]{lemma}    
-    \declaretheorem[style=thmbluebox,name=Lemma]{ilemma}
-    \declaretheorem[style=thmbluebox,name=Proposition,sibling=thm]{prop}    
-    \declaretheorem[style=thmbluebox,name=Fact,sibling=thm]{fact}    
-    \declaretheorem[style=thmbluebox,name=Corollary,sibling=thm]{cor}    
-    \declaretheorem[style=thmbluebox,name=Theorem,numbered=no]{thm*}
-    \declaretheorem[style=thmbluebox,name=Lemma,numbered=no]{lemma*}
-    \declaretheorem[style=thmbluebox,name=Fact,numbered=no]{fact*}
-    \declaretheorem[style=thmbluebox,name=Proposition,numbered=no]{prop*}
-    \declaretheorem[style=thmbluebox,name=Corollary,numbered=no]{cor*}
+		\declaretheorem[style=thmbluebox,name=Lemma,sibling=thm]{lemma}
+		\declaretheorem[style=thmbluebox,name=Lemma]{ilemma}
+		\declaretheorem[style=thmbluebox,name=Proposition,sibling=thm]{prop}
+		\declaretheorem[style=thmbluebox,name=Fact,sibling=thm]{fact}
+		\declaretheorem[style=thmbluebox,name=Corollary,sibling=thm]{cor}
+		\declaretheorem[style=thmbluebox,name=Theorem,numbered=no]{thm*}
+		\declaretheorem[style=thmbluebox,name=Lemma,numbered=no]{lemma*}
+		\declaretheorem[style=thmbluebox,name=Fact,numbered=no]{fact*}
+		\declaretheorem[style=thmbluebox,name=Proposition,numbered=no]{prop*}
+		\declaretheorem[style=thmbluebox,name=Corollary,numbered=no]{cor*}
 
-    \theoremstyle{definition}
-    \declaretheorem[style=thmgreenbox,name=Takeaway,sibling=thm]{takeaway}
-    \declaretheorem[style=thmgreenbox,name=Concept,sibling=thm]{concept}
-    \declaretheorem[style=thmgreenbox,name=Idea,sibling=thm]{idea}
+		\theoremstyle{definition}
+		\declaretheorem[style=thmgreenbox,name=Takeaway,sibling=thm]{takeaway}
+		\declaretheorem[style=thmgreenbox,name=Concept,sibling=thm]{concept}
+		\declaretheorem[style=thmgreenbox,name=Idea,sibling=thm]{idea}
 
-    \ifprestonchthm
-      \declaretheorem[name=Problem,numberwithin=chapter]{prob}
-    \else
-      \ifprestonsecthm
-        \declaretheorem[name=Problem,numberwithin=section]{prob}
-      \else
-        \declaretheorem[name=Problem]{prob}
-      \fi
-    \fi
+		\ifprestonchthm
+			\declaretheorem[name=Problem,numberwithin=chapter]{prob}
+		\else
+			\ifprestonsecthm
+				\declaretheorem[name=Problem,numberwithin=section]{prob}
+			\else
+				\declaretheorem[name=Problem]{prob}
+			\fi
+		\fi
 
-    \declaretheorem[name=Problem,numbered=no]{prob*}
-    \declaretheorem[style=thmbrownbox,name=Problem,sibling=prob]{boxprob}
-    \declaretheorem[style=thmbrownbox,name=Problem,numbered=no]{boxprob*}
+		\declaretheorem[name=Problem,numbered=no]{prob*}
+		\declaretheorem[style=thmbrownbox,name=Problem,sibling=prob]{boxprob}
+		\declaretheorem[style=thmbrownbox,name=Problem,numbered=no]{boxprob*}
 
-    \declaretheorem[style=thmorangebox,name=Claim,sibling=thm]{claim}
-    \declaretheorem[style=thmorangebox,name=Claim]{iclaim}
-    \declaretheorem[style=thmorangebox,name=Claim,numbered=no]{claim*}
+		\declaretheorem[style=thmorangebox,name=Claim,sibling=thm]{claim}
+		\declaretheorem[style=thmorangebox,name=Claim]{iclaim}
+		\declaretheorem[style=thmorangebox,name=Claim,numbered=no]{claim*}
 
-    \declaretheorem[style=thmpurplebox,name=Warning,sibling=thm]{warn}
-    \declaretheorem[style=thmpurplebox,name=Warning,numbered=no]{warn*}
-    \declaretheorem[style=thmpurplebox,name=Bogus Solution,numbered=no]{bogussol}
-    \declaretheorem[style=thmpurplebox,name=Bogus Proof,numbered=no]{bogusproof}
+		\declaretheorem[style=thmpurplebox,name=Warning,sibling=thm]{warn}
+		\declaretheorem[style=thmpurplebox,name=Warning,numbered=no]{warn*}
+		\declaretheorem[style=thmpurplebox,name=Bogus Solution,numbered=no]{bogussol}
+		\declaretheorem[style=thmpurplebox,name=Bogus Proof,numbered=no]{bogusproof}
 
-  \else
-    \theoremstyle{plain}
+	\else
+		\theoremstyle{plain}
 
-    \ifprestonchthm
-      \declaretheorem[name=Theorem,numberwithin=chapter]{thm}
-    \else
-      \ifprestonsecthm
-        \declaretheorem[name=Theorem,numberwithin=section]{thm}
-      \else
-        \declaretheorem[name=Theorem]{thm}
-      \fi
-    \fi
+		\ifprestonchthm
+			\declaretheorem[name=Theorem,numberwithin=chapter]{thm}
+		\else
+			\ifprestonsecthm
+				\declaretheorem[name=Theorem,numberwithin=section]{thm}
+			\else
+				\declaretheorem[name=Theorem]{thm}
+			\fi
+		\fi
 
-    \declaretheorem[name=Lemma,sibling=thm]{lemma}
-    \declaretheorem[name=Lemma]{ilemma}
-    \declaretheorem[name=Proposition,sibling=thm]{prop}
-    \declaretheorem[name=Fact,sibling=thm]{fact}
-    \declaretheorem[name=Corollary,sibling=thm]{cor}
+		\declaretheorem[name=Lemma,sibling=thm]{lemma}
+		\declaretheorem[name=Lemma]{ilemma}
+		\declaretheorem[name=Proposition,sibling=thm]{prop}
+		\declaretheorem[name=Fact,sibling=thm]{fact}
+		\declaretheorem[name=Corollary,sibling=thm]{cor}
 
-    \declaretheorem[name=Theorem,numbered=no]{thm*}
-    \declaretheorem[name=Lemma,numbered=no]{lemma*}
-    \declaretheorem[name=Proposition,numbered=no]{prop*}
-    \declaretheorem[name=Fact,numbered=no]{fact*}
-    \declaretheorem[name=Corollary,numbered=no]{cor*}
+		\declaretheorem[name=Theorem,numbered=no]{thm*}
+		\declaretheorem[name=Lemma,numbered=no]{lemma*}
+		\declaretheorem[name=Proposition,numbered=no]{prop*}
+		\declaretheorem[name=Fact,numbered=no]{fact*}
+		\declaretheorem[name=Corollary,numbered=no]{cor*}
 
-    \theoremstyle{definition}
+		\theoremstyle{definition}
 
-    \declaretheorem[name=Takeaway,numbered=no]{takeaway}
-    \declaretheorem[name=Concept,numbered=no]{concept}
-    \declaretheorem[name=Idea,numbered=no]{idea}
+		\declaretheorem[name=Takeaway,numbered=no]{takeaway}
+		\declaretheorem[name=Concept,numbered=no]{concept}
+		\declaretheorem[name=Idea,numbered=no]{idea}
 
-    \ifprestonchthm
-      \declaretheorem[name=Problem,numberwithin=chapter]{prob}
-    \else
-      \ifprestonsecthm
-        \declaretheorem[name=Problem,numberwithin=section]{prob}
-      \else
-        \declaretheorem[name=Problem]{prob}
-      \fi
-    \fi
+		\ifprestonchthm
+			\declaretheorem[name=Problem,numberwithin=chapter]{prob}
+		\else
+			\ifprestonsecthm
+				\declaretheorem[name=Problem,numberwithin=section]{prob}
+			\else
+				\declaretheorem[name=Problem]{prob}
+			\fi
+		\fi
 
-    \declaretheorem[name=Problem,numbered=no]{prob*}
-    \declaretheorem[name=Claim,sibling=thm]{claim}
-    \declaretheorem[name=Claim]{iclaim}
-    \declaretheorem[name=Claim,numbered=no]{claim*}
-    \declaretheorem[name=Warning,sibling=thm]{warn}
-    \declaretheorem[name=Warning,numbered=no]{warn*}
-    \declaretheorem[name=Bogus Solution,numbered=no]{bogussol}
-    \declaretheorem[name=Bogus Proof,numbered=no]{bogusproof}
-  \fi
+		\declaretheorem[name=Problem,numbered=no]{prob*}
+		\declaretheorem[name=Claim,sibling=thm]{claim}
+		\declaretheorem[name=Claim]{iclaim}
+		\declaretheorem[name=Claim,numbered=no]{claim*}
+		\declaretheorem[name=Warning,sibling=thm]{warn}
+		\declaretheorem[name=Warning,numbered=no]{warn*}
+		\declaretheorem[name=Bogus Solution,numbered=no]{bogussol}
+		\declaretheorem[name=Bogus Proof,numbered=no]{bogusproof}
+	\fi
 
-  \theoremstyle{definition}
+	\theoremstyle{definition}
 
-  \declaretheorem[name=Definition,sibling=thm]{defn}
-  \declaretheorem[name=Definition,numbered=no]{defn*}
-  \declaretheorem[name=Example,sibling=thm]{ex}
-  \declaretheorem[name=Example,numbered=no]{ex*}
-  \declaretheorem[name=Notation,sibling=thm]{notn}
-  \declaretheorem[name=Notation,numbered=no]{notn*}
-  \declaretheorem[name=Conjecture,sibling=thm]{conj}
-  \declaretheorem[name=Conjecture,numbered=no]{conj*}
-  \declaretheorem[name=Question,sibling=thm]{ques}
-  \declaretheorem[name=Question,numbered=no]{ques*}
-  \declaretheorem[name=Exercise,sibling=thm]{exer}
-  \declaretheorem[name=Exercise,numbered=no]{exer*}
+	\declaretheorem[name=Definition,sibling=thm]{defn}
+	\declaretheorem[name=Definition,numbered=no]{defn*}
+	\declaretheorem[name=Example,sibling=thm]{ex}
+	\declaretheorem[name=Example,numbered=no]{ex*}
+	\declaretheorem[name=Notation,sibling=thm]{notn}
+	\declaretheorem[name=Notation,numbered=no]{notn*}
+	\declaretheorem[name=Conjecture,sibling=thm]{conj}
+	\declaretheorem[name=Conjecture,numbered=no]{conj*}
+	\declaretheorem[name=Question,sibling=thm]{ques}
+	\declaretheorem[name=Question,numbered=no]{ques*}
+	\declaretheorem[name=Exercise,sibling=thm]{exer}
+	\declaretheorem[name=Exercise,numbered=no]{exer*}
 
-  \declaretheorem[name=Answer,numbered=no]{answer}
-  \declaretheorem[name=Abuse of Notation,numbered=no]{abuse}
-  \declaretheorem[name=Upshot,numbered=no]{upshot}
+	\declaretheorem[name=Answer,numbered=no]{answer}
+	\declaretheorem[name=Abuse of Notation,numbered=no]{abuse}
+	\declaretheorem[name=Upshot,numbered=no]{upshot}
 
 
-  \theoremstyle{remark}
+	\theoremstyle{remark}
 
-  \declaretheorem[name=Remark,numbered=no]{remark}
-  \declaretheorem[name=Remark,numbered=no]{remark*}
-  \declaretheorem[name=Note,numbered=no]{note}
+	\declaretheorem[name=Remark,numbered=no]{remark}
+	\declaretheorem[name=Remark,numbered=no]{remark*}
+	\declaretheorem[name=Note,numbered=no]{note}
 
-  \newenvironment{question}{\begin{ques}}{\end{ques}}
-  
-  \Crefname{thm}{Theorem}{Theorems}
-  \Crefname{lemma}{Lemma}{Lemmas}
-  \Crefname{prop}{Proposition}{Propositions}
-  \Crefname{fact}{Fact}{Facts}
-  \Crefname{cor}{Corollary}{Corollaries}
-  \Crefname{takeaway}{Takeaway}{Takeaways}
-  \Crefname{concept}{Concept}{Concepts}
-  \Crefname{idea}{Idea}{Ideas}
-  \Crefname{prob}{Problem}{Problems}
-  \Crefname{claim}{Claim}{Claims}
-  \Crefname{warn}{Warning}{Warnings}
-  \Crefname{defn}{Definition}{Definitions}
-  \Crefname{ex}{Example}{Examples}
-  \Crefname{notn}{Notation}{Notations}
-  \Crefname{conj}{Conjecture}{Conjectures}
-  \Crefname{ques}{Question}{Questions}
-  \Crefname{exer}{Exercise}{Exercises}
-  \Crefname{answer}{Answer}{Answers}
-  \Crefname{algo}{Algorithm}{Algorithms}
-  
+	\newenvironment{question}{\begin{ques}}{\end{ques}}
+
+	\Crefname{thm}{Theorem}{Theorems}
+	\Crefname{lemma}{Lemma}{Lemmas}
+	\Crefname{prop}{Proposition}{Propositions}
+	\Crefname{fact}{Fact}{Facts}
+	\Crefname{cor}{Corollary}{Corollaries}
+	\Crefname{takeaway}{Takeaway}{Takeaways}
+	\Crefname{concept}{Concept}{Concepts}
+	\Crefname{idea}{Idea}{Ideas}
+	\Crefname{prob}{Problem}{Problems}
+	\Crefname{claim}{Claim}{Claims}
+	\Crefname{warn}{Warning}{Warnings}
+	\Crefname{defn}{Definition}{Definitions}
+	\Crefname{ex}{Example}{Examples}
+	\Crefname{notn}{Notation}{Notations}
+	\Crefname{conj}{Conjecture}{Conjectures}
+	\Crefname{ques}{Question}{Questions}
+	\Crefname{exer}{Exercise}{Exercises}
+	\Crefname{answer}{Answer}{Answers}
+	\Crefname{algo}{Algorithm}{Algorithms}
 \fi
 
 \ifprestonbeamer\AtBeginDocument{
-    \newenvironment{thm}[1][]{
-      \ifthenelse{\isempty{#1}}{\begin{block}{Theorem}}{\begin{block}{Theorem (#1)}}
-            }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
-    }
-    \newenvironment{proposition}[1][]{
-      \ifthenelse{\isempty{#1}}{\begin{block}{Proposition}}{\begin{block}{Proposition (#1)}}
-            }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
-    }
-    \newenvironment{conjecture}[1][]{
-      \ifthenelse{\isempty{#1}}{\begin{block}{Conjecture}}{\begin{block}{Conjecture (#1)}}
-            }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
-    }
-    \newenvironment{prob}[1][]{
-      \ifthenelse{\isempty{#1}}{\begin{exampleblock}{Problem}}{\begin{exampleblock}{Problem (#1)}}
-            }{\ifthenelse{\isempty{}}{\end{exampleblock}}{\end{exampleblock}}
-    }
-    \newenvironment{}{}{}
+		\newenvironment{thm}[1][]{
+			\ifthenelse{\isempty{#1}}{\begin{block}{Theorem}}{\begin{block}{Theorem (#1)}}
+						}{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
+		}
+		\newenvironment{proposition}[1][]{
+			\ifthenelse{\isempty{#1}}{\begin{block}{Proposition}}{\begin{block}{Proposition (#1)}}
+						}{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
+		}
+		\newenvironment{conjecture}[1][]{
+			\ifthenelse{\isempty{#1}}{\begin{block}{Conjecture}}{\begin{block}{Conjecture (#1)}}
+						}{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
+		}
+		\newenvironment{prob}[1][]{
+			\ifthenelse{\isempty{#1}}{\begin{exampleblock}{Problem}}{\begin{exampleblock}{Problem (#1)}}
+						}{\ifthenelse{\isempty{}}{\end{exampleblock}}{\end{exampleblock}}
+		}
+		\newenvironment{}{}{}
 
-    \renewenvironment{lemma}[1][]{
-      \ifthenelse{\isempty{#1}}{\begin{alertblock}{Lemma}}{\begin{alertblock}{Lemma (#1)}}
-            }{\ifthenelse{\isempty{}}{\end{alertblock}}{\end{alertblock}}
-    }
-    \newenvironment{fact}[1][]{
-      \ifthenelse{\isempty{#1}}{\begin{alertblock}{Fact}}{\begin{alertblock}{Fact (#1)}}
-            }{\ifthenelse{\isempty{}}{\end{alertblock}}{\end{alertblock}}
-    }
-    \newenvironment{claim}[1][]{
-      \setbeamercolor{block title}{bg=BurntOrange,fg=white}
-      \ifthenelse{\isempty{#1}}{\begin{block}{Claim}}{\begin{block}{Claim (#1)}}
-            }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
-    }
-    \newenvironment{definition}[1][]{
-      \setbeamercolor{block title}{bg=RoyalPurple,fg=white}
-      \ifthenelse{\isempty{#1}}{\begin{block}{Definition}}{\begin{block}{Definition (#1)}}
-            }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
-    }
-    \newenvironment{corollary}[1][]{
-      \setbeamercolor{block title}{bg=MidnightBlue,fg=white}
-      \ifthenelse{\isempty{#1}}{\begin{block}{Corollary}}{\begin{block}{Corollary (#1)}}
-            }{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
-    }
-  }
+		\renewenvironment{lemma}[1][]{
+			\ifthenelse{\isempty{#1}}{\begin{alertblock}{Lemma}}{\begin{alertblock}{Lemma (#1)}}
+						}{\ifthenelse{\isempty{}}{\end{alertblock}}{\end{alertblock}}
+		}
+		\newenvironment{fact}[1][]{
+			\ifthenelse{\isempty{#1}}{\begin{alertblock}{Fact}}{\begin{alertblock}{Fact (#1)}}
+						}{\ifthenelse{\isempty{}}{\end{alertblock}}{\end{alertblock}}
+		}
+		\newenvironment{claim}[1][]{
+			\setbeamercolor{block title}{bg=BurntOrange,fg=white}
+			\ifthenelse{\isempty{#1}}{\begin{block}{Claim}}{\begin{block}{Claim (#1)}}
+						}{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
+		}
+		\newenvironment{definition}[1][]{
+			\setbeamercolor{block title}{bg=RoyalPurple,fg=white}
+			\ifthenelse{\isempty{#1}}{\begin{block}{Definition}}{\begin{block}{Definition (#1)}}
+						}{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
+		}
+		\newenvironment{corollary}[1][]{
+			\setbeamercolor{block title}{bg=MidnightBlue,fg=white}
+			\ifthenelse{\isempty{#1}}{\begin{block}{Corollary}}{\begin{block}{Corollary (#1)}}
+						}{\ifthenelse{\isempty{}}{\end{block}}{\end{block}}
+		}
+	}
 \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1125,22 +1143,22 @@
 \newenvironment{hint}{\noindent\footnotesize\normalfont\textbf{Hint:}}{\hspace{-0.5ex}}
 
 \ifprestonfancyhint %% Evan Chen
-  \usepackage{etoolbox}
-  \usepackage{tikz}
-  \usepackage{ifthen}
-  \usepackage{answers}
+	\usepackage{etoolbox}
+	\usepackage{tikz}
+	\usepackage{ifthen}
+	\usepackage{answers}
 
-  \newcounter{hindex}\setcounter{hindex}{0}
-  \newcounter{hintcounter}\setcounter{hintcounter}{0}
+	\newcounter{hindex}\setcounter{hindex}{0}
+	\newcounter{hintcounter}\setcounter{hintcounter}{0}
 
-  \newcommand{\addhint}[1]{%
-    \stepcounter{hintcounter}%
-    \ref{hint:\thehintcounter}%
-    \expandafter\gdef\csname hintlist\thehintcounter\endcsname{#1}%
-  }
-  \newcommand\gethint[1]{\item \csname hintlist#1\endcsname \label{hint:#1}}
+	\newcommand{\addhint}[1]{%
+		\stepcounter{hintcounter}%
+		\ref{hint:\thehintcounter}%
+		\expandafter\gdef\csname hintlist\thehintcounter\endcsname{#1}%
+	}
+	\newcommand\gethint[1]{\item \csname hintlist#1\endcsname \label{hint:#1}}
 \else
-  \newcommand{\addhint}[1]{#1}
+	\newcommand{\addhint}[1]{#1}
 \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1169,32 +1187,32 @@
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
 
 \lstdefinestyle{defaultstyle}{
-  backgroundcolor=\color{white},
-  breakatwhitespace=false,
-  breaklines=true,
-  captionpos=b,
-  commentstyle=\color{mygreen},
-  deletekeywords={...},
-  escapeinside={\%*}{*)}, % add LaTeX in code
-  extendedchars=true, % 8 bit encodings
-  frame=single,
-  keepspaces=true,
-  columns=flexible,
-  keywordstyle=\color{blue},
-  language=Python,
-  morekeywords={*,...},
-  numbers=left, % possible (none, left, right)
-  numbersep=7pt,
-  numberstyle=\tiny\color{mygray},
-  rulecolor=\color{black},
-  showspaces=false,
-  showstringspaces=false,
-  showtabs=false,
-  stepnumber=1, % e.g. if 2, every other line is numbered
-  stringstyle=\color{mymauve},
-  tabsize=2,
+	backgroundcolor=\color{white},
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	commentstyle=\color{mygreen},
+	deletekeywords={...},
+	escapeinside={\%*}{*)}, % add LaTeX in code
+	extendedchars=true, % 8 bit encodings
+	frame=single,
+	keepspaces=true,
+	columns=flexible,
+	keywordstyle=\color{blue},
+	language=Python,
+	morekeywords={*,...},
+	numbers=left, % possible (none, left, right)
+	numbersep=7pt,
+	numberstyle=\tiny\color{mygray},
+	rulecolor=\color{black},
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	stepnumber=1, % e.g. if 2, every other line is numbered
+	stringstyle=\color{mymauve},
+	tabsize=2,
 	basicstyle=\scriptsize\ttfamily\color{black},
-  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}
 }
 
 \lstset{style=defaultstyle}
